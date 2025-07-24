@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import authService from '../../../entities/user/service';
 
-export function useLogin() {
+export function useLogin({ navigate, from }) {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -10,7 +10,7 @@ export function useLogin() {
     setError(null);
     try {
       await authService.login({ phone, password });
-      window.location.href = '/';
+      navigate(from, { replace: true });
     } catch (err) {
       setError(err.message || 'Ошибка авторизации');
     } finally {
