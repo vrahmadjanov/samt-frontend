@@ -36,10 +36,10 @@ const VerificationForm = ({ phoneNumber, onVerify, error, loading }) => {
 };
 
 const ErrorBlock = styled.div`
-  color: #ef4444;
+  color: ${({ theme }) => theme.colors.error};
   text-align: center;
   margin-bottom: 8px;
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.font.base};
 `;
 
 export default VerificationForm;

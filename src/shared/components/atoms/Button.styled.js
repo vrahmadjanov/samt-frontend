@@ -2,21 +2,21 @@ import styled from 'styled-components';
 
 export const StyledButton = styled.button`
   padding: 10px 18px;
-  background-color: #3b82f6;
-  color: #fff;
-  font-size: 14px;
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.white};
+  font-size: ${({ theme }) => theme.font.base};
   font-weight: 500;
   border: none;
-  border-radius: 8px;
+  border-radius: ${({ theme }) => theme.radii.md};
   cursor: pointer;
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: #2563eb;
+    background-color: ${({ theme }) => theme.colors.primaryHover};
   }
 
   &:disabled {
-    background-color: #9ca3af;
+    background-color: ${({ theme }) => theme.colors.disabled};
     cursor: not-allowed;
   }
 `;

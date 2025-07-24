@@ -101,13 +101,13 @@ const RegistrationForm = ({ onRegister, districts, genders, errors, loading }) =
 
 const LoginBlock = styled.div`
   margin-top: 16px;
-  font-size: 14px;
-  color: #4b5563;
+  font-size: ${({ theme }) => theme.font.base};
+  color: ${({ theme }) => theme.colors.textSecondary};
   text-align: center;
 `;
 
 const StyledLink = styled(Link)`
-  color: #3b82f6;
+  color: ${({ theme }) => theme.colors.primary};
   text-decoration: none;
   font-weight: 600;
   cursor: pointer;

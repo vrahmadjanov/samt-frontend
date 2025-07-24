@@ -3,26 +3,26 @@ import styled from 'styled-components';
 export const FormWrapper = styled.form`
   width: 100%;
   max-width: 480px;
-  margin: 40px auto;
-  padding: 32px;
-  border-radius: 16px;
-  background-color: #ffffff;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
+  margin: ${({ theme }) => theme.spacing.xl} auto;
+  padding: ${({ theme }) => theme.spacing.xl};
+  border-radius: ${({ theme }) => theme.radii.lg};
+  background-color: ${({ theme }) => theme.colors.white};
+  box-shadow: ${({ theme }) => theme.shadow};
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
 `;
 
 export const Title = styled.h2`
-  font-size: 22px;
+  font-size: ${({ theme }) => theme.font.title};
   font-weight: 600;
-  color: #1f2937;
-  margin-bottom: 24px;
+  color: ${({ theme }) => theme.colors.text};
+  margin-bottom: ${({ theme }) => theme.spacing.lg};
   text-align: center;
 `;
 
 export const FormContent = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: ${({ theme }) => theme.spacing.md};
 `;
