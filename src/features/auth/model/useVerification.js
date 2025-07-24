@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import authService from '../../../entities/user/service';
 
-export function useVerification() {
+export function useVerification({ navigate }) {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -10,7 +10,7 @@ export function useVerification() {
     setError(null);
     try {
       await authService.verifyCode({ phone_number, confirmation_code });
-      window.location.href = '/dashboard';
+      navigate('/');
     } catch (err) {
       setError(err.message || 'Ошибка подтверждения');
       throw err;

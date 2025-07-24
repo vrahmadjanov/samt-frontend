@@ -20,10 +20,19 @@ const Card = styled.div`
   padding: ${({ theme }) => theme.spacing.lg} ${({ theme }) => theme.spacing.md};
   cursor: pointer;
   transition: box-shadow 0.2s, transform 0.2s;
-  min-width: 120px;
-  min-height: 160px;
+  min-width: 140px;
+  min-height: 120px;
   outline: none;
-
+  @media (max-width: 900px) {
+    min-width: 120px;
+    min-height: 100px;
+    padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.sm};
+  }
+  @media (max-width: 600px) {
+    min-width: 100px;
+    min-height: 80px;
+    padding: ${({ theme }) => theme.spacing.sm};
+  }
   &:hover, &:focus {
     box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
     transform: translateY(-2px) scale(1.03);
@@ -37,6 +46,11 @@ const IconWrapper = styled.div`
   align-items: center;
   justify-content: center;
   margin-bottom: ${({ theme }) => theme.spacing.md};
+  @media (max-width: 600px) {
+    width: 40px;
+    height: 40px;
+    margin-bottom: ${({ theme }) => theme.spacing.sm};
+  }
 `;
 
 const Icon = styled.img`
@@ -46,10 +60,13 @@ const Icon = styled.img`
 `;
 
 const Name = styled.div`
-  font-size: ${({ theme }) => theme.font.base};
+  font-size: 1.1rem;
   color: ${({ theme }) => theme.colors.text};
   text-align: center;
   font-weight: 500;
+  @media (max-width: 600px) {
+    font-size: ${({ theme }) => theme.font.base};
+  }
 `;
 
 export default SpecialtyCard; 

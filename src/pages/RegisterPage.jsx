@@ -6,6 +6,7 @@ import { useVerification } from '../features/auth/model/useVerification';
 import { useDistricts } from '../features/auth/model/useDistricts';
 import { useGenders } from '../features/auth/model/useGenders';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const PageWrapper = styled.div`
   min-height: 100vh;
@@ -18,7 +19,8 @@ const PageWrapper = styled.div`
 const RegistrationPage = () => {
   const [stage, setStage] = useState('register');
   const { register, errors, loading, phoneNumber } = useRegister();
-  const { verify, error: verifyError, loading: verifyLoading } = useVerification();
+  const navigate = useNavigate();
+  const { verify, error: verifyError, loading: verifyLoading } = useVerification({ navigate });
   const { districts } = useDistricts('ru');
   const { genders } = useGenders('ru');
 
