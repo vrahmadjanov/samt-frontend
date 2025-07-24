@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import PageWrapper from './PageWrapper';
 import Header from './Header';
@@ -10,6 +10,7 @@ const LayoutContainer = styled.div`
   flex-direction: row;
   flex: 1;
   min-height: 0;
+  width: 100%;
 `;
 
 const Main = styled.main`
@@ -17,29 +18,64 @@ const Main = styled.main`
   padding: 32px 24px;
   min-width: 0;
   background: ${({ theme }) => theme.colors.background};
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: ${({ theme }) => theme.spacing.md};
+  }
 `;
 
 const SidebarContainer = styled.div`
-  width: 220px;
-  min-width: 160px;
-  background: ${({ theme }) => theme.colors.backgroundGradient};
-  display: flex;
-  flex-direction: column;
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: ${({ theme }) => theme.zIndex.sidebar};
+  }
 `;
 
-const Layout = ({ children }) => (
-  <PageWrapper>
-    <Header />
-    <LayoutContainer>
-      <SidebarContainer>
-        <Sidebar />
-      </SidebarContainer>
-      <Main>
-        {children}
-      </Main>
-    </LayoutContainer>
-    <Footer />
-  </PageWrapper>
-);
+const Layout = ({ children }) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // Закрытие меню по Esc
+  useEffect(() => {
+    if (!menuOpen) return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [menuOpen]);
+
+  // Блокировка скролла body при открытом меню
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [menuOpen]);
+
+  // Закрытие меню при клике вне (overlay реализован в Sidebar)
+  const handleMenuToggle = useCallback(() => setMenuOpen((v) => !v), []);
+  const handleMenuClose = useCallback(() => setMenuOpen(false), []);
+
+  return (
+    <PageWrapper>
+      <Header menuOpen={menuOpen} onMenuToggle={handleMenuToggle} />
+      <LayoutContainer>
+        <SidebarContainer>
+          <Sidebar open={menuOpen} onClose={handleMenuClose} />
+        </SidebarContainer>
+        <Main>
+          {children}
+        </Main>
+      </LayoutContainer>
+      <Footer />
+    </PageWrapper>
+  );
+};
 
 export default Layout; 

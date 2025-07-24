@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const SidebarWrapper = styled.div`
   width: 220px;
@@ -10,6 +10,20 @@ const SidebarWrapper = styled.div`
   box-shadow: 2px 0 8px rgba(0,0,0,0.04);
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: ${({ theme }) => theme.zIndex.sidebar};
+  transition: transform ${({ theme }) => theme.transition.normal};
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    position: fixed;
+    top: ${({ theme }) => theme.headerHeight};
+    left: 0;
+    height: calc(100vh - ${({ theme }) => theme.headerHeight});
+    transform: translateX(-100%);
+    ${({ open }) => open && css`
+      transform: translateX(0);
+    `}
+    box-shadow: 4px 0 24px rgba(31,41,55,0.12);
+  }
 `;
 
 const Menu = styled.ul`
@@ -32,8 +46,8 @@ const MenuItem = styled.li`
   }
 `;
 
-const Sidebar = () => (
-  <SidebarWrapper>
+const Sidebar = ({ open }) => (
+  <SidebarWrapper open={open}>
     <Menu>
       <MenuItem>Профиль</MenuItem>
       <MenuItem>Избранное</MenuItem>

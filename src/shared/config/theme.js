@@ -11,10 +11,12 @@ export const theme = {
     error: '#ef4444',
     disabled: '#9ca3af',
     label: '#444',
+    overlay: 'rgba(31, 41, 55, 0.35)',
   },
   radii: {
     md: '8px',
     lg: '16px',
+    round: '50%',
   },
   font: {
     base: '14px',
@@ -40,4 +42,19 @@ export const theme = {
   minWidthContainer: '320px', // Минимальная ширина для мобильных
   headerHeight: '64px',
   footerHeight: '56px',
+  zIndex: {
+    header: 100,
+    sidebar: 110,
+    overlay: 120,
+    modal: 200,
+  },
+  breakpoints: {
+    mobile: '600px',
+    tablet: '900px',
+    desktop: '1200px',
+  },
+  transition: {
+    fast: '0.2s cubic-bezier(.4,0,.2,1)',
+    normal: '0.35s cubic-bezier(.4,0,.2,1)',
+  },
 }; 
