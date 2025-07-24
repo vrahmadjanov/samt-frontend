@@ -5,6 +5,15 @@ import { useRegister } from '../features/auth/model/useRegister';
 import { useVerification } from '../features/auth/model/useVerification';
 import { useDistricts } from '../features/auth/model/useDistricts';
 import { useGenders } from '../features/auth/model/useGenders';
+import styled from 'styled-components';
+
+const PageWrapper = styled.div`
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+`;
 
 const RegistrationPage = () => {
   const [stage, setStage] = useState('register');
@@ -25,21 +34,25 @@ const RegistrationPage = () => {
     await verify({ phone_number, confirmation_code });
   };
 
-  return stage === 'register' ? (
-    <RegistrationForm
-      onRegister={handleRegister}
-      districts={districts}
-      genders={genders}
-      errors={errors}
-      loading={loading}
-    />
-  ) : (
-    <VerificationForm
-      phoneNumber={phoneNumber}
-      onVerify={handleVerify}
-      error={verifyError}
-      loading={verifyLoading}
-    />
+  return (
+    <PageWrapper>
+      {stage === 'register' ? (
+        <RegistrationForm
+          onRegister={handleRegister}
+          districts={districts}
+          genders={genders}
+          errors={errors}
+          loading={loading}
+        />
+      ) : (
+        <VerificationForm
+          phoneNumber={phoneNumber}
+          onVerify={handleVerify}
+          error={verifyError}
+          loading={verifyLoading}
+        />
+      )}
+    </PageWrapper>
   );
 };
 
