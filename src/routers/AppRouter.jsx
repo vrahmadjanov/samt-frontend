@@ -10,13 +10,7 @@ const AppRouter = () => (
         <Route
           key={path}
           path={path}
-          element={
-            isProtected ? (
-              <ProtectedRoute>{element}</ProtectedRoute>
-            ) : (
-              element
-            )
-          }
+          element={isProtected ? <ProtectedRoute>{element}</ProtectedRoute> : element}
         />
       ))}
     </Routes>

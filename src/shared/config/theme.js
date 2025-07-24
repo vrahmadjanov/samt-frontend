@@ -19,6 +19,9 @@ export const theme = {
   font: {
     base: '14px',
     title: '22px',
+    header: '2rem',
+    weightBold: 700,
+    weightNormal: 400,
   },
   spacing: {
     xs: '4px',
@@ -28,5 +31,13 @@ export const theme = {
     xl: '32px',
     xxl: '40px',
   },
+  gap: {
+    md: '16px',
+    lg: '24px',
+  },
   shadow: '0 8px 16px rgba(0, 0, 0, 0.06)',
+  maxWidthContainer: '1200px', // Оптимально для десктопа (1140-1200px)
+  minWidthContainer: '320px', // Минимальная ширина для мобильных
+  headerHeight: '64px',
+  footerHeight: '56px',
 }; 
