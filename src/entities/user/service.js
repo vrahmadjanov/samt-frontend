@@ -1,5 +1,5 @@
-import httpClient from '../api/httpClient';
-import tokenService from '../api/tokenService';
+import httpClient from '../../shared/utils/httpClient';
+import tokenService from './tokenService';
 
 const authService = {
   async login({ phone, password }) {

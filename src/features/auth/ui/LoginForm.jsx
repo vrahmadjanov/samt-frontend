@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import BaseForm from '../../../ui/components/Form/BaseForm';
-import Input from '../../../ui/components/Input/Input';
-import Button from '../../../ui/components/Button/Button';
+import BaseForm from '../../../shared/components/molecules/BaseForm';
+import Input from '../../../shared/components/atoms/Input';
+import Button from '../../../shared/components/atoms/Button';
 import { Link } from 'react-router-dom';
 
-const LoginForm = ({ onLogin }) => {
+const LoginForm = ({ onLogin, error, loading }) => {
   const [formData, setFormData] = useState({
     phone: '',
     password: '',
@@ -21,7 +21,7 @@ const LoginForm = ({ onLogin }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (onLogin) {
-      onLogin(formData); // делегируем авторизацию вверх
+      onLogin(formData);
     }
   };
 
@@ -43,7 +43,8 @@ const LoginForm = ({ onLogin }) => {
         value={formData.password}
         onChange={handleChange}
       />
-      <Button type="submit">Войти</Button>
+      {error && <ErrorBlock>{error}</ErrorBlock>}
+      <Button type="submit" disabled={loading}>{loading ? 'Вход...' : 'Войти'}</Button>
       <RegisterBlock>
         Нет аккаунта?{' '}
         <StyledLink to="/register">
@@ -59,12 +60,12 @@ export default LoginForm;
 const RegisterBlock = styled.div`
   margin-top: 16px;
   font-size: 14px;
-  color: #4b5563; /* серый цвет */
+  color: #4b5563;
   text-align: center;
 `;
 
 const StyledLink = styled(Link)`
-  color: #3b82f6; /* синий акцент */
+  color: #3b82f6;
   text-decoration: none;
   font-weight: 600;
   cursor: pointer;
@@ -72,4 +73,11 @@ const StyledLink = styled(Link)`
   &:hover {
     text-decoration: underline;
   }
+`;
+
+const ErrorBlock = styled.div`
+  color: #ef4444;
+  text-align: center;
+  margin-bottom: 8px;
+  font-size: 14px;
 `;

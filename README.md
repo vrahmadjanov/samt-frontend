@@ -1,70 +1,41 @@
-# Getting Started with Create React App
+# Архитектура и структура проекта
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Основные принципы
+- **Feature-Sliced Design**: разделение кода по фичам, сущностям, shared-компонентам, процессам и виджетам.
+- **Atomic Design**: UI-компоненты делятся на атомы, молекулы, организмы.
+- **Разделение бизнес-логики и UI**: бизнес-логика реализуется через хуки (model), UI — через чистые компоненты (ui).
+- **Переиспользуемость**: все общие компоненты и утилиты вынесены в shared.
 
-## Available Scripts
+## Структура src
+```
+src/
+  app/                # Глобальные провайдеры, настройки
+  entities/           # Сущности (user, district, gender) с api, service, model, types
+  features/           # Фичи (auth и др.), каждая — отдельная папка с ui и model
+  pages/              # Страницы (LoginPage, RegisterPage, ...)
+  shared/             # Общие компоненты, хуки, утилиты, конфиги
+    components/
+      atoms/
+      molecules/
+      organisms/
+    hooks/
+    utils/
+    config/
+  widgets/            # Крупные виджеты, собирающие фичи и shared-компоненты
+  processes/          # Сложные бизнес-процессы
+```
 
-In the project directory, you can run:
+## Пример паттернов
+- **useLogin, useRegister, useVerification** — бизнес-логика вынесена в хуки features/auth/model
+- **LoginForm, RegistrationForm, VerificationForm** — чистые UI-компоненты в features/auth/ui
+- **Button, Input, Select, BaseForm** — атомы и молекулы в shared/components
 
-### `npm start`
+## Масштабируемость
+- Добавление новой фичи: создайте папку в features, ui и model внутри неё
+- Добавление новой сущности: создайте папку в entities с api, service, model, types
+- Все общие компоненты и утилиты — только в shared
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Рекомендации
+- Соблюдайте разделение ответственности
+- Пишите тесты для бизнес-логики и UI
+- Документируйте архитектурные решения

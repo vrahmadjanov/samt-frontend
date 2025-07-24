@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import LoginForm from '../features/auth/components/LoginForm';
-import authService from '../services/authService';
+import LoginForm from '../features/auth/ui/LoginForm';
+import { useLogin } from '../features/auth/model/useLogin';
 
 const PageWrapper = styled.div`
   min-height: 100vh;
@@ -12,18 +12,11 @@ const PageWrapper = styled.div`
 `;
 
 const LoginPage = () => {
-  const handleLogin = async ({ phone, password }) => {
-    try {
-      await authService.login({ phone, password });
-      window.location.href = '/'; // или навигация через React Router
-    } catch (error) {
-      alert('Неверные данные или ошибка подключения.');
-    }
-  };
+  const { login, error, loading } = useLogin();
 
   return (
     <PageWrapper>
-      <LoginForm onLogin={handleLogin} />
+      <LoginForm onLogin={login} error={error} loading={loading} />
     </PageWrapper>
   );
 };

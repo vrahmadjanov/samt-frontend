@@ -1,4 +1,4 @@
-import genderApi from '../api/genderApi';
+import genderApi from './api';
 
 function mapGenders(data) {
   return data.map(g => ({

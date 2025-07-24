@@ -1,4 +1,4 @@
-import districtApi from '../api/districtApi';
+import districtApi from './api';
 
 function mapDistricts(data) {
   return data.map(d => ({

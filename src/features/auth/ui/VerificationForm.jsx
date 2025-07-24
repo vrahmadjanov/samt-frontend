@@ -1,25 +1,19 @@
 import React, { useState } from 'react';
-import BaseForm from '../../../ui/components/Form/BaseForm';
-import Input from '../../../ui/components/Input/Input';
-import Button from '../../../ui/components/Button/Button';
+import BaseForm from '../../../shared/components/molecules/BaseForm';
+import Input from '../../../shared/components/atoms/Input';
+import Button from '../../../shared/components/atoms/Button';
+import styled from 'styled-components';
 
-const VerificationForm = ({ phoneNumber, onVerify }) => {
+const VerificationForm = ({ phoneNumber, onVerify, error, loading }) => {
   const [confirmationCode, setConfirmationCode] = useState('');
-  const [error, setError] = useState(null);
 
   const handleChange = e => {
     setConfirmationCode(e.target.value);
-    setError(null);
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
-    setError(null);
-    try {
-      await onVerify({ phone_number: phoneNumber, confirmation_code: confirmationCode });
-    } catch (err) {
-      setError(err.message || 'Ошибка подтверждения');
-    }
+    onVerify({ phone_number: phoneNumber, confirmation_code: confirmationCode });
   };
 
   return (
@@ -35,9 +29,17 @@ const VerificationForm = ({ phoneNumber, onVerify }) => {
         placeholder="Введите код из SMS"
         error={error}
       />
-      <Button type="submit">Подтвердить</Button>
+      {error && <ErrorBlock>{error}</ErrorBlock>}
+      <Button type="submit" disabled={loading}>{loading ? 'Подтверждение...' : 'Подтвердить'}</Button>
     </BaseForm>
   );
 };
+
+const ErrorBlock = styled.div`
+  color: #ef4444;
+  text-align: center;
+  margin-bottom: 8px;
+  font-size: 14px;
+`;
 
 export default VerificationForm;
