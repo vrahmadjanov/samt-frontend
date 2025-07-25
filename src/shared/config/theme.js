@@ -45,13 +45,13 @@ export const theme = {
     },
     sizes: {
       mobile: {
-        xs: '12px',
-        sm: '14px',
-        base: '16px',
-        lg: '18px',
-        xl: '20px',
-        title: '24px',
-        header: '1.2rem',
+        xs: '16px',
+        sm: '18px',
+        base: '20px',
+        lg: '22px',
+        xl: '26px',
+        title: '32px',
+        header: '2.1rem',
       },
       tablet: {
         xs: '13px',
@@ -148,6 +148,6 @@ export const theme = {
   maxWidthContainer: '1200px',
   minWidthContainer: '320px',
   headerHeight: '64px',
-  headerHeightMobile: '48px',
+  headerHeightMobile: '80px',
   headerMobile: '1.2rem',
 }; 

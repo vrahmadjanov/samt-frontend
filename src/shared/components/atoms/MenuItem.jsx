@@ -17,10 +17,17 @@ const Item = styled.li`
     background: ${({ theme }) => theme.colors.gray[100]};
   }
   svg {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     flex-shrink: 0;
     display: block;
+  }
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: var(--font-lg);
+    svg {
+      width: 32px;
+      height: 32px;
+    }
   }
 `;
 

@@ -41,15 +41,19 @@ const Brand = styled.div`
     width: 100%;
     pointer-events: none;
   }
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: var(--font-title);
+    gap: var(--gap-md);
+  }
 `;
 
 const LogoImg = styled.img`
-  height: 32px;
-  width: 32px;
+  height: 56px;
+  width: 56px;
   object-fit: contain;
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    height: 24px;
-    width: 24px;
+    height: 48px;
+    width: 48px;
   }
 `;
 
