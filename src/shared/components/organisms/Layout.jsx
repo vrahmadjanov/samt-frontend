@@ -11,13 +11,16 @@ const LayoutContainer = styled.div`
   flex: 1;
   min-height: 0;
   width: 100%;
+  overflow: hidden;
 `;
 
 const Main = styled.main`
   flex: 1;
   padding: 32px 24px;
   min-width: 0;
+  min-height: 0;
   background: ${({ theme }) => theme.colors.background};
+  overflow-y: auto;
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     padding: ${({ theme }) => theme.spacing.md};
   }

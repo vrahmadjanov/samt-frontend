@@ -5,13 +5,13 @@ const Wrapper = styled.div`
   width: 100%;
   max-width: ${({ theme }) => theme.maxWidthContainer};
   margin: 0 auto;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   background: ${({ theme }) => theme.colors.white};
   box-shadow: ${({ theme }) => theme.shadow};
   box-sizing: border-box;
-  overflow-x: hidden;
+  overflow: hidden;
 `;
 
 const PageWrapper = ({ children }) => <Wrapper>{children}</Wrapper>;

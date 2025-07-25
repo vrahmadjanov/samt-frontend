@@ -11,7 +11,7 @@ const SidebarWrapper = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  z-index: ${({ theme }) => theme.zIndex.sidebar};
+  z-index: ${({ theme }) => theme.zIndex.sidebar - 10};
   transition: transform ${({ theme }) => theme.transition.normal};
   box-sizing: border-box;
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
@@ -22,6 +22,7 @@ const SidebarWrapper = styled.div`
     width: 280px;
     max-width: 85vw;
     transform: translateX(-100%);
+    overflow-y: auto;
     ${({ open }) => open && css`
       transform: translateX(0);
     `}
