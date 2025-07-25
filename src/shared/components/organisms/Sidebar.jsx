@@ -7,6 +7,7 @@ import { ReactComponent as PaymentIcon } from '../../assets/icons/Payment.svg';
 import { ReactComponent as SettingsIcon } from '../../assets/icons/Settings.svg';
 import { ReactComponent as HelpIcon } from '../../assets/icons/Help.svg';
 import { ReactComponent as LogoutIcon } from '../../assets/icons/Logout.svg';
+import authService from '../../../entities/user/service';
 
 const SidebarWrapper = styled.div`
   width: 220px;
@@ -49,17 +50,23 @@ const Menu = styled.ul`
   gap: var(--gap-sm);
 `;
 
-const Sidebar = ({ open }) => (
-  <SidebarWrapper open={open}>
-    <Menu>
-      <MenuItem icon={ProfileIcon}>Профиль</MenuItem>
-      <MenuItem icon={FavouriteIcon}>Избранное</MenuItem>
-      <MenuItem icon={PaymentIcon}>Платежи</MenuItem>
-      <MenuItem icon={SettingsIcon}>Настройки</MenuItem>
-      <MenuItem icon={HelpIcon}>Помощь</MenuItem>
-      <MenuItem icon={LogoutIcon}>Выйти</MenuItem>
-    </Menu>
-  </SidebarWrapper>
-);
+const Sidebar = ({ open }) => {
+  const handleLogout = () => {
+    authService.logout();
+  };
+
+  return (
+    <SidebarWrapper open={open}>
+      <Menu>
+        <MenuItem icon={ProfileIcon}>Профиль</MenuItem>
+        <MenuItem icon={FavouriteIcon}>Избранное</MenuItem>
+        <MenuItem icon={PaymentIcon}>Платежи</MenuItem>
+        <MenuItem icon={SettingsIcon}>Настройки</MenuItem>
+        <MenuItem icon={HelpIcon}>Помощь</MenuItem>
+        <MenuItem icon={LogoutIcon} onClick={handleLogout}>Выйти</MenuItem>
+      </Menu>
+    </SidebarWrapper>
+  );
+};
 
 export default Sidebar; 

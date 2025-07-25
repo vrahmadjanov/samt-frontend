@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import RegistrationForm from '../features/auth/ui/RegistrationForm';
+import RegistrationStepper from '../features/auth/ui/RegistrationForm';
 import VerificationForm from '../features/auth/ui/VerificationForm';
 import { useRegister } from '../features/auth/model/useRegister';
 import { useVerification } from '../features/auth/model/useVerification';
@@ -39,7 +39,7 @@ const RegistrationPage = () => {
   return (
     <CenteredWrapper>
       {stage === 'register' ? (
-        <RegistrationForm
+        <RegistrationStepper
           onRegister={handleRegister}
           districts={districts}
           genders={genders}
