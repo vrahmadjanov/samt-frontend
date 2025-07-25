@@ -4,12 +4,12 @@ import LoginForm from '../features/auth/ui/LoginForm';
 import { useLogin } from '../features/auth/model/useLogin';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-const PageWrapper = styled.div`
+const CenteredWrapper = styled.div`
   min-height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+  justify-content: center;
+  background: ${({ theme }) => theme.colors.backgroundGradient};
 `;
 
 const LoginPage = () => {
@@ -19,9 +19,9 @@ const LoginPage = () => {
   const { login, error, loading } = useLogin({ navigate, from });
 
   return (
-    <PageWrapper>
+    <CenteredWrapper>
       <LoginForm onLogin={login} error={error} loading={loading} />
-    </PageWrapper>
+    </CenteredWrapper>
   );
 };
 

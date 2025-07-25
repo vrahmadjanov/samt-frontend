@@ -13,11 +13,14 @@ const SidebarWrapper = styled.div`
   position: relative;
   z-index: ${({ theme }) => theme.zIndex.sidebar};
   transition: transform ${({ theme }) => theme.transition.normal};
+  box-sizing: border-box;
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     position: fixed;
     top: ${({ theme }) => theme.headerHeight};
     left: 0;
     height: calc(100vh - ${({ theme }) => theme.headerHeight});
+    width: 280px;
+    max-width: 85vw;
     transform: translateX(-100%);
     ${({ open }) => open && css`
       transform: translateX(0);

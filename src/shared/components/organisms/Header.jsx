@@ -16,6 +16,8 @@ const HeaderWrapper = styled.header`
   padding: 0 ${({ theme }) => theme.spacing.lg};
   position: relative;
   z-index: ${({ theme }) => theme.zIndex.header};
+  box-sizing: border-box;
+  overflow-x: hidden;
 `;
 
 const Brand = styled.div`

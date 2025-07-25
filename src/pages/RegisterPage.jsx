@@ -8,12 +8,12 @@ import { useGenders } from '../features/auth/model/useGenders';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
-const PageWrapper = styled.div`
+const CenteredWrapper = styled.div`
   min-height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+  justify-content: center;
+  background: ${({ theme }) => theme.colors.backgroundGradient};
 `;
 
 const RegistrationPage = () => {
@@ -37,7 +37,7 @@ const RegistrationPage = () => {
   };
 
   return (
-    <PageWrapper>
+    <CenteredWrapper>
       {stage === 'register' ? (
         <RegistrationForm
           onRegister={handleRegister}
@@ -54,7 +54,7 @@ const RegistrationPage = () => {
           loading={verifyLoading}
         />
       )}
-    </PageWrapper>
+    </CenteredWrapper>
   );
 };
 
