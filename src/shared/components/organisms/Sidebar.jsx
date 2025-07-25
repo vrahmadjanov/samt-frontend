@@ -9,7 +9,6 @@ import { ReactComponent as HelpIcon } from '../../assets/icons/Help.svg';
 import { ReactComponent as LogoutIcon } from '../../assets/icons/Logout.svg';
 import { ReactComponent as DoctorIcon } from '../../assets/icons/Doctor.svg';
 import authService from '../../../entities/user/service';
-import { Link } from 'react-router-dom';
 
 const SidebarWrapper = styled.div`
   width: 220px;
@@ -61,11 +60,7 @@ const Sidebar = ({ open }) => {
     <SidebarWrapper open={open}>
       <Menu>
         <MenuItem icon={ProfileIcon}>Профиль</MenuItem>
-        <li>
-          <Link to="/doctors" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}>
-            <MenuItem icon={DoctorIcon}>Мой врач</MenuItem>
-          </Link>
-        </li>
+        <MenuItem to="/doctors" icon={DoctorIcon}>Мой врач</MenuItem>
         <MenuItem icon={FavouriteIcon}>Избранное</MenuItem>
         <MenuItem icon={PaymentIcon}>Платежи</MenuItem>
         <MenuItem icon={SettingsIcon}>Настройки</MenuItem>

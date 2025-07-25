@@ -17,7 +17,9 @@ const Card = styled.div`
   margin-bottom: var(--spacing-sm);
   flex-direction: column;
   position: relative;
-  max-width: 550px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 const TopRow = styled.div`

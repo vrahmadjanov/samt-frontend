@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Item = styled.li`
   display: flex;
@@ -13,32 +14,53 @@ const Item = styled.li`
   transition: background 0.2s;
   background: transparent;
   border: none;
-  &:hover {
+  list-style: none;
+  &:hover, &:has(a:hover) {
     background: ${({ theme }) => theme.colors.gray[100]};
   }
   svg {
-    width: 24px;
-    height: 24px;
+    width: 34px;
+    height: 34px;
     flex-shrink: 0;
     display: block;
   }
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: var(--font-lg);
     svg {
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
     }
   }
+`;
+
+const MenuLink = styled(Link)`
+  color: inherit;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+  background: none;
+  gap: var(--gap-sm);
 `;
 
 const Label = styled.span`
   flex: 1;
 `;
 
-const MenuItem = ({ icon: Icon, children, ...props }) => (
+const MenuItem = ({ icon: Icon, children, to, ...props }) => (
   <Item {...props}>
-    {Icon && <Icon />}
-    <Label>{children}</Label>
+    {to ? (
+      <MenuLink to={to} tabIndex={0}>
+        {Icon && <Icon />}
+        <Label>{children}</Label>
+      </MenuLink>
+    ) : (
+      <>
+        {Icon && <Icon />}
+        <Label>{children}</Label>
+      </>
+    )}
   </Item>
 );
 
