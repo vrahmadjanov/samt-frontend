@@ -1,32 +1,48 @@
 export const theme = {
   colors: {
-    primary: '#3b82f6', // основной синий
-    primaryHover: '#2563eb',
-    background: '#f9fafb',
-    backgroundGradient: 'linear-gradient(135deg, #f3f4f6, #e5e7eb)',
-    white: '#fff',
-    text: '#1f2937',
-    textSecondary: '#4b5563',
-    border: '#d1d5db',
-    error: '#ef4444',
-    disabled: '#9ca3af',
-    label: '#444',
-    overlay: 'rgba(31, 41, 55, 0.35)',
-  },
-  radii: {
-    md: '8px',
-    lg: '16px',
-    round: '50%',
+    primary: '#2563eb',
+    secondary: '#6B7280',
+    accent: '#F59E0B',
+    success: '#10B981',
+    error: '#EF4444',
+    warning: '#F59E0B',
+    info: '#3B82F6',
+    text: '#1F2937',
+    textLight: '#6B7280',
+    textInverse: '#FFFFFF',
+    background: '#FFFFFF',
+    backgroundGradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    border: '#E5E7EB',
+    borderLight: '#F3F4F6',
+    overlay: 'rgba(0, 0, 0, 0.5)',
+    white: '#FFFFFF',
+    black: '#000000',
+    gray: {
+      50: '#F9FAFB',
+      100: '#F3F4F6',
+      200: '#E5E7EB',
+      300: '#D1D5DB',
+      400: '#9CA3AF',
+      500: '#6B7280',
+      600: '#4B5563',
+      700: '#374151',
+      800: '#1F2937',
+      900: '#111827',
+    },
   },
   font: {
-    // Базовые размеры для мобильных (до 600px)
-    base: '14px',
-    title: '22px',
-    header: '2rem',
-    headerMobile: '1.2rem',
-    weightBold: 700,
-    weightNormal: 400,
-    // Адаптивные размеры для разных экранов
+    family: {
+      primary: "'Montserrat', sans-serif",
+      secondary: "'Montserrat', sans-serif",
+      mono: "'source-code-pro', 'Menlo', 'Monaco', 'Consolas', 'Courier New', monospace",
+    },
+    weight: {
+      light: 300,
+      normal: 400,
+      medium: 500,
+      semibold: 600,
+      bold: 700,
+    },
     sizes: {
       mobile: {
         xs: '12px',
@@ -58,14 +74,12 @@ export const theme = {
     },
   },
   spacing: {
-    // Базовые отступы для мобильных
     xs: '4px',
     sm: '8px',
-    md: '16px',
-    lg: '24px',
-    xl: '32px',
-    xxl: '40px',
-    // Адаптивные отступы для разных экранов
+    md: '12px',
+    lg: '16px',
+    xl: '24px',
+    xxl: '32px',
     responsive: {
       mobile: {
         xs: '4px',
@@ -94,37 +108,33 @@ export const theme = {
     },
   },
   gap: {
-    md: '16px',
-    lg: '24px',
+    sm: '8px',
+    md: '12px',
+    lg: '16px',
     responsive: {
-      mobile: {
-        sm: '8px',
-        md: '12px',
-        lg: '16px',
-      },
-      tablet: {
-        sm: '12px',
-        md: '16px',
-        lg: '24px',
-      },
-      desktop: {
-        sm: '16px',
-        md: '24px',
-        lg: '32px',
-      },
+      mobile: { sm: '8px', md: '12px', lg: '16px', },
+      tablet: { sm: '12px', md: '16px', lg: '24px', },
+      desktop: { sm: '16px', md: '24px', lg: '32px', },
     },
   },
-  shadow: '0 8px 16px rgba(0, 0, 0, 0.06)',
-  maxWidthContainer: '1200px', // Оптимально для десктопа (1140-1200px)
-  minWidthContainer: '320px', // Минимальная ширина для мобильных
-  headerHeight: '64px',
-  headerHeightMobile: '48px',
-  footerHeight: '56px',
+  radius: {
+    sm: '4px',
+    md: '8px',
+    lg: '12px',
+    xl: '16px',
+    round: '50%',
+  },
+  shadow: {
+    sm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+    md: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+    lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+    xl: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+  },
   zIndex: {
-    header: 100,
-    sidebar: 110,
-    overlay: 120,
-    modal: 200,
+    header: 1000,
+    sidebar: 900,
+    overlay: 800,
+    modal: 1100,
   },
   breakpoints: {
     mobile: '600px',
@@ -132,7 +142,12 @@ export const theme = {
     desktop: '1200px',
   },
   transition: {
-    fast: '0.2s cubic-bezier(.4,0,.2,1)',
-    normal: '0.35s cubic-bezier(.4,0,.2,1)',
+    fast: '0.15s ease',
+    normal: '0.3s ease',
   },
+  maxWidthContainer: '1200px',
+  minWidthContainer: '320px',
+  headerHeight: '64px',
+  headerHeightMobile: '48px',
+  headerMobile: '1.2rem',
 }; 

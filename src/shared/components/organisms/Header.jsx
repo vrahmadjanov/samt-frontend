@@ -5,8 +5,8 @@ import BurgerButton from '../atoms/BurgerButton';
 const HeaderWrapper = styled.header`
   width: 100%;
   height: ${({ theme }) => theme.headerHeight};
-  background: ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.white};
+  background: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.primary};
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -26,8 +26,8 @@ const Brand = styled.div`
   flex: 1;
   text-align: left;
   font-size: var(--font-header);
-  font-weight: ${({ theme }) => theme.font.weightBold};
-  color: ${({ theme }) => theme.colors.white};
+  font-weight: ${({ theme }) => theme.font.weight.bold};
+  color: ${({ theme }) => theme.colors.primary};
   letter-spacing: 1px;
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     text-align: center;
@@ -61,7 +61,7 @@ const Header = ({ menuOpen, onMenuToggle }) => (
     <BurgerContainer>
       <BurgerButton open={menuOpen} onClick={onMenuToggle} />
     </BurgerContainer>
-    <Brand>SAMT</Brand>
+    <Brand>CAMT</Brand>
   </HeaderWrapper>
 );
 

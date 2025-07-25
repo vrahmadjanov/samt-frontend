@@ -1,3 +1,7 @@
-<svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M3.27918 4.88568C2.00897 4.88667 0.526161 4.3919 0.523928 3.15209C0.521807 1.97427 1.89698 1.47727 3.27304 1.4762L15.8045 1.4762C17.0809 1.4762 17.5596 2.16261 17.5596 2.87298V4.88568M21.4756 9.84492H16.9012C14.9998 9.84492 13.4584 11.302 13.4584 13.0994C13.4584 14.8968 14.9998 16.3539 16.9012 16.3539H21.4756M16.7434 13.2544H16.9012M0.523926 3.33591V18.9885C0.523926 19.8364 1.22085 20.5238 2.08055 20.5238H20.8721C21.7318 20.5238 22.4287 19.8364 22.4287 18.9885V6.42096C22.4287 5.57305 21.7318 4.88568 20.8721 4.88568H3.25689" stroke="white" stroke-linecap="round"/>
-</svg>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
+<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
+<g id="SVGRepo_bgCarrier" stroke-width="0"/>
+<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="SVGRepo_iconCarrier"> <path d="M19 20V14M19 14L21 16M19 14L17 16" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M22 12C22 8.22876 22 6.34315 20.8284 5.17157C19.6569 4 17.7712 4 14 4H10C6.22876 4 4.34315 4 3.17157 5.17157C2 6.34315 2 8.22876 2 12C2 15.7712 2 17.6569 3.17157 18.8284C4.34315 20 6.22876 20 10 20H14" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round"/> <path d="M10 16H6" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round"/> <path d="M13 16H12.5" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round"/> <path d="M2 10L22 10" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round"/> </g>
+</svg>

@@ -10,7 +10,7 @@ const Button = styled.button`
   height: 44px;
   background: ${({ theme }) => theme.colors.white};
   border: 2px solid ${({ theme }) => theme.colors.primary};
-  border-radius: ${({ theme }) => theme.radii.md};
+  border-radius: ${({ theme }) => theme.radius.md};
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(59,130,246,0.08);
   transition: border-color ${({ theme }) => theme.transition.fast}, box-shadow ${({ theme }) => theme.transition.fast};
