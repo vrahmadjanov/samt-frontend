@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import DoctorAvatar from '../atoms/DoctorAvatar';
 import SpecialtyBadge from '../molecules/SpecialtyBadge';
 import InfoBadge from '../molecules/InfoBadge';
+import RatingStars from '../atoms/RatingStars';
+import FavoriteButton from '../atoms/FavoriteButton';
+import { addDoctorToFavorites } from '../../../entities/doctor/favoritesApi';
 
 const Card = styled.div`
   display: flex;
@@ -11,8 +14,16 @@ const Card = styled.div`
   border-radius: ${({ theme }) => theme.radius.md};
   box-shadow: ${({ theme }) => theme.shadow.sm};
   padding: var(--spacing-lg);
-  align-items: flex-start;
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--spacing-sm);
+  flex-direction: column;
+  position: relative;
+  max-width: 550px;
+`;
+
+const TopRow = styled.div`
+  display: flex;
+  gap: var(--gap-md);
+  width: 100%;
 `;
 
 const Info = styled.div`
@@ -44,29 +55,86 @@ const Workplace = styled.div`
   color: ${({ theme }) => theme.colors.textLight};
 `;
 
-const DoctorCard = ({ doctor }) => (
-  <Card>
-    <DoctorAvatar src={doctor.profile_picture} alt={doctor.first_name + ' ' + doctor.last_name} />
-    <Info>
-      <Name>{doctor.last_name} {doctor.first_name} {doctor.middle_name}, {doctor.age}</Name>
-      <SpecialtyList>
-        {doctor.specialties.map(s => (
-          <SpecialtyBadge key={s.id} icon={s.icon} name={s.name} />
-        ))}
-      </SpecialtyList>
-      <Badges>
-        {doctor.medical_category && <InfoBadge>{doctor.medical_category.name}</InfoBadge>}
-        {doctor.academic_degree && <InfoBadge>{doctor.academic_degree.name}</InfoBadge>}
-        {doctor.experience_level && <InfoBadge>{doctor.experience_level.level}</InfoBadge>}
-      </Badges>
-      <div>Рейтинг: <b>{doctor.rating}</b></div>
-      {doctor.workplaces && doctor.workplaces.length > 0 && (
-        <Workplace>
-          {doctor.workplaces[0].clinic?.name} — {doctor.workplaces[0].position}
-        </Workplace>
-      )}
-    </Info>
-  </Card>
-);
+const CardFooter = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 0;
+  gap: var(--gap-md);
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+`;
+
+const StyledButton = styled.button`
+  background: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.white};
+  border: none;
+  border-radius: ${({ theme }) => theme.radius.md};
+  padding: 10px 18px;
+  font-size: var(--font-base);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  min-width: 110px;
+  &:hover {
+    background: ${({ theme }) => theme.colors.primaryHover || theme.colors.primary};
+    opacity: 0.95;
+  }
+`;
+
+const DoctorCard = ({ doctor, favorite, onFavorite }) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleFavorite = async () => {
+    if (favorite) return;
+    setLoading(true);
+    try {
+      await addDoctorToFavorites(doctor.id);
+      onFavorite(doctor.id);
+    } catch (e) {
+      // Можно добавить toast или alert
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleBook = () => {
+    // TODO: реализовать запись к врачу
+    alert('Функция записи будет реализована позже');
+  };
+
+  return (
+    <Card>
+      <TopRow>
+        <DoctorAvatar src={doctor.profile_picture} alt={doctor.first_name + ' ' + doctor.last_name} />
+        <Info>
+          <Name>{doctor.last_name} {doctor.first_name} {doctor.middle_name}</Name>
+          <SpecialtyList>
+            {doctor.specialties.map(s => (
+              <SpecialtyBadge key={s.id} icon={s.icon} name={s.name} />
+            ))}
+          </SpecialtyList>
+          <Badges>
+            {doctor.medical_category && <InfoBadge>{doctor.medical_category.name}</InfoBadge>}
+            {doctor.academic_degree && <InfoBadge>{doctor.academic_degree.name}</InfoBadge>}
+            {doctor.experience_level && <InfoBadge>{doctor.experience_level.level}</InfoBadge>}
+          </Badges>
+          <RatingStars rating={doctor.rating} />
+          {doctor.workplaces && doctor.workplaces.length > 0 && (
+            <Workplace>
+              {doctor.workplaces[0].clinic?.name} — {doctor.workplaces[0].position}
+            </Workplace>
+          )}
+        </Info>
+      </TopRow>
+      <CardFooter>
+        <StyledButton onClick={handleBook}>Записаться</StyledButton>
+        <FavoriteButton active={favorite} onClick={handleFavorite} disabled={loading} />
+      </CardFooter>
+    </Card>
+  );
+};
 
 export default DoctorCard; 
