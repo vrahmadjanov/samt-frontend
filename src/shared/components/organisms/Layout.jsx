@@ -14,13 +14,13 @@ const LayoutContainer = styled.div`
 
 const Main = styled.main`
   flex: 1;
-  padding: 32px 24px;
+  padding: var(--spacing-xl) var(--spacing-lg);
   min-width: 0;
   min-height: 0;
   background: ${({ theme }) => theme.colors.background};
   overflow-y: auto;
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    padding: ${({ theme }) => theme.spacing.md};
+    padding: var(--spacing-md);
   }
 `;
 

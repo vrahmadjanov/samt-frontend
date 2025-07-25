@@ -10,6 +10,76 @@ html, body, #root {
   overflow: hidden;
 }
 
+/* Адаптивные размеры шрифтов */
+@media (max-width: 600px) {
+  :root {
+    --font-xs: 12px;
+    --font-sm: 14px;
+    --font-base: 16px;
+    --font-lg: 18px;
+    --font-xl: 20px;
+    --font-title: 24px;
+    --font-header: 1.2rem;
+    
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 12px;
+    --spacing-lg: 16px;
+    --spacing-xl: 24px;
+    --spacing-xxl: 32px;
+    
+    --gap-sm: 8px;
+    --gap-md: 12px;
+    --gap-lg: 16px;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+  :root {
+    --font-xs: 13px;
+    --font-sm: 15px;
+    --font-base: 16px;
+    --font-lg: 20px;
+    --font-xl: 24px;
+    --font-title: 28px;
+    --font-header: 1.5rem;
+    
+    --spacing-xs: 6px;
+    --spacing-sm: 12px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-xxl: 40px;
+    
+    --gap-sm: 12px;
+    --gap-md: 16px;
+    --gap-lg: 24px;
+  }
+}
+
+@media (min-width: 901px) {
+  :root {
+    --font-xs: 14px;
+    --font-sm: 16px;
+    --font-base: 18px;
+    --font-lg: 22px;
+    --font-xl: 26px;
+    --font-title: 32px;
+    --font-header: 2rem;
+    
+    --spacing-xs: 8px;
+    --spacing-sm: 16px;
+    --spacing-md: 24px;
+    --spacing-lg: 32px;
+    --spacing-xl: 40px;
+    --spacing-xxl: 48px;
+    
+    --gap-sm: 16px;
+    --gap-md: 24px;
+    --gap-lg: 32px;
+  }
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

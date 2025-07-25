@@ -19,24 +19,100 @@ export const theme = {
     round: '50%',
   },
   font: {
+    // Базовые размеры для мобильных (до 600px)
     base: '14px',
     title: '22px',
     header: '2rem',
     headerMobile: '1.2rem',
     weightBold: 700,
     weightNormal: 400,
+    // Адаптивные размеры для разных экранов
+    sizes: {
+      mobile: {
+        xs: '12px',
+        sm: '14px',
+        base: '16px',
+        lg: '18px',
+        xl: '20px',
+        title: '24px',
+        header: '1.2rem',
+      },
+      tablet: {
+        xs: '13px',
+        sm: '15px',
+        base: '16px',
+        lg: '20px',
+        xl: '24px',
+        title: '28px',
+        header: '1.5rem',
+      },
+      desktop: {
+        xs: '14px',
+        sm: '16px',
+        base: '18px',
+        lg: '22px',
+        xl: '26px',
+        title: '32px',
+        header: '2rem',
+      },
+    },
   },
   spacing: {
+    // Базовые отступы для мобильных
     xs: '4px',
     sm: '8px',
     md: '16px',
     lg: '24px',
     xl: '32px',
     xxl: '40px',
+    // Адаптивные отступы для разных экранов
+    responsive: {
+      mobile: {
+        xs: '4px',
+        sm: '8px',
+        md: '12px',
+        lg: '16px',
+        xl: '24px',
+        xxl: '32px',
+      },
+      tablet: {
+        xs: '6px',
+        sm: '12px',
+        md: '16px',
+        lg: '24px',
+        xl: '32px',
+        xxl: '40px',
+      },
+      desktop: {
+        xs: '8px',
+        sm: '16px',
+        md: '24px',
+        lg: '32px',
+        xl: '40px',
+        xxl: '48px',
+      },
+    },
   },
   gap: {
     md: '16px',
     lg: '24px',
+    responsive: {
+      mobile: {
+        sm: '8px',
+        md: '12px',
+        lg: '16px',
+      },
+      tablet: {
+        sm: '12px',
+        md: '16px',
+        lg: '24px',
+      },
+      desktop: {
+        sm: '16px',
+        md: '24px',
+        lg: '32px',
+      },
+    },
   },
   shadow: '0 8px 16px rgba(0, 0, 0, 0.06)',
   maxWidthContainer: '1200px', // Оптимально для десктопа (1140-1200px)

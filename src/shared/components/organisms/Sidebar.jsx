@@ -6,7 +6,7 @@ const SidebarWrapper = styled.div`
   min-width: 160px;
   background: ${({ theme }) => theme.colors.backgroundGradient};
   height: 100%;
-  padding: ${({ theme }) => theme.spacing.lg} 0;
+  padding: var(--spacing-lg) 0;
   box-shadow: 2px 0 8px rgba(0,0,0,0.04);
   display: flex;
   flex-direction: column;
@@ -31,6 +31,7 @@ const SidebarWrapper = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     top: ${({ theme }) => theme.headerHeightMobile};
     height: calc(100vh - ${({ theme }) => theme.headerHeightMobile});
+    padding: var(--spacing-md) 0;
   }
 `;
 
@@ -40,14 +41,14 @@ const Menu = styled.ul`
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.gap.md};
+  gap: var(--gap-md);
 `;
 
 const MenuItem = styled.li`
-  padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.xl};
+  padding: var(--spacing-md) var(--spacing-xl);
   cursor: pointer;
   color: ${({ theme }) => theme.colors.text};
-  font-size: ${({ theme }) => theme.font.base};
+  font-size: var(--font-base);
   transition: background 0.2s;
   &:hover {
     background: ${({ theme }) => theme.colors.white};

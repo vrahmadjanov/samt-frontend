@@ -10,23 +10,22 @@ const HeaderWrapper = styled.header`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  font-size: ${({ theme }) => theme.font.header};
+  font-size: var(--font-header);
   font-weight: ${({ theme }) => theme.font.weightBold};
   letter-spacing: 1px;
-  padding: 0 ${({ theme }) => theme.spacing.lg};
+  padding: 0 var(--spacing-lg);
   box-sizing: border-box;
   overflow-x: hidden;
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     height: ${({ theme }) => theme.headerHeightMobile};
-    font-size: ${({ theme }) => theme.font.headerMobile};
-    padding: 0 ${({ theme }) => theme.spacing.md};
+    padding: 0 var(--spacing-md);
   }
 `;
 
 const Brand = styled.div`
   flex: 1;
   text-align: left;
-  font-size: ${({ theme }) => theme.font.header};
+  font-size: var(--font-header);
   font-weight: ${({ theme }) => theme.font.weightBold};
   color: ${({ theme }) => theme.colors.white};
   letter-spacing: 1px;
@@ -38,9 +37,6 @@ const Brand = styled.div`
     margin: auto;
     width: 100%;
     pointer-events: none;
-  }
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: ${({ theme }) => theme.font.headerMobile};
   }
 `;
 
