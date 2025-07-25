@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import BurgerButton from '../atoms/BurgerButton';
+import logo from '../../../logo.png';
 
 const HeaderWrapper = styled.header`
   width: 100%;
@@ -24,19 +25,31 @@ const HeaderWrapper = styled.header`
 
 const Brand = styled.div`
   flex: 1;
-  text-align: left;
+  display: flex;
+  align-items: center;
   font-size: var(--font-header);
   font-weight: ${({ theme }) => theme.font.weight.bold};
   color: ${({ theme }) => theme.colors.primary};
   letter-spacing: 1px;
+  gap: var(--gap-sm);
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    text-align: center;
+    justify-content: center;
     position: absolute;
     left: 0;
     right: 0;
     margin: auto;
     width: 100%;
     pointer-events: none;
+  }
+`;
+
+const LogoImg = styled.img`
+  height: 32px;
+  width: 32px;
+  object-fit: contain;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    height: 24px;
+    width: 24px;
   }
 `;
 
@@ -61,7 +74,10 @@ const Header = ({ menuOpen, onMenuToggle }) => (
     <BurgerContainer>
       <BurgerButton open={menuOpen} onClick={onMenuToggle} />
     </BurgerContainer>
-    <Brand>CAMT</Brand>
+    <Brand>
+      <LogoImg src={logo} alt="Логотип" />
+      SAMT
+    </Brand>
   </HeaderWrapper>
 );
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import MenuItem from '../atoms/MenuItem';
 import { ReactComponent as ProfileIcon } from '../../assets/icons/Profile.svg';
 import { ReactComponent as FavouriteIcon } from '../../assets/icons/Favourite.svg';
 import { ReactComponent as PaymentIcon } from '../../assets/icons/Payment.svg';
@@ -13,7 +14,6 @@ const SidebarWrapper = styled.div`
   background: ${({ theme }) => theme.colors.white};
   height: 100%;
   padding: var(--spacing-lg) 0;
-  box-shadow: 2px 0 8px rgba(0,0,0,0.04);
   display: flex;
   flex-direction: column;
   position: relative;
@@ -32,7 +32,6 @@ const SidebarWrapper = styled.div`
     ${({ open }) => open && css`
       transform: translateX(0);
     `}
-    box-shadow: 4px 0 24px rgba(31,41,55,0.12);
   }
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     top: ${({ theme }) => theme.headerHeightMobile};
@@ -50,42 +49,15 @@ const Menu = styled.ul`
   gap: var(--gap-sm);
 `;
 
-const MenuItem = styled.li`
-  display: flex;
-  align-items: center;
-  gap: var(--gap-sm);
-  padding: var(--spacing-sm) var(--spacing-lg);
-  cursor: pointer;
-  color: ${({ theme }) => theme.colors.primary};
-  font-size: var(--font-sm);
-  font-weight: ${({ theme }) => theme.font.weight.regular};
-  transition: background 0.2s;
-  background: transparent;
-  border: none;
-  &:hover {
-    background: ${({ theme }) => theme.colors.gray[100]};
-  }
-  svg {
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-    display: block;
-  }
-`;
-
-const Label = styled.span`
-  flex: 1;
-`;
-
 const Sidebar = ({ open }) => (
   <SidebarWrapper open={open}>
     <Menu>
-      <MenuItem><ProfileIcon /> <Label>Профиль</Label></MenuItem>
-      <MenuItem><FavouriteIcon /> <Label>Избранное</Label></MenuItem>
-      <MenuItem><PaymentIcon /> <Label>Платежи</Label></MenuItem>
-      <MenuItem><SettingsIcon /> <Label>Настройки</Label></MenuItem>
-      <MenuItem><HelpIcon /> <Label>Помощь</Label></MenuItem>
-      <MenuItem><LogoutIcon /> <Label>Выйти</Label></MenuItem>
+      <MenuItem icon={ProfileIcon}>Профиль</MenuItem>
+      <MenuItem icon={FavouriteIcon}>Избранное</MenuItem>
+      <MenuItem icon={PaymentIcon}>Платежи</MenuItem>
+      <MenuItem icon={SettingsIcon}>Настройки</MenuItem>
+      <MenuItem icon={HelpIcon}>Помощь</MenuItem>
+      <MenuItem icon={LogoutIcon}>Выйти</MenuItem>
     </Menu>
   </SidebarWrapper>
 );
