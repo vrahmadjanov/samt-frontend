@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import PageWrapper from './PageWrapper';
 import Header from './Header';
 import Sidebar from './Sidebar';
-import Footer from './Footer';
 
 const LayoutContainer = styled.div`
   display: flex;
@@ -11,7 +10,6 @@ const LayoutContainer = styled.div`
   flex: 1;
   min-height: 0;
   width: 100%;
-  overflow: hidden;
 `;
 
 const Main = styled.main`
@@ -76,7 +74,6 @@ const Layout = ({ children }) => {
           {children}
         </Main>
       </LayoutContainer>
-      <Footer />
     </PageWrapper>
   );
 };

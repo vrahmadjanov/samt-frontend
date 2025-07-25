@@ -22,6 +22,7 @@ export const theme = {
     base: '14px',
     title: '22px',
     header: '2rem',
+    headerMobile: '1.2rem',
     weightBold: 700,
     weightNormal: 400,
   },
@@ -41,6 +42,7 @@ export const theme = {
   maxWidthContainer: '1200px', // Оптимально для десктопа (1140-1200px)
   minWidthContainer: '320px', // Минимальная ширина для мобильных
   headerHeight: '64px',
+  headerHeightMobile: '48px',
   footerHeight: '56px',
   zIndex: {
     header: 100,

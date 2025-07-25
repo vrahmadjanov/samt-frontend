@@ -31,14 +31,26 @@ const Line = styled.span`
   &:not(:last-child) {
     margin-bottom: 5px;
   }
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 20px;
+    height: 3px;
+    &:not(:last-child) {
+      margin-bottom: 4px;
+    }
+  }
 `;
 
-const BurgerButton = ({ open, onClick, ...props }) => (
-  <Button onClick={onClick} aria-label={open ? 'Закрыть меню' : 'Открыть меню'} aria-expanded={open} {...props}>
-    <Line style={open ? { transform: 'translateY(9px) rotate(45deg)' } : {}} />
-    <Line style={open ? { opacity: 0 } : {}} />
-    <Line style={open ? { transform: 'translateY(-9px) rotate(-45deg)' } : {}} />
-  </Button>
-);
+const BurgerButton = ({ open, onClick, ...props }) => {
+  const isMobile = window.innerWidth <= 600;
+  const translateY = isMobile ? '7px' : '9px';
+  
+  return (
+    <Button onClick={onClick} aria-label={open ? 'Закрыть меню' : 'Открыть меню'} aria-expanded={open} {...props}>
+      <Line style={open ? { transform: `translateY(${translateY}) rotate(45deg)` } : {}} />
+      <Line style={open ? { opacity: 0 } : {}} />
+      <Line style={open ? { transform: `translateY(-${translateY}) rotate(-45deg)` } : {}} />
+    </Button>
+  );
+};
 
 export default BurgerButton; 

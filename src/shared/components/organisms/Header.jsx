@@ -14,10 +14,13 @@ const HeaderWrapper = styled.header`
   font-weight: ${({ theme }) => theme.font.weightBold};
   letter-spacing: 1px;
   padding: 0 ${({ theme }) => theme.spacing.lg};
-  position: relative;
-  z-index: ${({ theme }) => theme.zIndex.header};
   box-sizing: border-box;
   overflow-x: hidden;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    height: ${({ theme }) => theme.headerHeightMobile};
+    font-size: ${({ theme }) => theme.font.headerMobile};
+    padding: 0 ${({ theme }) => theme.spacing.md};
+  }
 `;
 
 const Brand = styled.div`
@@ -36,12 +39,25 @@ const Brand = styled.div`
     width: 100%;
     pointer-events: none;
   }
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: ${({ theme }) => theme.font.headerMobile};
+  }
 `;
 
 const BurgerContainer = styled.div`
   display: flex;
   align-items: center;
   z-index: ${({ theme }) => theme.zIndex.header + 1};
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    & > button {
+      width: 36px;
+      height: 36px;
+    }
+    & > button span {
+      width: 20px;
+      height: 3px;
+    }
+  }
 `;
 
 const Header = ({ menuOpen, onMenuToggle }) => (

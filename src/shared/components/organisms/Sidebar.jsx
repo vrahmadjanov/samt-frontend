@@ -28,6 +28,10 @@ const SidebarWrapper = styled.div`
     `}
     box-shadow: 4px 0 24px rgba(31,41,55,0.12);
   }
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    top: ${({ theme }) => theme.headerHeightMobile};
+    height: calc(100vh - ${({ theme }) => theme.headerHeightMobile});
+  }
 `;
 
 const Menu = styled.ul`
