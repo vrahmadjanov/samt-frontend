@@ -1,21 +1,13 @@
 import httpClient from '../../shared/utils/httpClient';
 import tokenService from './tokenService';
+import { tokenAPI } from './api';
 
 const authService = {
+  // Авторизация пользователя
   async login({ phone, password }) {
     try {
-      const response = await httpClient.post('/token/', {
-        phone_number: phone,
-        password,
-      });
-
-      if (response.data.status === 'success' && response.data.data?.tokens) {
-        const { access, refresh } = response.data.data.tokens;
-        tokenService.setTokens({ access, refresh });
-        return response.data.data.user;
-      } else {
-        throw new Error(response.data.message || 'Ошибка авторизации');
-      }
+      const response = await tokenAPI.login({ phone, password });
+      return response.user;
     } catch (error) {
       // Обработка ошибок из API
       if (error.response?.status === 401) {
@@ -27,7 +19,8 @@ const authService = {
       throw error;
     }
   },
-  
+
+  // Регистрация пользователя
   async register(data) {
     try {
       const response = await httpClient.post('/register/', data);
@@ -47,12 +40,14 @@ const authService = {
     }
   },
 
+  // Подтверждение кода верификации
   async verifyCode(data) {
     try {
       const response = await httpClient.post('/verify-code/', data);
       if (response.data.status === 'success') {
         const { access, refresh } = response.data.data.tokens;
-        tokenService.setTokens({ access, refresh });
+        const user = response.data.data.user;
+        tokenService.setTokens({ access, refresh, user });
         return response.data.data.user;
       }
       throw new Error(response.data.message);
@@ -65,10 +60,41 @@ const authService = {
     }
   },
 
+  // Выход из системы
   logout() {
     tokenService.clearTokens();
     window.location.href = '/login';
   },
+
+  // Проверка авторизации
+  isAuthenticated() {
+    return tokenService.isAuthenticated();
+  },
+
+  // Получение данных пользователя
+  getUserData() {
+    return tokenService.getUserData() || tokenService.getTokenUserInfo();
+  },
+
+  // Обновление токена
+  async refreshToken() {
+    return await tokenAPI.refreshToken();
+  },
+
+  // Проверка валидности токена
+  async verifyToken(token) {
+    return await tokenAPI.verifyToken(token);
+  },
+
+  // Получение информации о пользователе из токена
+  getTokenUserInfo() {
+    return tokenService.getTokenUserInfo();
+  },
+
+  // Получение времени истечения токена
+  getTokenExpirationTime() {
+    return tokenService.getTokenExpirationTime();
+  }
 };
 
 export default authService;

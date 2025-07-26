@@ -1,22 +1,25 @@
 import { useState } from 'react';
-import authService from '../../../entities/user/service';
+import { useAuthContext } from './AuthContext';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-export function useLogin({ navigate, from }) {
+export function useLogin() {
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const { login, loading } = useAuthContext();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const login = async ({ phone, password }) => {
-    setLoading(true);
+  const handleLogin = async ({ phone, password }) => {
     setError(null);
     try {
-      await authService.login({ phone, password });
+      await login({ phone, password });
+      
+      // Перенаправляем на страницу, с которой пришел пользователь, или на главную
+      const from = location.state?.from?.pathname || '/';
       navigate(from, { replace: true });
     } catch (err) {
       setError(err.message || 'Ошибка авторизации');
-    } finally {
-      setLoading(false);
     }
   };
 
-  return { login, error, loading };
+  return { login: handleLogin, error, loading };
 } 

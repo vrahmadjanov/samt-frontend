@@ -1,21 +1,20 @@
 import { useState } from 'react';
-import authService from '../../../entities/user/service';
+import { useAuthContext } from './AuthContext';
 
 export function useVerification({ navigate }) {
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const { login, loading } = useAuthContext();
 
   const verify = async ({ phone_number, confirmation_code }) => {
-    setLoading(true);
     setError(null);
     try {
-      await authService.verifyCode({ phone_number, confirmation_code });
+      // Здесь должна быть логика верификации кода
+      // После успешной верификации, пользователь автоматически авторизуется
+      await login({ phone: phone_number, password: confirmation_code });
       navigate('/');
     } catch (err) {
       setError(err.message || 'Ошибка подтверждения');
       throw err;
-    } finally {
-      setLoading(false);
     }
   };
 

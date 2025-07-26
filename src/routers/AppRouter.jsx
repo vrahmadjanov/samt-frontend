@@ -1,28 +1,78 @@
 import React from 'react';
-import { Routes, Route, useLocation, BrowserRouter as Router } from 'react-router-dom';
+import { Routes, Route, BrowserRouter as Router, Navigate } from 'react-router-dom';
 import { routes } from './routes';
 import ProtectedRoute from './ProtectedRoute';
+import PublicRoute from './PublicRoute';
 import Layout from '../shared/components/organisms/Layout';
+import { useAuthContext } from '../features/auth/model/AuthContext';
+import AuthRedirectHandler from '../features/auth/model/AuthRedirectHandler';
 
 const AppRouterInner = () => {
-  const location = useLocation();
-  const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
-  if (isAuthPage) {
-    const route = routes.find(r => r.path === location.pathname);
-    return route ? route.element : null;
+  const { isAuthenticated, loading } = useAuthContext();
+
+  // Показываем загрузку пока проверяется авторизация
+  if (loading) {
+    return null; // AuthLoader будет показан в ProtectedRoute
   }
+
   return (
-    <Layout>
+    <>
+      <AuthRedirectHandler />
       <Routes>
-        {routes.map(({ path, element, protected: isProtected }) => (
-          <Route
-            key={path}
-            path={path}
-            element={isProtected ? <ProtectedRoute>{element}</ProtectedRoute> : element}
-          />
-        ))}
+        {routes.map(({ path, element, protected: isProtected, public: isPublic }) => {
+          // Если маршрут защищенный
+          if (isProtected) {
+            return (
+              <Route
+                key={path}
+                path={path}
+                element={
+                  <ProtectedRoute>
+                    <Layout>{element}</Layout>
+                  </ProtectedRoute>
+                }
+              />
+            );
+          }
+
+          // Если маршрут публичный (только для неавторизованных)
+          if (isPublic) {
+            return (
+              <Route
+                key={path}
+                path={path}
+                element={
+                  <PublicRoute>
+                    {element}
+                  </PublicRoute>
+                }
+              />
+            );
+          }
+
+          // Обычные маршруты (без Layout)
+          return (
+            <Route
+              key={path}
+              path={path}
+              element={element}
+            />
+          );
+        })}
+        
+        {/* Редирект с несуществующих маршрутов */}
+        <Route
+          path="*"
+          element={
+            isAuthenticated ? (
+              <Navigate to="/" replace />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
       </Routes>
-    </Layout>
+    </>
   );
 };
 

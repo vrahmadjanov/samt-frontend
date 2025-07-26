@@ -7,20 +7,21 @@ export const routes = [
   {
     path: '/',
     element: <MainPage />,
-    protected: true,
+    protected: true, // Защищенный маршрут - требует авторизации
   },
   {
     path: '/login',
     element: <LoginPage />,
-    protected: false,
+    public: true, // Публичный маршрут - только для неавторизованных
   },
   {
     path: '/register',
     element: <RegisterPage />,
-    protected: false,
+    public: true, // Публичный маршрут - только для неавторизованных
   },
   {
     path: '/doctors',
     element: <DoctorsPage />,
+    protected: true, // Защищенный маршрут - требует авторизации
   },
 ];
