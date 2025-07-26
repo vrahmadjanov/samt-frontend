@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { fetchDoctors } from '../../../entities/doctor/api';
 
-export const useDoctors = () => {
+export const useDoctors = (filters = {}) => {
   const [doctors, setDoctors] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -9,11 +9,11 @@ export const useDoctors = () => {
   const [error, setError] = useState(null);
   const pageSizeRef = useRef(null);
 
-  const loadPage = async (p = 1) => {
+  const loadPage = async (p = 1, currentFilters = filters) => {
     setLoading(true);
     setError(null);
     try {
-      const data = await fetchDoctors(p);
+      const data = await fetchDoctors(p, currentFilters);
       setDoctors(data.results);
       setPage(p);
       // Сохраняем pageSize только с первой страницы
@@ -29,8 +29,15 @@ export const useDoctors = () => {
     }
   };
 
+  // Перезагружаем данные при изменении фильтров
   useEffect(() => {
-    loadPage(1);
+    loadPage(1, filters);
+    // eslint-disable-next-line
+  }, [filters]);
+
+  // Инициализация при первом рендере
+  useEffect(() => {
+    loadPage(1, filters);
     // eslint-disable-next-line
   }, []);
 

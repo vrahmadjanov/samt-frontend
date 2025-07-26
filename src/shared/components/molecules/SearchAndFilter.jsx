@@ -27,6 +27,7 @@ const FilterSection = styled.div`
 const SearchAndFilter = ({ 
   searchValue, 
   onSearchChange, 
+  onSearchSubmit,
   isFilterActive = false, 
   onFilterClick, 
   searchPlaceholder = "Поиск врачей...",
@@ -38,6 +39,7 @@ const SearchAndFilter = ({
         <SearchInputComponent
           value={searchValue}
           onChange={onSearchChange}
+          onSubmit={onSearchSubmit}
           placeholder={searchPlaceholder}
         />
       </SearchSection>

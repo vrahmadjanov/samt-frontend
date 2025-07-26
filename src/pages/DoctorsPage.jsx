@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDoctors } from '../features/doctor/model/useDoctors';
 import DoctorList from '../shared/components/organisms/DoctorList';
 import SearchAndFilter from '../shared/components/molecules/SearchAndFilter';
+import FilterPanel from '../shared/components/organisms/FilterPanel';
 import styled from 'styled-components';
 import Pagination from '../shared/components/organisms/Pagination';
+import genderService from '../entities/gender/api';
+import specialtyService from '../entities/specialty/service';
+import experienceService from '../entities/experience/service';
+import { mapUiFiltersToApi } from '../entities/doctor/filterMapper';
 
 const Wrapper = styled.div`
   max-width: 900px;
@@ -33,18 +38,115 @@ const ErrorMessage = styled.div`
 `;
 
 const DoctorsPage = () => {
-  const { doctors, page, totalPages, loading, error, loadPage } = useDoctors();
   const [searchValue, setSearchValue] = useState('');
   const [isFilterActive, setIsFilterActive] = useState(false);
+  const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState({});
+  const [genders, setGenders] = useState([]);
+  const [specialties, setSpecialties] = useState([]);
+  const [experienceLevels, setExperienceLevels] = useState([]);
+  const [activeFilters, setActiveFilters] = useState({});
+
+  const { doctors, page, totalPages, loading, error, loadPage } = useDoctors(activeFilters);
+
+  useEffect(() => {
+    async function fetchGenders() {
+      try {
+        const data = await genderService.fetchGenders();
+        setGenders(data);
+      } catch (e) {
+        setGenders([]);
+      }
+    }
+    fetchGenders();
+    // Загружаем специальности
+    async function fetchSpecialties() {
+      try {
+        const data = await specialtyService.getSpecialties();
+        setSpecialties(data);
+      } catch (e) {
+        setSpecialties([]);
+      }
+    }
+    fetchSpecialties();
+    // Загружаем уровни опыта
+    async function fetchExperienceLevels() {
+      try {
+        const data = await experienceService.getExperienceLevels();
+        setExperienceLevels(data);
+      } catch (e) {
+        setExperienceLevels([]);
+      }
+    }
+    fetchExperienceLevels();
+  }, []);
+
+  // Пример данных фильтров
+  const filterGroups = [
+    ...(genders.length > 0 ? [{
+      id: 'gender',
+      title: 'Пол',
+      options: genders.map(g => ({ id: g.id || g.slug || g.name, label: g.name }))
+    }] : []),
+    ...(specialties.length > 0 ? [{
+      id: 'specialties',
+      title: 'Специальности',
+      options: specialties.map(s => ({ id: s.id, label: s.name }))
+    }] : []),
+    ...(experienceLevels.length > 0 ? [{
+      id: 'experience',
+      title: 'Опыт работы',
+      options: experienceLevels.map(e => ({ id: e.id, label: e.name }))
+    }] : [])
+  ];
 
   const handleSearchChange = (e) => {
     setSearchValue(e.target.value);
-    // TODO: Добавить логику поиска
+    // Убираем автоматическое применение поиска
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    const apiFilters = mapUiFiltersToApi({
+      selectedFilters,
+      genders,
+      specialties,
+      experienceLevels,
+      searchValue
+    });
+    setActiveFilters(apiFilters);
   };
 
   const handleFilterClick = () => {
-    setIsFilterActive(!isFilterActive);
-    // TODO: Добавить логику фильтрации
+    setIsFilterPanelOpen(!isFilterPanelOpen);
+    setIsFilterActive(!isFilterPanelOpen);
+  };
+
+  const handleFilterChange = (groupId, optionId) => {
+    setSelectedFilters(prev => ({
+      ...prev,
+      [groupId]: optionId
+    }));
+  };
+
+  const handleApplyFilters = (filters) => {
+    setIsFilterPanelOpen(false);
+    setIsFilterActive(true);
+    const apiFilters = mapUiFiltersToApi({
+      selectedFilters: filters,
+      genders,
+      specialties,
+      experienceLevels,
+      searchValue
+    });
+    setActiveFilters(apiFilters);
+  };
+
+  const handleResetFilters = () => {
+    setSelectedFilters({});
+    setActiveFilters({});
+    setSearchValue('');
+    setIsFilterActive(false);
   };
 
   return (
@@ -54,8 +156,18 @@ const DoctorsPage = () => {
       <SearchAndFilter
         searchValue={searchValue}
         onSearchChange={handleSearchChange}
+        onSearchSubmit={handleSearchSubmit}
         isFilterActive={isFilterActive}
         onFilterClick={handleFilterClick}
+      />
+
+      <FilterPanel
+        isOpen={isFilterPanelOpen}
+        filters={filterGroups}
+        selectedFilters={selectedFilters}
+        onFilterChange={handleFilterChange}
+        onApplyFilters={handleApplyFilters}
+        onResetFilters={handleResetFilters}
       />
 
       {loading && <LoadingMessage>Загрузка...</LoadingMessage>}

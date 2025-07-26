@@ -14,7 +14,7 @@ const FilterButtonWrapper = styled.button`
   background-color: ${({ theme, $isActive }) => 
     $isActive ? theme.colors.white : theme.colors.primary};
   color: ${({ theme, $isActive }) => 
-    $isActive ? theme.colors.text : theme.colors.white};
+    $isActive ? theme.colors.white : theme.colors.text};
   font-size: var(--font-base);
   font-weight: 500;
   cursor: pointer;
