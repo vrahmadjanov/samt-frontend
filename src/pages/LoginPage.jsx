@@ -8,7 +8,7 @@ const CenteredWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${({ theme }) => theme.colors.backgroundGradient};
+  background: ${({ theme }) => theme.colors.background};
 `;
 
 const LoginPage = () => {

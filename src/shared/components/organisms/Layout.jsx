@@ -10,6 +10,7 @@ const LayoutContainer = styled.div`
   flex: 1;
   min-height: 0;
   width: 100%;
+  background: ${({ theme }) => theme.colors.background};
 `;
 
 const Main = styled.main`
@@ -19,12 +20,28 @@ const Main = styled.main`
   min-height: 0;
   background: ${({ theme }) => theme.colors.background};
   overflow-y: auto;
+  position: relative;
+  
+  /* Создаем эффект глубины */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: ${({ theme }) => theme.colors.background};
+    z-index: -1;
+  }
+  
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     padding: var(--spacing-md);
   }
 `;
 
 const SidebarContainer = styled.div`
+  position: relative;
+  
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     position: absolute;
     top: 0;

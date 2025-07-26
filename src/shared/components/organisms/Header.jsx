@@ -6,7 +6,7 @@ import logo from '../../../logo.png';
 const HeaderWrapper = styled.header`
   width: 100%;
   height: ${({ theme }) => theme.headerHeight};
-  background: ${({ theme }) => theme.colors.white};
+  background: ${({ theme }) => theme.colors.header};
   color: ${({ theme }) => theme.colors.primary};
   display: flex;
   align-items: center;
@@ -17,6 +17,13 @@ const HeaderWrapper = styled.header`
   padding: 0 var(--spacing-lg);
   box-sizing: border-box;
   overflow-x: hidden;
+  position: relative;
+  z-index: ${({ theme }) => theme.zIndex.header};
+  
+  /* Создаем эффект приподнятости */
+  box-shadow: ${({ theme }) => theme.shadow.header};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.borderLight};
+  
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     height: ${({ theme }) => theme.headerHeightMobile};
     padding: 0 var(--spacing-md);
@@ -32,6 +39,9 @@ const Brand = styled.div`
   color: ${({ theme }) => theme.colors.primary};
   letter-spacing: 1px;
   gap: var(--gap-sm);
+  position: relative;
+  z-index: 1;
+  
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     justify-content: center;
     position: absolute;
@@ -51,6 +61,8 @@ const LogoImg = styled.img`
   height: 56px;
   width: 56px;
   object-fit: contain;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+  
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     height: 48px;
     width: 48px;
@@ -61,6 +73,8 @@ const BurgerContainer = styled.div`
   display: flex;
   align-items: center;
   z-index: ${({ theme }) => theme.zIndex.header + 1};
+  position: relative;
+  
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     & > button {
       width: 36px;
@@ -80,7 +94,7 @@ const Header = ({ menuOpen, onMenuToggle }) => (
     </BurgerContainer>
     <Brand>
       <LogoImg src={logo} alt="Логотип" />
-      SAMT
+      CAMT
     </Brand>
   </HeaderWrapper>
 );

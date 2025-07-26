@@ -13,7 +13,7 @@ import authService from '../../../entities/user/service';
 const SidebarWrapper = styled.div`
   width: 220px;
   min-width: 160px;
-  background: ${({ theme }) => theme.colors.white};
+  background: ${({ theme }) => theme.colors.sidebar};
   height: 100%;
   padding: var(--spacing-lg) 0;
   display: flex;
@@ -22,6 +22,11 @@ const SidebarWrapper = styled.div`
   z-index: ${({ theme }) => theme.zIndex.sidebar - 10};
   transition: transform ${({ theme }) => theme.transition.normal};
   box-sizing: border-box;
+  
+  /* Создаем эффект приподнятости */
+  box-shadow: ${({ theme }) => theme.shadow.sidebar};
+  border-right: 1px solid ${({ theme }) => theme.colors.borderLight};
+  
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     position: fixed;
     top: ${({ theme }) => theme.headerHeight};
@@ -31,6 +36,9 @@ const SidebarWrapper = styled.div`
     max-width: 85vw;
     transform: translateX(-100%);
     overflow-y: auto;
+    border-right: none;
+    box-shadow: ${({ theme }) => theme.shadow.lg};
+    
     ${({ open }) => open && css`
       transform: translateX(0);
     `}
@@ -49,6 +57,8 @@ const Menu = styled.ul`
   display: flex;
   flex-direction: column;
   gap: var(--gap-sm);
+  position: relative;
+  z-index: 1;
 `;
 
 const Sidebar = ({ open }) => {
