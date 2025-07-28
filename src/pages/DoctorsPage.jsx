@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDoctors } from '../features/doctor/model/useDoctors';
 import { useFavoriteDoctors } from '../features/doctor/model/useFavoriteDoctors';
 import DoctorList from '../shared/components/organisms/DoctorList';
@@ -6,10 +6,11 @@ import SearchAndFilter from '../shared/components/molecules/SearchAndFilter';
 import FilterPanel from '../shared/components/organisms/FilterPanel';
 import styled from 'styled-components';
 import Pagination from '../shared/components/organisms/Pagination';
-import genderService from '../entities/gender/api';
-import specialtyService from '../entities/specialty/service';
-import experienceService from '../entities/experience/service';
 import { mapUiFiltersToApi } from '../entities/doctor/filterMapper';
+import { useTranslation } from '../shared/i18n/useTranslation';
+import { useGenders } from '../features/clinic/model/useGenders';
+import { useSpecialties } from '../features/main/model/useSpecialties';
+import { useExperienceLevels } from '../features/doctor/model/useExperienceLevels';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -45,65 +46,36 @@ const ErrorMessage = styled.div`
 `;
 
 const DoctorsPage = () => {
+  const { t } = useTranslation();
   const [searchValue, setSearchValue] = useState('');
   const [isFilterActive, setIsFilterActive] = useState(false);
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({});
-  const [genders, setGenders] = useState([]);
-  const [specialties, setSpecialties] = useState([]);
-  const [experienceLevels, setExperienceLevels] = useState([]);
   const [activeFilters, setActiveFilters] = useState({});
 
   const { doctors, page, totalPages, loading, error, loadPage } = useDoctors(activeFilters);
   const { favoriteIds, addToFavorites, removeFromFavorites } = useFavoriteDoctors();
 
-  useEffect(() => {
-    async function fetchGenders() {
-      try {
-        const data = await genderService.fetchGenders();
-        setGenders(data);
-      } catch (e) {
-        setGenders([]);
-      }
-    }
-    fetchGenders();
-    // Загружаем специальности
-    async function fetchSpecialties() {
-      try {
-        const data = await specialtyService.getSpecialties();
-        setSpecialties(data);
-      } catch (e) {
-        setSpecialties([]);
-      }
-    }
-    fetchSpecialties();
-    // Загружаем уровни опыта
-    async function fetchExperienceLevels() {
-      try {
-        const data = await experienceService.getExperienceLevels();
-        setExperienceLevels(data);
-      } catch (e) {
-        setExperienceLevels([]);
-      }
-    }
-    fetchExperienceLevels();
-  }, []);
+  // Используем хуки для загрузки справочников
+  const { genders } = useGenders();
+  const { specialties } = useSpecialties();
+  const { experienceLevels } = useExperienceLevels();
 
   // Пример данных фильтров
   const filterGroups = [
     ...(genders.length > 0 ? [{
       id: 'gender',
-      title: 'Пол',
+      title: t('doctors.filters.gender'),
       options: genders.map(g => ({ id: g.id || g.slug || g.name, label: g.name }))
     }] : []),
     ...(specialties.length > 0 ? [{
       id: 'specialties',
-      title: 'Специальности',
+      title: t('doctors.filters.specialties'),
       options: specialties.map(s => ({ id: s.id, label: s.name }))
     }] : []),
     ...(experienceLevels.length > 0 ? [{
       id: 'experience',
-      title: 'Опыт работы',
+      title: t('doctors.filters.experience'),
       options: experienceLevels.map(e => ({ id: e.id, label: e.name }))
     }] : [])
   ];
@@ -167,7 +139,7 @@ const DoctorsPage = () => {
 
   return (
     <Wrapper>
-      <PageTitle>Врачи</PageTitle>
+      <PageTitle>{t('doctors.title')}</PageTitle>
       
       <SearchAndFilter
         searchValue={searchValue}
@@ -175,6 +147,7 @@ const DoctorsPage = () => {
         onSearchSubmit={handleSearchSubmit}
         isFilterActive={isFilterActive}
         onFilterClick={handleFilterClick}
+        searchPlaceholder={t('doctors.searchPlaceholder')}
       />
 
       <FilterPanel
@@ -186,8 +159,8 @@ const DoctorsPage = () => {
         onResetFilters={handleResetFilters}
       />
 
-      {loading && <LoadingMessage>Загрузка...</LoadingMessage>}
-      {error && <ErrorMessage>Ошибка загрузки</ErrorMessage>}
+      {loading && <LoadingMessage>{t('common.loading')}</LoadingMessage>}
+      {error && <ErrorMessage>{t('common.error')}</ErrorMessage>}
       {!loading && !error && <DoctorList doctors={doctors} favorites={favoriteIds} onFavorite={handleFavorite} />}
       
       <Pagination

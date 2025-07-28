@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { fetchClinics } from '../../../entities/clinic/api';
+import { useLanguage } from '../../i18n/model/useLanguage';
 
 export const useClinics = (filters = {}) => {
   const [clinics, setClinics] = useState([]);
@@ -8,6 +9,7 @@ export const useClinics = (filters = {}) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const pageSizeRef = useRef(null);
+  const { language } = useLanguage();
 
   const loadPage = async (p = 1, currentFilters = filters) => {
     setLoading(true);
@@ -34,6 +36,12 @@ export const useClinics = (filters = {}) => {
     loadPage(1, filters);
     // eslint-disable-next-line
   }, [filters]);
+
+  // Перезагружаем данные при изменении языка
+  useEffect(() => {
+    loadPage(1, filters);
+    // eslint-disable-next-line
+  }, [language]);
 
   // Инициализация при первом рендере
   useEffect(() => {

@@ -1,10 +1,12 @@
-import axios from 'axios';
+import httpClient, { setLanguageHeader } from '../../shared/utils/httpClient';
 import tokenService from '../user/tokenService';
-
-const BASE_URL = 'http://89.111.172.219/api';
 
 export const fetchClinics = async (page = 1, filters = {}) => {
   const accessToken = tokenService.getAccessToken();
+  
+  // Устанавливаем заголовок языка
+  const currentLanguage = localStorage.getItem('app_language') || 'ru';
+  setLanguageHeader(currentLanguage);
   
   // Формируем URL с параметрами
   const params = new URLSearchParams();
@@ -16,7 +18,7 @@ export const fetchClinics = async (page = 1, filters = {}) => {
     }
   });
   
-  const response = await axios.get(`${BASE_URL}/clinics-paginated/?${params.toString()}`, {
+  const response = await httpClient.get(`/clinics-paginated/?${params.toString()}`, {
     headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
   });
   return response.data; // предполагается, что data = { count, next, previous, results }

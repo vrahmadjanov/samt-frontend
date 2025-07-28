@@ -4,6 +4,7 @@ import InfoBadge from '../molecules/InfoBadge';
 import RatingStars from '../atoms/RatingStars';
 import FavoriteButton from '../atoms/FavoriteButton';
 import { addClinicToFavorites, removeClinicFromFavorites } from '../../../entities/clinic/favoritesApi';
+import { useTranslation } from '../../../shared/i18n/useTranslation';
 
 const Card = styled.div`
   display: flex;
@@ -106,6 +107,7 @@ const StyledButton = styled.button`
 `;
 
 const ClinicCard = memo(({ clinic, favorite, onFavorite }) => {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
 
   const handleFavorite = async () => {
@@ -157,7 +159,7 @@ const ClinicCard = memo(({ clinic, favorite, onFavorite }) => {
           {clinic.address && <Address>{clinic.address}</Address>}
           <Badges>
             {clinic.type && <InfoBadge>{clinic.type}</InfoBadge>}
-            {clinic.doctors_count && <InfoBadge>Врачей: {clinic.doctors_count}</InfoBadge>}
+            {clinic.doctors_count && <InfoBadge>{t('clinics.card.doctorsCount')}: {clinic.doctors_count}</InfoBadge>}
           </Badges>
           {clinic.rating && <RatingStars rating={clinic.rating} />}
           {clinic.description && (
@@ -170,7 +172,7 @@ const ClinicCard = memo(({ clinic, favorite, onFavorite }) => {
         </Info>
       </TopRow>
       <CardFooter>
-        <StyledButton onClick={handleViewDoctors}>Врачи клиники</StyledButton>
+        <StyledButton onClick={handleViewDoctors}>{t('clinics.card.viewDoctors')}</StyledButton>
         <FavoriteButton active={favorite} onClick={handleFavorite} disabled={loading} />
       </CardFooter>
     </Card>

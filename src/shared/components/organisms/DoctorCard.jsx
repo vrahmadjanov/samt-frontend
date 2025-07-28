@@ -6,6 +6,7 @@ import InfoBadge from '../molecules/InfoBadge';
 import RatingStars from '../atoms/RatingStars';
 import FavoriteButton from '../atoms/FavoriteButton';
 import { addDoctorToFavorites, removeDoctorFromFavorites } from '../../../entities/doctor/favoritesApi';
+import { useTranslation } from '../../../shared/i18n/useTranslation';
 
 const Card = styled.div`
   display: flex;
@@ -88,6 +89,7 @@ const StyledButton = styled.button`
 `;
 
 const DoctorCard = memo(({ doctor, favorite, onFavorite }) => {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
 
   const handleFavorite = async () => {
@@ -138,7 +140,7 @@ const DoctorCard = memo(({ doctor, favorite, onFavorite }) => {
         </Info>
       </TopRow>
       <CardFooter>
-        <StyledButton onClick={handleBook}>Записаться</StyledButton>
+        <StyledButton onClick={handleBook}>{t('doctors.card.bookAppointment')}</StyledButton>
         <FavoriteButton active={favorite} onClick={handleFavorite} disabled={loading} />
       </CardFooter>
     </Card>

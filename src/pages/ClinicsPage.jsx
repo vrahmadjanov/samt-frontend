@@ -9,6 +9,7 @@ import SearchAndFilter from '../shared/components/molecules/SearchAndFilter';
 import FilterPanel from '../shared/components/organisms/FilterPanel';
 import styled from 'styled-components';
 import Pagination from '../shared/components/organisms/Pagination';
+import { useTranslation } from '../shared/i18n/useTranslation';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -44,6 +45,7 @@ const ErrorMessage = styled.div`
 `;
 
 const ClinicsPage = () => {
+  const { t } = useTranslation();
   const [searchValue, setSearchValue] = useState('');
   const [isFilterActive, setIsFilterActive] = useState(false);
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
@@ -60,17 +62,17 @@ const ClinicsPage = () => {
   const filterGroups = [
     ...(regions.length > 0 ? [{
       id: 'region',
-      title: 'Регион',
+      title: t('clinics.filters.region'),
       options: regions.map(r => ({ id: r.name, label: r.name }))
     }] : []),
     ...(districts.length > 0 ? [{
       id: 'district',
-      title: 'Район',
+      title: t('clinics.filters.district'),
       options: districts.map(d => ({ id: d.name, label: d.name }))
     }] : []),
     ...(clinicTypes.length > 0 ? [{
       id: 'clinic_type',
-      title: 'Тип медицинского учреждения',
+      title: t('clinics.filters.type'),
       options: clinicTypes.map(ct => ({ id: ct.id.toString(), label: ct.name }))
     }] : [])
   ];
@@ -127,7 +129,7 @@ const ClinicsPage = () => {
 
   return (
     <Wrapper>
-      <PageTitle>Клиники</PageTitle>
+      <PageTitle>{t('clinics.title')}</PageTitle>
       
       <SearchAndFilter
         searchValue={searchValue}
@@ -135,6 +137,7 @@ const ClinicsPage = () => {
         onSearchSubmit={handleSearchSubmit}
         isFilterActive={isFilterActive}
         onFilterClick={handleFilterClick}
+        searchPlaceholder={t('clinics.searchPlaceholder')}
       />
 
       <FilterPanel
@@ -146,8 +149,8 @@ const ClinicsPage = () => {
         onResetFilters={handleResetFilters}
       />
 
-      {loading && <LoadingMessage>Загрузка...</LoadingMessage>}
-      {error && <ErrorMessage>Ошибка загрузки</ErrorMessage>}
+      {loading && <LoadingMessage>{t('common.loading')}</LoadingMessage>}
+      {error && <ErrorMessage>{t('common.error')}</ErrorMessage>}
       {!loading && !error && <ClinicList clinics={clinics} favorites={favoriteIds} onFavorite={handleFavorite} />}
       
       <Pagination

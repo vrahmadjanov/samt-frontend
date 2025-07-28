@@ -1,0 +1,91 @@
+{
+  "common": {
+    "loading": "Боргирӣ...",
+    "error": "Хатои боргирӣ",
+    "search": "Ҷустуҷӯ",
+    "filter": "Филтр",
+    "apply": "Истифода",
+    "reset": "Барқарор кардан",
+    "cancel": "Бекор кардан",
+    "save": "Сабт кардан",
+    "edit": "Таҳрир кардан",
+    "delete": "Нест кардан",
+    "close": "Пӯшидан",
+    "back": "Бозгашт",
+    "next": "Баъдӣ",
+    "previous": "Пеш",
+    "of": "аз",
+    "page": "Саҳифа"
+  },
+  "navigation": {
+    "doctors": "Духтурҳо",
+    "clinics": "Марказҳои тиббӣ",
+    "profile": "Профил",
+    "favorites": "Дӯстдоштаҳо",
+    "payments": "Пардохтҳо",
+    "settings": "Танзимот",
+    "help": "Ёрӣ",
+    "logout": "Баромад"
+  },
+  "doctors": {
+    "title": "Духтурҳо",
+    "searchPlaceholder": "Ҷустуҷӯи духтурҳо...",
+    "notFound": "Духтурҳо ёфт нашуд",
+    "filters": {
+      "gender": "Ҷинс",
+      "specialties": "Ихтисосҳо",
+      "experience": "Таҷрибаи кор"
+    },
+    "card": {
+      "rating": "Баҳо",
+      "experience": "Таҷриба",
+      "specialties": "Ихтисосҳо",
+      "workplace": "Ҷойи кор",
+      "availableToday": "Имрӯз дастрас",
+      "notAvailableToday": "Имрӯз дастрас нест",
+      "addToFavorites": "Ба дӯстдоштаҳо илова кунед",
+      "removeFromFavorites": "Аз дӯстдоштаҳо хориҷ кунед",
+      "bookAppointment": "Қабул"
+    },
+    "gender": {
+      "male": "Мард",
+      "female": "Зан"
+    }
+  },
+  "clinics": {
+    "title": "Марказҳои тиббӣ",
+    "searchPlaceholder": "Ҷустуҷӯи марказҳои тиббӣ...",
+    "notFound": "Марказҳои тиббӣ ёфт нашуд",
+    "filters": {
+      "type": "Навъи марказ",
+      "district": "Ноҳия",
+      "region": "Вилоят"
+    },
+    "card": {
+      "viewDoctors": "Духтурҳои марказ",
+      "doctorsCount": "Духтурҳо"
+    }
+  },
+  "auth": {
+    "login": "Даромад",
+    "register": "Бақайдгирӣ",
+    "logout": "Баромад",
+    "email": "Email",
+    "password": "Рамз",
+    "confirmPassword": "Рамзро тасдиқ кунед",
+    "forgotPassword": "Рамзро фаромӯш кардед?",
+    "rememberMe": "Маро дар хотир нигоҳ дор"
+  },
+  "profile": {
+    "title": "Профил",
+    "personalInfo": "Маълумоти шахсӣ",
+    "settings": "Танзимот",
+    "favorites": "Дӯстдоштаҳо",
+    "appointments": "Қабулҳо"
+  },
+  "language": {
+    "ru": "Ру",
+    "tg": "Тҷ",
+    "switch": "Забон"
+  }
+} 

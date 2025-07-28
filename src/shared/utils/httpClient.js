@@ -8,4 +8,23 @@ const httpClient = axios.create({
   },
 });
 
+// Функция для установки языка в заголовках
+export const setLanguageHeader = (language) => {
+  httpClient.defaults.headers.common['Accept-Language'] = language;
+};
+
+// Функция для получения текущего языка из localStorage
+export const getCurrentLanguage = () => {
+  return localStorage.getItem('app_language') || 'ru';
+};
+
+// Инициализируем язык по умолчанию
+setLanguageHeader(getCurrentLanguage());
+
+// Функция для обновления заголовка языка при изменении
+export const updateLanguageHeader = () => {
+  const currentLanguage = getCurrentLanguage();
+  setLanguageHeader(currentLanguage);
+};
+
 export default httpClient;

@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import styled from 'styled-components';
 import ClinicCard from './ClinicCard';
+import { useTranslation } from '../../../shared/i18n/useTranslation';
 
 const ListContainer = styled.div`
   display: flex;
@@ -17,10 +18,12 @@ const EmptyMessage = styled.div`
 `;
 
 const ClinicList = memo(({ clinics, favorites = [], onFavorite }) => {
+  const { t, language } = useTranslation();
+  
   if (!clinics || clinics.length === 0) {
     return (
       <EmptyMessage>
-        Клиники не найдены
+        {t('clinics.notFound', 'Клиники не найдены')}
       </EmptyMessage>
     );
   }
@@ -29,7 +32,7 @@ const ClinicList = memo(({ clinics, favorites = [], onFavorite }) => {
     <ListContainer>
       {clinics.map((clinic) => (
         <ClinicCard 
-          key={clinic.id} 
+          key={`${clinic.id}-${language}`} 
           clinic={clinic} 
           favorite={favorites.includes(clinic.id)}
           onFavorite={onFavorite}

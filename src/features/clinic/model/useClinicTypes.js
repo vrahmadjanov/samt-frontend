@@ -1,28 +1,31 @@
 import { useEffect, useState } from 'react';
-import clinicTypeService from '../../../entities/clinicType/service';
+import { fetchClinicTypes } from '../../../entities/clinicType/api';
+import { useLanguage } from '../../i18n/model/useLanguage';
 
 export const useClinicTypes = () => {
   const [clinicTypes, setClinicTypes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { language } = useLanguage();
 
+  const loadClinicTypes = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await fetchClinicTypes();
+      setClinicTypes(data);
+    } catch (err) {
+      setError(err);
+      setClinicTypes([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Загружаем типы клиник при изменении языка
   useEffect(() => {
-    const loadClinicTypes = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const data = await clinicTypeService.getClinicTypes();
-        setClinicTypes(data);
-      } catch (err) {
-        setError(err);
-        setClinicTypes([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     loadClinicTypes();
-  }, []);
+  }, [language]);
 
-  return { clinicTypes, loading, error };
+  return { clinicTypes, loading, error, reload: loadClinicTypes };
 }; 

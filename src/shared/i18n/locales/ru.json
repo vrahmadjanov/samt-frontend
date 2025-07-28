@@ -1,0 +1,91 @@
+{
+  "common": {
+    "loading": "Загрузка...",
+    "error": "Ошибка загрузки",
+    "search": "Поиск",
+    "filter": "Фильтр",
+    "apply": "Применить",
+    "reset": "Сбросить",
+    "cancel": "Отмена",
+    "save": "Сохранить",
+    "edit": "Редактировать",
+    "delete": "Удалить",
+    "close": "Закрыть",
+    "back": "Назад",
+    "next": "Далее",
+    "previous": "Предыдущая",
+    "of": "из",
+    "page": "Страница"
+  },
+  "navigation": {
+    "doctors": "Врачи",
+    "clinics": "Клиники",
+    "profile": "Профиль",
+    "favorites": "Избранное",
+    "payments": "Платежи",
+    "settings": "Настройки",
+    "help": "Помощь",
+    "logout": "Выйти"
+  },
+  "doctors": {
+    "title": "Врачи",
+    "searchPlaceholder": "Поиск врачей...",
+    "notFound": "Врачи не найдены",
+    "filters": {
+      "gender": "Пол",
+      "specialties": "Специальности",
+      "experience": "Опыт работы"
+    },
+    "card": {
+      "rating": "Рейтинг",
+      "experience": "Опыт",
+      "specialties": "Специальности",
+      "workplace": "Место работы",
+      "availableToday": "Доступен сегодня",
+      "notAvailableToday": "Недоступен сегодня",
+      "addToFavorites": "Добавить в избранное",
+      "removeFromFavorites": "Удалить из избранное",
+      "bookAppointment": "Записаться"
+    },
+    "gender": {
+      "male": "Мужской",
+      "female": "Женский"
+    }
+  },
+  "clinics": {
+    "title": "Клиники",
+    "searchPlaceholder": "Поиск клиник...",
+    "notFound": "Клиники не найдены",
+    "filters": {
+      "type": "Тип клиники",
+      "district": "Район",
+      "region": "Область"
+    },
+    "card": {
+      "viewDoctors": "Врачи клиники",
+      "doctorsCount": "Врачей"
+    }
+  },
+  "auth": {
+    "login": "Войти",
+    "register": "Регистрация",
+    "logout": "Выйти",
+    "email": "Email",
+    "password": "Пароль",
+    "confirmPassword": "Подтвердите пароль",
+    "forgotPassword": "Забыли пароль?",
+    "rememberMe": "Запомнить меня"
+  },
+  "profile": {
+    "title": "Профиль",
+    "personalInfo": "Личная информация",
+    "settings": "Настройки",
+    "favorites": "Избранное",
+    "appointments": "Записи"
+  },
+  "language": {
+    "ru": "Ру",
+    "tg": "Тҷ",
+    "switch": "Язык"
+  }
+} 

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import FilterGroup from '../molecules/FilterGroup';
 import Button from '../atoms/Button';
+import { useTranslation } from '../../../shared/i18n/useTranslation';
 
 const FilterPanelWrapper = styled.div`
   background: ${({ theme }) => theme.colors.white};
@@ -54,6 +55,8 @@ const FilterPanel = ({
   onResetFilters,
   ...props 
 }) => {
+  const { t } = useTranslation();
+  
   if (!isOpen) return null;
 
   const handleFilterChange = (groupId, optionId) => {
@@ -76,7 +79,7 @@ const FilterPanel = ({
 
   return (
     <FilterPanelWrapper {...props}>
-      <FilterTitle>Фильтры</FilterTitle>
+      <FilterTitle>{t('common.filter')}</FilterTitle>
       
       <FilterContent>
         {filters.map((filterGroup) => (
@@ -95,10 +98,10 @@ const FilterPanel = ({
 
       <FilterActions>
         <ResetButton onClick={handleReset}>
-          Сбросить
+          {t('common.reset')}
         </ResetButton>
         <Button onClick={handleApply}>
-          Применить
+          {t('common.apply')}
         </Button>
       </FilterActions>
     </FilterPanelWrapper>

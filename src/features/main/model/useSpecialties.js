@@ -1,19 +1,31 @@
 import { useEffect, useState } from 'react';
 import specialtyService from '../../../entities/specialty/service';
+import { useLanguage } from '../../i18n/model/useLanguage';
 
-export function useSpecialties() {
+export const useSpecialties = () => {
   const [specialties, setSpecialties] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { language } = useLanguage();
 
-  useEffect(() => {
+  const loadSpecialties = async () => {
     setLoading(true);
     setError(null);
-    specialtyService.getSpecialties()
-      .then(setSpecialties)
-      .catch(setError)
-      .finally(() => setLoading(false));
-  }, []);
+    try {
+      const data = await specialtyService.getSpecialties();
+      setSpecialties(data);
+    } catch (err) {
+      setError(err);
+      setSpecialties([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  return { specialties, loading, error };
-} 
+  // Загружаем специальности при изменении языка
+  useEffect(() => {
+    loadSpecialties();
+  }, [language]);
+
+  return { specialties, loading, error, reload: loadSpecialties };
+}; 

@@ -1,12 +1,14 @@
-import axios from 'axios';
+import httpClient, { setLanguageHeader } from '../../shared/utils/httpClient';
 import tokenService from '../user/tokenService';
-
-const BASE_URL = 'http://89.111.172.219/api';
 
 export const fetchClinicTypes = async () => {
   const accessToken = tokenService.getAccessToken();
   
-  const response = await axios.get(`${BASE_URL}/clinic_types/`, {
+  // Устанавливаем заголовок языка
+  const currentLanguage = localStorage.getItem('app_language') || 'ru';
+  setLanguageHeader(currentLanguage);
+  
+  const response = await httpClient.get('/clinic_types/', {
     headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
   });
   return response.data;

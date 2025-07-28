@@ -10,10 +10,12 @@ import { ReactComponent as LogoutIcon } from '../../assets/icons/Logout.svg';
 import { ReactComponent as DoctorIcon } from '../../assets/icons/Doctor.svg';
 import { ReactComponent as ClinicIcon } from '../../assets/icons/Clinic.svg';
 import authService from '../../../entities/user/service';
+import LanguageSwitcher from '../../../features/i18n/ui/LanguageSwitcher';
+import { useTranslation } from '../../../shared/i18n/useTranslation';
 
 const SidebarWrapper = styled.div`
-  width: 220px;
-  min-width: 160px;
+  width: 270px;
+  min-width: 200px;
   background: ${({ theme }) => theme.colors.sidebar};
   height: 100%;
   padding: var(--spacing-lg) 0;
@@ -33,7 +35,7 @@ const SidebarWrapper = styled.div`
     top: ${({ theme }) => theme.headerHeight};
     left: 0;
     height: calc(100vh - ${({ theme }) => theme.headerHeight});
-    width: 280px;
+    width: 320px;
     max-width: 85vw;
     transform: translateX(-100%);
     overflow-y: auto;
@@ -63,6 +65,8 @@ const Menu = styled.ul`
 `;
 
 const Sidebar = ({ open, onClose }) => {
+  const { t, language } = useTranslation();
+  
   const handleLogout = () => {
     authService.logout();
   };
@@ -77,17 +81,18 @@ const Sidebar = ({ open, onClose }) => {
   return (
     <SidebarWrapper open={open}>
       <Menu>
-        <MenuItem icon={ProfileIcon} onClick={handleMenuItemClick}>Профиль</MenuItem>
-        <MenuItem to="/doctors" icon={DoctorIcon} onClick={handleMenuItemClick}>Врачи</MenuItem>
-        <MenuItem to="/clinics" icon={ClinicIcon} onClick={handleMenuItemClick}>Клиники</MenuItem>
-        <MenuItem icon={FavouriteIcon} onClick={handleMenuItemClick}>Избранное</MenuItem>
-        <MenuItem icon={PaymentIcon} onClick={handleMenuItemClick}>Платежи</MenuItem>
-        <MenuItem icon={SettingsIcon} onClick={handleMenuItemClick}>Настройки</MenuItem>
-        <MenuItem icon={HelpIcon} onClick={handleMenuItemClick}>Помощь</MenuItem>
-        <MenuItem icon={LogoutIcon} onClick={() => {
+        <MenuItem key={`profile-${language}`} icon={ProfileIcon} onClick={handleMenuItemClick}>{t('navigation.profile')}</MenuItem>
+        <MenuItem key={`doctors-${language}`} to="/doctors" icon={DoctorIcon} onClick={handleMenuItemClick}>{t('navigation.doctors')}</MenuItem>
+        <MenuItem key={`clinics-${language}`} to="/clinics" icon={ClinicIcon} onClick={handleMenuItemClick}>{t('navigation.clinics')}</MenuItem>
+        <MenuItem key={`favorites-${language}`} icon={FavouriteIcon} onClick={handleMenuItemClick}>{t('navigation.favorites')}</MenuItem>
+        <MenuItem key={`payments-${language}`} icon={PaymentIcon} onClick={handleMenuItemClick}>{t('navigation.payments')}</MenuItem>
+        <MenuItem key={`settings-${language}`} icon={SettingsIcon} onClick={handleMenuItemClick}>{t('navigation.settings')}</MenuItem>
+        <MenuItem key={`help-${language}`} icon={HelpIcon} onClick={handleMenuItemClick}>{t('navigation.help')}</MenuItem>
+        <LanguageSwitcher onMenuClose={onClose} />
+        <MenuItem key={`logout-${language}`} icon={LogoutIcon} onClick={() => {
           handleLogout();
           handleMenuItemClick();
-        }}>Выйти</MenuItem>
+        }}>{t('navigation.logout')}</MenuItem>
       </Menu>
     </SidebarWrapper>
   );

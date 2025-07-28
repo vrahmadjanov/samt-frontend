@@ -1,10 +1,12 @@
-import httpClient from '../../shared/utils/httpClient';
+import httpClient, { setLanguageHeader } from '../../shared/utils/httpClient';
 
 const districtService = {
-  async fetchDistricts(language = 'ru') {
-    const response = await httpClient.get('/districts/', {
-      headers: { 'Accept-Language': language },
-    });
+  async fetchDistricts() {
+    // Устанавливаем заголовок языка
+    const currentLanguage = localStorage.getItem('app_language') || 'ru';
+    setLanguageHeader(currentLanguage);
+    
+    const response = await httpClient.get('/districts/');
     return response.data;
   },
 };

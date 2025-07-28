@@ -1,31 +1,31 @@
 import { useEffect, useState } from 'react';
-import { fetchRegions } from '../../../entities/region/api';
+import genderService from '../../../entities/gender/api';
 import { useLanguage } from '../../i18n/model/useLanguage';
 
-export const useRegions = () => {
-  const [regions, setRegions] = useState([]);
+export const useGenders = () => {
+  const [genders, setGenders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { language } = useLanguage();
 
-  const loadRegions = async () => {
+  const loadGenders = async () => {
     setLoading(true);
     setError(null);
     try {
-      const data = await fetchRegions();
-      setRegions(data);
+      const data = await genderService.fetchGenders();
+      setGenders(data);
     } catch (err) {
       setError(err);
-      setRegions([]);
+      setGenders([]);
     } finally {
       setLoading(false);
     }
   };
 
-  // Загружаем регионы при изменении языка
+  // Загружаем полы при изменении языка
   useEffect(() => {
-    loadRegions();
+    loadGenders();
   }, [language]);
 
-  return { regions, loading, error, reload: loadRegions };
+  return { genders, loading, error, reload: loadGenders };
 }; 
