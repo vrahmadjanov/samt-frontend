@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import InfoBadge from '../molecules/InfoBadge';
 import RatingStars from '../atoms/RatingStars';
+import FavoriteButton from '../atoms/FavoriteButton';
+import { addClinicToFavorites, removeClinicFromFavorites } from '../../../entities/clinic/favoritesApi';
 
 const Card = styled.div`
   display: flex;
@@ -103,7 +105,27 @@ const StyledButton = styled.button`
   }
 `;
 
-const ClinicCard = ({ clinic }) => {
+const ClinicCard = ({ clinic, favorite, onFavorite }) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleFavorite = async () => {
+    setLoading(true);
+    try {
+      if (favorite) {
+        await removeClinicFromFavorites(clinic.id);
+        onFavorite(clinic.id, false); // false означает удаление
+      } else {
+        await addClinicToFavorites(clinic.id);
+        onFavorite(clinic.id, true); // true означает добавление
+      }
+    } catch (e) {
+      // Можно добавить toast или alert
+      console.error('Error handling clinic favorite:', e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleViewDoctors = () => {
     // TODO: реализовать переход к врачам клиники
     alert('Функция просмотра врачей клиники будет реализована позже');
@@ -149,6 +171,7 @@ const ClinicCard = ({ clinic }) => {
       </TopRow>
       <CardFooter>
         <StyledButton onClick={handleViewDoctors}>Врачи клиники</StyledButton>
+        <FavoriteButton active={favorite} onClick={handleFavorite} disabled={loading} />
       </CardFooter>
     </Card>
   );

@@ -4,8 +4,9 @@ import { ReactComponent as StarIcon } from '../../assets/icons/FavouriteButton.s
 import { ReactComponent as StarActiveIcon } from '../../assets/icons/FavouriteButtonActive.svg';
 
 const Btn = styled.button`
-  background: none;
-  border: none;
+  background: ${({ theme }) => theme.colors.white};
+  border: 2px solid ${({ theme, $active }) => $active ? theme.colors.primary : theme.colors.border};
+  border-radius: ${({ theme }) => theme.radius.md};
   padding: 0;
   cursor: pointer;
   width: 42px;
@@ -13,19 +14,34 @@ const Btn = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.1s;
+  transition: all ${({ theme }) => theme.transition.fast};
+  
+  &:hover {
+    background: ${({ theme }) => theme.colors.hover.surface};
+    border-color: ${({ theme, $active }) => $active ? theme.colors.primary : theme.colors.primary};
+    transform: translateY(-1px);
+    box-shadow: ${({ theme }) => theme.shadow.sm};
+  }
+  
   &:active {
     transform: scale(0.95);
   }
+  
   svg {
-    width: 34px;
-    height: 34px;
+    width: 20px;
+    height: 20px;
     display: block;
+    color: ${({ theme, $active }) => $active ? theme.colors.primary : theme.colors.textLight};
   }
 `;
 
 const FavoriteButton = ({ active, onClick, ...props }) => (
-  <Btn onClick={onClick} aria-label={active ? 'В избранном' : 'Добавить в избранное'} {...props}>
+  <Btn 
+    $active={active}
+    onClick={onClick} 
+    aria-label={active ? 'В избранном' : 'Добавить в избранное'} 
+    {...props}
+  >
     {active ? <StarActiveIcon /> : <StarIcon />}
   </Btn>
 );

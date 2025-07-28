@@ -5,7 +5,7 @@ import SpecialtyBadge from '../molecules/SpecialtyBadge';
 import InfoBadge from '../molecules/InfoBadge';
 import RatingStars from '../atoms/RatingStars';
 import FavoriteButton from '../atoms/FavoriteButton';
-import { addDoctorToFavorites } from '../../../entities/doctor/favoritesApi';
+import { addDoctorToFavorites, removeDoctorFromFavorites } from '../../../entities/doctor/favoritesApi';
 
 const Card = styled.div`
   display: flex;
@@ -17,6 +17,7 @@ const Card = styled.div`
   margin-bottom: var(--spacing-sm);
   flex-direction: column;
   position: relative;
+  width: 100%;
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
@@ -90,13 +91,18 @@ const DoctorCard = ({ doctor, favorite, onFavorite }) => {
   const [loading, setLoading] = useState(false);
 
   const handleFavorite = async () => {
-    if (favorite) return;
     setLoading(true);
     try {
-      await addDoctorToFavorites(doctor.id);
-      onFavorite(doctor.id);
+      if (favorite) {
+        await removeDoctorFromFavorites(doctor.id);
+        onFavorite(doctor.id, false); // false означает удаление
+      } else {
+        await addDoctorToFavorites(doctor.id);
+        onFavorite(doctor.id, true); // true означает добавление
+      }
     } catch (e) {
       // Можно добавить toast или alert
+      console.error('Error handling favorite:', e);
     } finally {
       setLoading(false);
     }

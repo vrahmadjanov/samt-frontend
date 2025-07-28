@@ -16,7 +16,7 @@ const EmptyMessage = styled.div`
   font-size: var(--font-base);
 `;
 
-const ClinicList = ({ clinics }) => {
+const ClinicList = ({ clinics, favorites = [], onFavorite }) => {
   if (!clinics || clinics.length === 0) {
     return (
       <EmptyMessage>
@@ -28,7 +28,12 @@ const ClinicList = ({ clinics }) => {
   return (
     <ListContainer>
       {clinics.map((clinic) => (
-        <ClinicCard key={clinic.id} clinic={clinic} />
+        <ClinicCard 
+          key={clinic.id} 
+          clinic={clinic} 
+          favorite={favorites.includes(clinic.id)}
+          onFavorite={onFavorite}
+        />
       ))}
     </ListContainer>
   );

@@ -3,6 +3,7 @@ import { useClinics } from '../features/clinic/model/useClinics';
 import { useRegions } from '../features/clinic/model/useRegions';
 import { useDistricts } from '../features/clinic/model/useDistricts';
 import { useClinicTypes } from '../features/clinic/model/useClinicTypes';
+import { useFavoriteClinics } from '../features/clinic/model/useFavoriteClinics';
 import ClinicList from '../shared/components/organisms/ClinicList';
 import SearchAndFilter from '../shared/components/molecules/SearchAndFilter';
 import FilterPanel from '../shared/components/organisms/FilterPanel';
@@ -53,6 +54,7 @@ const ClinicsPage = () => {
   const { regions } = useRegions();
   const { districts } = useDistricts();
   const { clinicTypes } = useClinicTypes();
+  const { favoriteIds, addToFavorites, removeFromFavorites } = useFavoriteClinics();
 
   // Динамически формируем фильтры на основе загруженных данных
   const filterGroups = [
@@ -115,6 +117,14 @@ const ClinicsPage = () => {
     setIsFilterActive(false);
   };
 
+  const handleFavorite = (clinicId, isAdding) => {
+    if (isAdding) {
+      addToFavorites(clinicId);
+    } else {
+      removeFromFavorites(clinicId);
+    }
+  };
+
   return (
     <Wrapper>
       <PageTitle>Клиники</PageTitle>
@@ -138,7 +148,7 @@ const ClinicsPage = () => {
 
       {loading && <LoadingMessage>Загрузка...</LoadingMessage>}
       {error && <ErrorMessage>Ошибка загрузки</ErrorMessage>}
-      {!loading && !error && <ClinicList clinics={clinics} />}
+      {!loading && !error && <ClinicList clinics={clinics} favorites={favoriteIds} onFavorite={handleFavorite} />}
       
       <Pagination
         page={page}

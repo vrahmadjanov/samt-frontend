@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDoctors } from '../features/doctor/model/useDoctors';
+import { useFavoriteDoctors } from '../features/doctor/model/useFavoriteDoctors';
 import DoctorList from '../shared/components/organisms/DoctorList';
 import SearchAndFilter from '../shared/components/molecules/SearchAndFilter';
 import FilterPanel from '../shared/components/organisms/FilterPanel';
@@ -54,6 +55,7 @@ const DoctorsPage = () => {
   const [activeFilters, setActiveFilters] = useState({});
 
   const { doctors, page, totalPages, loading, error, loadPage } = useDoctors(activeFilters);
+  const { favoriteIds, addToFavorites, removeFromFavorites } = useFavoriteDoctors();
 
   useEffect(() => {
     async function fetchGenders() {
@@ -155,6 +157,14 @@ const DoctorsPage = () => {
     setIsFilterActive(false);
   };
 
+  const handleFavorite = (doctorId, isAdding) => {
+    if (isAdding) {
+      addToFavorites(doctorId);
+    } else {
+      removeFromFavorites(doctorId);
+    }
+  };
+
   return (
     <Wrapper>
       <PageTitle>Врачи</PageTitle>
@@ -178,7 +188,7 @@ const DoctorsPage = () => {
 
       {loading && <LoadingMessage>Загрузка...</LoadingMessage>}
       {error && <ErrorMessage>Ошибка загрузки</ErrorMessage>}
-      {!loading && !error && <DoctorList doctors={doctors} />}
+      {!loading && !error && <DoctorList doctors={doctors} favorites={favoriteIds} onFavorite={handleFavorite} />}
       
       <Pagination
         page={page}

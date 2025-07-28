@@ -1,24 +1,41 @@
-import React, { useState } from 'react';
+import React from 'react';
+import styled from 'styled-components';
 import DoctorCard from './DoctorCard';
 
-const DoctorList = ({ doctors }) => {
-  const [favorites, setFavorites] = useState([]);
+const ListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  margin-bottom: var(--spacing-lg);
+`;
 
-  const handleFavorite = (doctorId) => {
-    setFavorites((prev) => prev.includes(doctorId) ? prev : [...prev, doctorId]);
-  };
+const EmptyMessage = styled.div`
+  text-align: center;
+  padding: var(--spacing-xl);
+  color: ${({ theme }) => theme.colors.textLight};
+  font-size: var(--font-base);
+`;
+
+const DoctorList = ({ doctors, favorites = [], onFavorite }) => {
+  if (!doctors || doctors.length === 0) {
+    return (
+      <EmptyMessage>
+        Врачи не найдены
+      </EmptyMessage>
+    );
+  }
 
   return (
-    <div>
+    <ListContainer>
       {doctors.map(doctor => (
         <DoctorCard
           key={doctor.id}
           doctor={doctor}
           favorite={favorites.includes(doctor.id)}
-          onFavorite={handleFavorite}
+          onFavorite={onFavorite}
         />
       ))}
-    </div>
+    </ListContainer>
   );
 };
 
