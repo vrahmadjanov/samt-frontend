@@ -10,9 +10,12 @@ import styled from 'styled-components';
 import Pagination from '../shared/components/organisms/Pagination';
 
 const Wrapper = styled.div`
-  max-width: 900px;
-  margin: 0 auto;
-  padding: var(--spacing-xl) var(--spacing-md);
+  width: 100%;
+  padding: 0;
+  
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: var(--spacing-xl) var(--spacing-md);
+  }
 `;
 
 const PageTitle = styled.h1`
@@ -20,6 +23,9 @@ const PageTitle = styled.h1`
   color: ${({ theme }) => theme.colors.text};
   font-size: var(--font-xl);
   font-weight: 600;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 const LoadingMessage = styled.div`
