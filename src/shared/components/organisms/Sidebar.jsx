@@ -8,6 +8,7 @@ import { ReactComponent as SettingsIcon } from '../../assets/icons/Settings.svg'
 import { ReactComponent as HelpIcon } from '../../assets/icons/Help.svg';
 import { ReactComponent as LogoutIcon } from '../../assets/icons/Logout.svg';
 import { ReactComponent as DoctorIcon } from '../../assets/icons/Doctor.svg';
+import { ReactComponent as ClinicIcon } from '../../assets/icons/Clinic.svg';
 import authService from '../../../entities/user/service';
 
 const SidebarWrapper = styled.div`
@@ -70,7 +71,8 @@ const Sidebar = ({ open }) => {
     <SidebarWrapper open={open}>
       <Menu>
         <MenuItem icon={ProfileIcon}>Профиль</MenuItem>
-        <MenuItem to="/doctors" icon={DoctorIcon}>Мой врач</MenuItem>
+        <MenuItem to="/doctors" icon={DoctorIcon}>Врачи</MenuItem>
+        <MenuItem to="/clinics" icon={ClinicIcon}>Клиники</MenuItem>
         <MenuItem icon={FavouriteIcon}>Избранное</MenuItem>
         <MenuItem icon={PaymentIcon}>Платежи</MenuItem>
         <MenuItem icon={SettingsIcon}>Настройки</MenuItem>
