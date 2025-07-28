@@ -127,6 +127,7 @@ const DoctorsPage = () => {
     setActiveFilters({});
     setSearchValue('');
     setIsFilterActive(false);
+    setIsFilterPanelOpen(false);
   };
 
   const handleFavorite = (doctorId, isAdding) => {

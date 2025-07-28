@@ -10,6 +10,7 @@ import FilterPanel from '../shared/components/organisms/FilterPanel';
 import styled from 'styled-components';
 import Pagination from '../shared/components/organisms/Pagination';
 import { useTranslation } from '../shared/i18n/useTranslation';
+import { mapUiFiltersToApi } from '../entities/clinic/filterMapper';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -83,10 +84,13 @@ const ClinicsPage = () => {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    const apiFilters = {
-      ...selectedFilters,
-      search: searchValue
-    };
+    const apiFilters = mapUiFiltersToApi({
+      selectedFilters,
+      regions,
+      districts,
+      clinicTypes,
+      searchValue
+    });
     setActiveFilters(apiFilters);
   };
 
@@ -105,10 +109,13 @@ const ClinicsPage = () => {
   const handleApplyFilters = (filters) => {
     setIsFilterPanelOpen(false);
     setIsFilterActive(true);
-    const apiFilters = {
-      ...filters,
-      search: searchValue
-    };
+    const apiFilters = mapUiFiltersToApi({
+      selectedFilters: filters,
+      regions,
+      districts,
+      clinicTypes,
+      searchValue
+    });
     setActiveFilters(apiFilters);
   };
 
@@ -117,6 +124,7 @@ const ClinicsPage = () => {
     setActiveFilters({});
     setSearchValue('');
     setIsFilterActive(false);
+    setIsFilterPanelOpen(false);
   };
 
   const handleFavorite = (clinicId, isAdding) => {
