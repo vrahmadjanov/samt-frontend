@@ -63,17 +63,17 @@ const ClinicsPage = () => {
     ...(regions.length > 0 ? [{
       id: 'region',
       title: t('clinics.filters.region'),
-      options: regions.map(r => ({ id: r.name, label: r.name }))
+      options: regions.map(r => ({ id: r.id, label: r.name }))
     }] : []),
     ...(districts.length > 0 ? [{
       id: 'district',
       title: t('clinics.filters.district'),
-      options: districts.map(d => ({ id: d.name, label: d.name }))
+      options: districts.map(d => ({ id: d.id, label: d.name }))
     }] : []),
     ...(clinicTypes.length > 0 ? [{
       id: 'clinic_type',
       title: t('clinics.filters.type'),
-      options: clinicTypes.map(ct => ({ id: ct.id.toString(), label: ct.name }))
+      options: clinicTypes.map(ct => ({ id: ct.id, label: ct.name }))
     }] : [])
   ];
 
@@ -84,15 +84,15 @@ const ClinicsPage = () => {
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     const apiFilters = {
-      ...activeFilters,
-      name: searchValue
+      ...selectedFilters,
+      search: searchValue
     };
     setActiveFilters(apiFilters);
   };
 
   const handleFilterClick = () => {
     setIsFilterPanelOpen(!isFilterPanelOpen);
-    setIsFilterActive(!isFilterPanelOpen);
+    setIsFilterActive(!isFilterActive);
   };
 
   const handleFilterChange = (groupId, optionId) => {
@@ -107,7 +107,7 @@ const ClinicsPage = () => {
     setIsFilterActive(true);
     const apiFilters = {
       ...filters,
-      name: searchValue
+      search: searchValue
     };
     setActiveFilters(apiFilters);
   };

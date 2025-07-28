@@ -66,7 +66,7 @@ const DoctorsPage = () => {
     ...(genders.length > 0 ? [{
       id: 'gender',
       title: t('doctors.filters.gender'),
-      options: genders.map(g => ({ id: g.id || g.slug || g.name, label: g.name }))
+      options: genders.map(g => ({ id: g.id, label: g.name }))
     }] : []),
     ...(specialties.length > 0 ? [{
       id: 'specialties',
@@ -99,7 +99,7 @@ const DoctorsPage = () => {
 
   const handleFilterClick = () => {
     setIsFilterPanelOpen(!isFilterPanelOpen);
-    setIsFilterActive(!isFilterPanelOpen);
+    setIsFilterActive(!isFilterActive);
   };
 
   const handleFilterChange = (groupId, optionId) => {
