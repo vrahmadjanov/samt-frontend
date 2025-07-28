@@ -71,20 +71,28 @@ const Label = styled.span`
   transition: color ${({ theme }) => theme.transition.fast};
 `;
 
-const MenuItem = ({ icon: Icon, children, to, ...props }) => (
-  <Item {...props}>
-    {to ? (
-      <MenuLink to={to} tabIndex={0}>
-        {Icon && <Icon />}
-        <Label>{children}</Label>
-      </MenuLink>
-    ) : (
-      <>
-        {Icon && <Icon />}
-        <Label>{children}</Label>
-      </>
-    )}
-  </Item>
-);
+const MenuItem = ({ icon: Icon, children, to, onClick, ...props }) => {
+  const handleClick = (e) => {
+    if (onClick) {
+      onClick(e);
+    }
+  };
+
+  return (
+    <Item {...props} onClick={handleClick}>
+      {to ? (
+        <MenuLink to={to} tabIndex={0}>
+          {Icon && <Icon />}
+          <Label>{children}</Label>
+        </MenuLink>
+      ) : (
+        <>
+          {Icon && <Icon />}
+          <Label>{children}</Label>
+        </>
+      )}
+    </Item>
+  );
+};
 
 export default MenuItem; 

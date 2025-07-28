@@ -62,22 +62,32 @@ const Menu = styled.ul`
   z-index: 1;
 `;
 
-const Sidebar = ({ open }) => {
+const Sidebar = ({ open, onClose }) => {
   const handleLogout = () => {
     authService.logout();
+  };
+
+  const handleMenuItemClick = () => {
+    // Закрываем меню при клике на пункт меню только на мобильных устройствах
+    if (window.innerWidth <= 900) { // tablet breakpoint
+      onClose?.();
+    }
   };
 
   return (
     <SidebarWrapper open={open}>
       <Menu>
-        <MenuItem icon={ProfileIcon}>Профиль</MenuItem>
-        <MenuItem to="/doctors" icon={DoctorIcon}>Врачи</MenuItem>
-        <MenuItem to="/clinics" icon={ClinicIcon}>Клиники</MenuItem>
-        <MenuItem icon={FavouriteIcon}>Избранное</MenuItem>
-        <MenuItem icon={PaymentIcon}>Платежи</MenuItem>
-        <MenuItem icon={SettingsIcon}>Настройки</MenuItem>
-        <MenuItem icon={HelpIcon}>Помощь</MenuItem>
-        <MenuItem icon={LogoutIcon} onClick={handleLogout}>Выйти</MenuItem>
+        <MenuItem icon={ProfileIcon} onClick={handleMenuItemClick}>Профиль</MenuItem>
+        <MenuItem to="/doctors" icon={DoctorIcon} onClick={handleMenuItemClick}>Врачи</MenuItem>
+        <MenuItem to="/clinics" icon={ClinicIcon} onClick={handleMenuItemClick}>Клиники</MenuItem>
+        <MenuItem icon={FavouriteIcon} onClick={handleMenuItemClick}>Избранное</MenuItem>
+        <MenuItem icon={PaymentIcon} onClick={handleMenuItemClick}>Платежи</MenuItem>
+        <MenuItem icon={SettingsIcon} onClick={handleMenuItemClick}>Настройки</MenuItem>
+        <MenuItem icon={HelpIcon} onClick={handleMenuItemClick}>Помощь</MenuItem>
+        <MenuItem icon={LogoutIcon} onClick={() => {
+          handleLogout();
+          handleMenuItemClick();
+        }}>Выйти</MenuItem>
       </Menu>
     </SidebarWrapper>
   );
