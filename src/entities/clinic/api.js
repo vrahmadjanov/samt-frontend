@@ -16,7 +16,7 @@ export const fetchClinics = async (page = 1, filters = {}) => {
     }
   });
   
-  const response = await axios.get(`${BASE_URL}/clinics/?${params.toString()}`, {
+  const response = await axios.get(`${BASE_URL}/clinics-paginated/?${params.toString()}`, {
     headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
   });
   return response.data; // предполагается, что data = { count, next, previous, results }
