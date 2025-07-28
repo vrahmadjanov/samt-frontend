@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 
 const PaginationWrapper = styled.div`
@@ -35,7 +35,7 @@ const PageButton = styled.button`
   }
 `;
 
-const Pagination = ({ page, totalPages, onPage }) => {
+const Pagination = memo(({ page, totalPages, onPage }) => {
   const pages = [];
   for (let i = 1; i <= totalPages; i++) {
     if (i === 1 || i === totalPages || Math.abs(i - page) <= 2) {
@@ -59,6 +59,12 @@ const Pagination = ({ page, totalPages, onPage }) => {
       </PagesRow>
     </PaginationWrapper>
   );
-};
+}, (prevProps, nextProps) => {
+  // Кастомная функция сравнения для оптимизации
+  return (
+    prevProps.page === nextProps.page &&
+    prevProps.totalPages === nextProps.totalPages
+  );
+});
 
 export default Pagination; 

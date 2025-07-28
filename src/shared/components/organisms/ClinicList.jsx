@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import ClinicCard from './ClinicCard';
 
@@ -16,7 +16,7 @@ const EmptyMessage = styled.div`
   font-size: var(--font-base);
 `;
 
-const ClinicList = ({ clinics, favorites = [], onFavorite }) => {
+const ClinicList = memo(({ clinics, favorites = [], onFavorite }) => {
   if (!clinics || clinics.length === 0) {
     return (
       <EmptyMessage>
@@ -37,6 +37,18 @@ const ClinicList = ({ clinics, favorites = [], onFavorite }) => {
       ))}
     </ListContainer>
   );
-};
+}, (prevProps, nextProps) => {
+  // Кастомная функция сравнения для оптимизации
+  return (
+    prevProps.clinics.length === nextProps.clinics.length &&
+    prevProps.favorites.length === nextProps.favorites.length &&
+    prevProps.clinics.every((clinic, index) => 
+      clinic.id === nextProps.clinics[index]?.id
+    ) &&
+    prevProps.favorites.every((id, index) => 
+      id === nextProps.favorites[index]
+    )
+  );
+});
 
 export default ClinicList; 

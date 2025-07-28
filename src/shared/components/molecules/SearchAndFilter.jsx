@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import SearchInputComponent from '../atoms/SearchInput';
 import FilterButton from '../atoms/FilterButton';
@@ -24,7 +24,7 @@ const FilterSection = styled.div`
   justify-content: flex-end;
 `;
 
-const SearchAndFilter = ({ 
+const SearchAndFilter = memo(({ 
   searchValue, 
   onSearchChange, 
   onSearchSubmit,
@@ -51,6 +51,13 @@ const SearchAndFilter = ({
       </FilterSection>
     </Container>
   );
-};
+}, (prevProps, nextProps) => {
+  // Кастомная функция сравнения для оптимизации
+  return (
+    prevProps.searchValue === nextProps.searchValue &&
+    prevProps.isFilterActive === nextProps.isFilterActive &&
+    prevProps.searchPlaceholder === nextProps.searchPlaceholder
+  );
+});
 
 export default SearchAndFilter; 

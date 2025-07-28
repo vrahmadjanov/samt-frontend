@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import styled from 'styled-components';
 import DoctorAvatar from '../atoms/DoctorAvatar';
 import SpecialtyBadge from '../molecules/SpecialtyBadge';
@@ -87,7 +87,7 @@ const StyledButton = styled.button`
   }
 `;
 
-const DoctorCard = ({ doctor, favorite, onFavorite }) => {
+const DoctorCard = memo(({ doctor, favorite, onFavorite }) => {
   const [loading, setLoading] = useState(false);
 
   const handleFavorite = async () => {
@@ -143,6 +143,14 @@ const DoctorCard = ({ doctor, favorite, onFavorite }) => {
       </CardFooter>
     </Card>
   );
-};
+}, (prevProps, nextProps) => {
+  // Кастомная функция сравнения для оптимизации
+  return (
+    prevProps.doctor.id === nextProps.doctor.id &&
+    prevProps.favorite === nextProps.favorite &&
+    prevProps.doctor.rating === nextProps.doctor.rating &&
+    prevProps.doctor.specialties.length === nextProps.doctor.specialties.length
+  );
+});
 
 export default DoctorCard; 
