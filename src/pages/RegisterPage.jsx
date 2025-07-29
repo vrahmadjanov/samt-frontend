@@ -5,16 +5,8 @@ import { useRegister } from '../features/auth/model/useRegister';
 import { useVerification } from '../features/auth/model/useVerification';
 import { useDistricts } from '../features/auth/model/useDistricts';
 import { useGenders } from '../features/auth/model/useGenders';
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-
-const CenteredWrapper = styled.div`
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: ${({ theme }) => theme.colors.background};
-`;
+import CenteredWrapper from '../shared/components/atoms/CenteredWrapper';
 
 const RegistrationPage = () => {
   const [stage, setStage] = useState('register');

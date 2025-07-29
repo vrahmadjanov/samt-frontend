@@ -4,6 +4,7 @@ import BaseForm from '../../../shared/components/molecules/BaseForm';
 import Input from '../../../shared/components/atoms/Input';
 import Button from '../../../shared/components/atoms/Button';
 import { Link } from 'react-router-dom';
+import ErrorMessage from '../../../shared/components/atoms/ErrorMessage';
 
 const LoginForm = ({ onLogin, error, loading }) => {
   const [formData, setFormData] = useState({
@@ -43,7 +44,7 @@ const LoginForm = ({ onLogin, error, loading }) => {
         value={formData.password}
         onChange={handleChange}
       />
-      {error && <ErrorBlock>{error}</ErrorBlock>}
+      {error && <ErrorMessage>{error}</ErrorMessage>}
       <Button type="submit" disabled={loading}>{loading ? 'Вход...' : 'Войти'}</Button>
       <RegisterBlock>
         Нет аккаунта?{' '}
@@ -75,9 +76,4 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const ErrorBlock = styled.div`
-  color: ${({ theme }) => theme.colors.error};
-  text-align: center;
-  margin-bottom: 8px;
-  font-size: ${({ theme }) => theme.font.base};
-`;
+

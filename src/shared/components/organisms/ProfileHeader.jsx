@@ -8,6 +8,10 @@ const HeaderSection = styled.div`
   box-shadow: ${({ theme }) => theme.shadow.card};
   padding: var(--spacing-lg);
   margin-bottom: var(--spacing-lg);
+  width: 100%;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 const ProfileContainer = styled.div`

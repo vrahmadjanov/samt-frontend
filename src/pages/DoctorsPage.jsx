@@ -11,39 +11,16 @@ import { useTranslation } from '../shared/i18n/useTranslation';
 import { useGenders } from '../features/clinic/model/useGenders';
 import { useSpecialties } from '../features/main/model/useSpecialties';
 import { useExperienceLevels } from '../features/doctor/model/useExperienceLevels';
+import LoadingMessage from '../shared/components/atoms/LoadingMessage';
+import ErrorMessage from '../shared/components/atoms/ErrorMessage';
+import PageTitle from '../shared/components/atoms/PageTitle';
+import PageWrapper from '../shared/components/atoms/PageWrapper';
 
-const Wrapper = styled.div`
-  width: 100%;
-  padding: 0;
-  
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    padding: var(--spacing-xl) var(--spacing-md);
-  }
-`;
 
-const PageTitle = styled.h1`
-  margin-bottom: var(--spacing-lg);
-  color: ${({ theme }) => theme.colors.text};
-  font-size: var(--font-xl);
-  font-weight: 600;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-`;
 
-const LoadingMessage = styled.div`
-  text-align: center;
-  padding: var(--spacing-xl);
-  color: ${({ theme }) => theme.colors.textLight};
-  font-size: var(--font-base);
-`;
 
-const ErrorMessage = styled.div`
-  text-align: center;
-  padding: var(--spacing-xl);
-  color: ${({ theme }) => theme.colors.error};
-  font-size: var(--font-base);
-`;
+
+
 
 const DoctorsPage = () => {
   const { t } = useTranslation();
@@ -139,7 +116,7 @@ const DoctorsPage = () => {
   };
 
   return (
-    <Wrapper>
+    <PageWrapper>
       <PageTitle>{t('doctors.title')}</PageTitle>
       
       <SearchAndFilter
@@ -169,7 +146,7 @@ const DoctorsPage = () => {
         totalPages={totalPages}
         onPage={loadPage}
       />
-    </Wrapper>
+    </PageWrapper>
   );
 };
 

@@ -3,6 +3,7 @@ import BaseForm from '../../../shared/components/molecules/BaseForm';
 import Input from '../../../shared/components/atoms/Input';
 import Button from '../../../shared/components/atoms/Button';
 import styled from 'styled-components';
+import ErrorMessage from '../../../shared/components/atoms/ErrorMessage';
 
 const VerificationForm = ({ phoneNumber, onVerify, error, loading }) => {
   const [confirmationCode, setConfirmationCode] = useState('');
@@ -29,17 +30,12 @@ const VerificationForm = ({ phoneNumber, onVerify, error, loading }) => {
         placeholder="Введите код из SMS"
         error={error}
       />
-      {error && <ErrorBlock>{error}</ErrorBlock>}
+      {error && <ErrorMessage>{error}</ErrorMessage>}
       <Button type="submit" disabled={loading}>{loading ? 'Подтверждение...' : 'Подтвердить'}</Button>
     </BaseForm>
   );
 };
 
-const ErrorBlock = styled.div`
-  color: ${({ theme }) => theme.colors.error};
-  text-align: center;
-  margin-bottom: 8px;
-  font-size: ${({ theme }) => theme.font.base};
-`;
+
 
 export default VerificationForm;

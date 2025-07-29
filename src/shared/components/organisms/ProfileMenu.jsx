@@ -19,6 +19,10 @@ const MenuSection = styled.div`
   box-shadow: ${({ theme }) => theme.shadow.card};
   padding: var(--spacing-lg);
   margin-bottom: var(--spacing-lg);
+  width: 100%;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 const SectionTitle = styled.h3`
@@ -53,6 +57,34 @@ const MenuIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  
+  svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+  
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    width: 28px;
+    height: 28px;
+    margin-right: var(--spacing-lg);
+    
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+  
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 20px;
+    height: 20px;
+    margin-right: var(--spacing-sm);
+    
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
 `;
 
 const MenuText = styled.span`
