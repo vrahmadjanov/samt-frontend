@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from '../../i18n/useTranslation';
-import Button from '../atoms/Button';
 
 const HeaderSection = styled.div`
   background: ${({ theme }) => theme.colors.surface};
@@ -70,20 +69,13 @@ const ProfilePhone = styled.p`
   margin-bottom: var(--spacing-sm);
 `;
 
-const EditButton = styled(Button)`
-  margin-left: auto;
-  
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    margin-left: 0;
-    margin-top: var(--spacing-md);
-  }
-`;
+
 
 const HiddenInput = styled.input`
   display: none;
 `;
 
-const ProfileHeader = ({ profile, onEdit, onUploadPicture, loading }) => {
+const ProfileHeader = ({ profile, onUploadPicture, loading }) => {
   const { t } = useTranslation();
   const fileInputRef = useRef(null);
 
@@ -141,10 +133,6 @@ const ProfileHeader = ({ profile, onEdit, onUploadPicture, loading }) => {
           <ProfileName>{getFullName()}</ProfileName>
           <ProfilePhone>{getPhoneNumber()}</ProfilePhone>
         </ProfileInfo>
-        
-        <EditButton onClick={onEdit} disabled={loading}>
-          {t('profile.edit')}
-        </EditButton>
       </ProfileContainer>
       
       <HiddenInput

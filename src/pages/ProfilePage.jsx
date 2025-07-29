@@ -40,9 +40,7 @@ const ProfilePage = () => {
     fetchProfile();
   }, [fetchProfile]);
 
-  const handleEdit = () => {
-    navigate('/profile/details');
-  };
+
 
   const handleUploadPicture = async (file) => {
     try {
@@ -66,7 +64,6 @@ const ProfilePage = () => {
 
       <ProfileHeader
         profile={profile}
-        onEdit={handleEdit}
         onUploadPicture={handleUploadPicture}
         loading={loading}
       />
