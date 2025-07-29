@@ -140,8 +140,8 @@ const DoctorCard = memo(({ doctor, favorite, onFavorite }) => {
         </Info>
       </TopRow>
       <CardFooter>
-        <StyledButton onClick={handleBook}>{t('doctors.card.bookAppointment')}</StyledButton>
         <FavoriteButton active={favorite} onClick={handleFavorite} disabled={loading} />
+        <StyledButton onClick={handleBook}>{t('doctors.card.bookAppointment')}</StyledButton>
       </CardFooter>
     </Card>
   );

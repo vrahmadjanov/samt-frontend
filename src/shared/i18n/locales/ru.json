@@ -63,7 +63,8 @@
     },
     "card": {
       "viewDoctors": "Подробнее",
-      "doctorsCount": "Врачей"
+      "doctorsCount": "Врачей",
+      "scheduleToday": "Сегодня:"
     }
   },
   "auth": {

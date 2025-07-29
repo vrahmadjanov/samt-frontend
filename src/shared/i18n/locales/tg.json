@@ -63,7 +63,8 @@
     },
     "card": {
       "viewDoctors": "Муфассал",
-      "doctorsCount": "Духтурҳо"
+      "doctorsCount": "Духтурҳо",
+      "scheduleToday": "Имрӯз:"
     }
   },
   "auth": {

@@ -80,6 +80,34 @@ const Description = styled.div`
   margin-top: var(--spacing-sm);
 `;
 
+const Schedule = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-sm);
+  color: ${({ theme }) => theme.colors.textLight};
+  font-weight: 400;
+  
+  .schedule-label {
+    color: ${({ theme }) => theme.colors.textLight};
+    font-weight: 400;
+  }
+  
+  .schedule-time {
+    color: ${({ theme }) => theme.colors.textLight};
+    font-weight: 400;
+  }
+  
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    font-size: 13px;
+  }
+  
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 12px;
+  }
+`;
+
 const CardFooter = styled.div`
   display: flex;
   align-items: center;
@@ -176,6 +204,36 @@ const ClinicCard = memo(({ clinic, favorite, onFavorite }) => {
     }
   };
 
+  // Функция для определения статуса работы клиники
+  const getClinicStatus = (schedule) => {
+    if (!schedule) return { isOpen: false, text: 'Нет расписания' };
+    
+    try {
+      // Парсим расписание в формате "08:00 - 18:00"
+      const [startTime, endTime] = schedule.split(' - ');
+      if (!startTime || !endTime) return { isOpen: false, text: schedule };
+      
+      const now = new Date();
+      const currentTime = now.getHours() * 60 + now.getMinutes();
+      
+      const [startHour, startMinute] = startTime.split(':').map(Number);
+      const [endHour, endMinute] = endTime.split(':').map(Number);
+      
+      const startMinutes = startHour * 60 + startMinute;
+      const endMinutes = endHour * 60 + endMinute;
+      
+      const isOpen = currentTime >= startMinutes && currentTime <= endMinutes;
+      
+      return {
+        isOpen,
+        text: `${startTime}-${endTime}`,
+        schedule: schedule
+      };
+    } catch (error) {
+      return { isOpen: false, text: schedule };
+    }
+  };
+
   return (
     <Card>
       <TopRow>
@@ -210,6 +268,12 @@ const ClinicCard = memo(({ clinic, favorite, onFavorite }) => {
             {clinic.doctors_count && <InfoBadge>{t('clinics.card.doctorsCount')}: {clinic.doctors_count}</InfoBadge>}
           </Badges>
           {clinic.rating && <RatingStars rating={clinic.rating} />}
+          {clinic.schedule && (
+            <Schedule>
+              <span className="schedule-label">{t('clinics.card.scheduleToday')}</span>
+              <span className="schedule-time">{getClinicStatus(clinic.schedule).text}</span>
+            </Schedule>
+          )}
           {clinic.description && (
             <Description>
               {clinic.description.length > 150 
@@ -220,13 +284,13 @@ const ClinicCard = memo(({ clinic, favorite, onFavorite }) => {
         </Info>
       </TopRow>
       <CardFooter>
-        <StyledButton onClick={handleViewDoctors}>{t('clinics.card.viewDoctors')}</StyledButton>
+        <FavoriteButton active={favorite} onClick={handleFavorite} disabled={loading} />
         {clinic.latitude && clinic.longitude && (
           <MapButton onClick={handleOpenMap} title="Открыть на карте">
             <MapIcon />
           </MapButton>
         )}
-        <FavoriteButton active={favorite} onClick={handleFavorite} disabled={loading} />
+        <StyledButton onClick={handleViewDoctors}>{t('clinics.card.viewDoctors')}</StyledButton>
       </CardFooter>
     </Card>
   );
