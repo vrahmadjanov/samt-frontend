@@ -82,29 +82,23 @@ const Description = styled.div`
 
 const Schedule = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 6px;
   margin-top: var(--spacing-sm);
-  font-size: var(--font-sm);
+  font-size: var(--font-base);
   color: ${({ theme }) => theme.colors.textLight};
   font-weight: 400;
+  flex-wrap: wrap;
   
   .schedule-label {
     color: ${({ theme }) => theme.colors.textLight};
     font-weight: 400;
+    white-space: nowrap;
   }
   
   .schedule-time {
     color: ${({ theme }) => theme.colors.textLight};
     font-weight: 400;
-  }
-  
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    font-size: 13px;
-  }
-  
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 12px;
   }
 `;
 
