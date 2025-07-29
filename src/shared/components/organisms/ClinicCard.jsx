@@ -5,6 +5,7 @@ import RatingStars from '../atoms/RatingStars';
 import FavoriteButton from '../atoms/FavoriteButton';
 import { addClinicToFavorites, removeClinicFromFavorites } from '../../../entities/clinic/favoritesApi';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
+import { ReactComponent as MapIcon } from '../../assets/icons/Map.svg';
 
 const Card = styled.div`
   display: flex;
@@ -38,11 +39,13 @@ const ClinicImage = styled.div`
   justify-content: center;
   flex-shrink: 0;
   overflow: hidden;
+  box-shadow: ${({ theme }) => theme.shadow.sm};
   
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: ${({ theme }) => theme.radius.md};
   }
 `;
 
@@ -82,7 +85,7 @@ const CardFooter = styled.div`
   align-items: center;
   justify-content: flex-end;
   margin-top: var(--spacing-md);
-  gap: var(--gap-md);
+  gap: 12px;
   background: none;
   border-radius: 0;
   box-shadow: none;
@@ -106,9 +109,42 @@ const StyledButton = styled.button`
   }
 `;
 
+const MapButton = styled.button`
+  background: ${({ theme }) => theme.colors.white};
+  border: 2px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.radius.md};
+  padding: 0;
+  cursor: pointer;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all ${({ theme }) => theme.transition.fast};
+  
+  &:hover {
+    background: ${({ theme }) => theme.colors.hover.surface};
+    border-color: ${({ theme }) => theme.colors.primary};
+    transform: translateY(-1px);
+    box-shadow: ${({ theme }) => theme.shadow.sm};
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+  
+  svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+    color: ${({ theme }) => theme.colors.textLight};
+  }
+`;
+
 const ClinicCard = memo(({ clinic, favorite, onFavorite }) => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   const handleFavorite = async () => {
     setLoading(true);
@@ -133,12 +169,23 @@ const ClinicCard = memo(({ clinic, favorite, onFavorite }) => {
     alert('Функция просмотра врачей клиники будет реализована позже');
   };
 
+  const handleOpenMap = () => {
+    if (clinic.latitude && clinic.longitude) {
+      const url = `https://yandex.ru/maps/?pt=${clinic.longitude},${clinic.latitude}&z=16&l=map`;
+      window.open(url, '_blank');
+    }
+  };
+
   return (
     <Card>
       <TopRow>
         <ClinicImage>
-          {clinic.image ? (
-            <img src={clinic.image} alt={clinic.name} />
+          {clinic.picture && !imageError ? (
+            <img 
+              src={clinic.picture} 
+              alt={clinic.name}
+              onError={() => setImageError(true)}
+            />
           ) : (
             <div style={{ 
               width: '100%', 
@@ -148,7 +195,8 @@ const ClinicCard = memo(({ clinic, favorite, onFavorite }) => {
               alignItems: 'center',
               justifyContent: 'center',
               color: '#6b7280',
-              fontSize: '12px'
+              fontSize: '12px',
+              fontWeight: '500'
             }}>
               КЛИНИКА
             </div>
@@ -158,7 +206,7 @@ const ClinicCard = memo(({ clinic, favorite, onFavorite }) => {
           <Name>{clinic.name}</Name>
           {clinic.address && <Address>{clinic.address}</Address>}
           <Badges>
-            {clinic.type && <InfoBadge>{clinic.type}</InfoBadge>}
+            {clinic.clinic_type && <InfoBadge>{clinic.clinic_type.name}</InfoBadge>}
             {clinic.doctors_count && <InfoBadge>{t('clinics.card.doctorsCount')}: {clinic.doctors_count}</InfoBadge>}
           </Badges>
           {clinic.rating && <RatingStars rating={clinic.rating} />}
@@ -173,6 +221,11 @@ const ClinicCard = memo(({ clinic, favorite, onFavorite }) => {
       </TopRow>
       <CardFooter>
         <StyledButton onClick={handleViewDoctors}>{t('clinics.card.viewDoctors')}</StyledButton>
+        {clinic.latitude && clinic.longitude && (
+          <MapButton onClick={handleOpenMap} title="Открыть на карте">
+            <MapIcon />
+          </MapButton>
+        )}
         <FavoriteButton active={favorite} onClick={handleFavorite} disabled={loading} />
       </CardFooter>
     </Card>

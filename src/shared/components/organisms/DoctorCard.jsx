@@ -64,7 +64,7 @@ const CardFooter = styled.div`
   align-items: center;
   justify-content: flex-end;
   margin-top: 0;
-  gap: var(--gap-md);
+  gap: 12px;
   background: none;
   border-radius: 0;
   box-shadow: none;
