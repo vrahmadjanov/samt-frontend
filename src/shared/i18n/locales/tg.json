@@ -200,6 +200,22 @@
     "deleteProfile": "Профилро нест кардан",
     "deleting": "Нест кардан...",
     "deleteConfirm": "Шумо мутмаин ҳастед, ки мехоҳед ҳисобро нест кунед? Ин амал бозгаштнопазир аст.",
-    "deleteAccount": "Ҳисобро нест кардан"
+    "deleteAccount": "Ҳисобро нест кардан",
+    "saveError": "Хатои сабти профил",
+    "deleteError": "Хатои несткунии ҳисоб",
+    "validationError": "Хатои тасдиқи маълумот",
+    "networkError": "Хатои шабака",
+    "serverError": "Хатои сервер",
+    "fieldNames": {
+      "first_name": "Ном",
+      "last_name": "Насаб",
+      "middle_name": "Номи падар",
+      "email": "Email",
+      "actual_address": "Суроға",
+      "weight": "Вазн",
+      "height": "Баландӣ",
+      "blood_type": "Гуруҳи хун",
+      "inn": "ИНН"
+    }
   }
 } 

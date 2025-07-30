@@ -19,6 +19,8 @@ const PatientProfileDetailsPage = () => {
   const [formData, setFormData] = useState({});
   const [saveLoading, setSaveLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [saveError, setSaveError] = useState(null);
+  const [deleteError, setDeleteError] = useState(null);
 
   useEffect(() => {
     // Загружаем данные только если их еще нет
@@ -51,14 +53,79 @@ const PatientProfileDetailsPage = () => {
     }));
   };
 
+  // Функция для очистки пустых полей перед отправкой
+  const cleanFormData = (data) => {
+    const cleaned = {};
+    Object.keys(data).forEach(key => {
+      const value = data[key];
+      if (value !== '' && value !== null && value !== undefined) {
+        cleaned[key] = value;
+      }
+    });
+    return cleaned;
+  };
+
   const handleSave = async (e) => {
     e.preventDefault();
     setSaveLoading(true);
+    setSaveError(null);
     try {
-      await updateProfile(formData);
+      // Очищаем данные перед отправкой
+      const cleanedData = cleanFormData(formData);
+      console.log('Sending data:', cleanedData);
+      await updateProfile(cleanedData);
       setIsEditing(false);
     } catch (error) {
       console.error('Error saving profile:', error);
+      console.error('Error response:', error.response);
+      console.error('Error request:', error.request);
+      console.error('Error config:', error.config);
+      
+      // Детальная обработка ошибок
+      let errorMessage;
+      
+      if (error.response) {
+        // Ошибка от сервера
+        const status = error.response.status;
+        const data = error.response.data;
+        
+        if (status === 400) {
+          // Ошибка валидации
+          if (data.detail) {
+            errorMessage = data.detail;
+          } else if (data.message) {
+            errorMessage = data.message;
+          } else if (data.data) {
+            // Обработка ошибок валидации по полям
+            const fieldErrors = [];
+            Object.keys(data.data).forEach(field => {
+              if (Array.isArray(data.data[field])) {
+                const fieldName = t(`profileDetails.fieldNames.${field}`) || field;
+                fieldErrors.push(`${fieldName}: ${data.data[field].join(', ')}`);
+              }
+            });
+            errorMessage = fieldErrors.join('; ');
+          } else {
+            errorMessage = t('profileDetails.validationError');
+          }
+        } else if (status === 401) {
+          errorMessage = 'Необходима авторизация';
+        } else if (status === 404) {
+          errorMessage = 'Профиль не найден';
+        } else if (status >= 500) {
+          errorMessage = t('profileDetails.serverError');
+        } else {
+          errorMessage = data.detail || data.message || t('profileDetails.saveError');
+        }
+      } else if (error.request) {
+        // Ошибка сети
+        errorMessage = t('profileDetails.networkError');
+      } else {
+        // Другие ошибки
+        errorMessage = error.message || t('profileDetails.saveError');
+      }
+      
+      setSaveError(errorMessage);
     } finally {
       setSaveLoading(false);
     }
@@ -77,6 +144,8 @@ const PatientProfileDetailsPage = () => {
       inn: profile.inn || ''
     });
     setIsEditing(false);
+    setSaveError(null);
+    setDeleteError(null);
   };
 
   const bloodTypeOptions = [
@@ -95,10 +164,17 @@ const PatientProfileDetailsPage = () => {
   const handleDeleteAccount = async () => {
     if (window.confirm(t('profileDetails.deleteConfirm'))) {
       setDeleteLoading(true);
+      setDeleteError(null);
       try {
         await authService.deleteAccount();
       } catch (error) {
         console.error('Error deleting account:', error);
+        const errorMessage = error.response?.data?.detail || 
+                           error.response?.data?.message || 
+                           error.message || 
+                           t('profileDetails.deleteError');
+        setDeleteError(errorMessage);
+      } finally {
         setDeleteLoading(false);
       }
     }
@@ -257,13 +333,30 @@ const PatientProfileDetailsPage = () => {
           </ProfileSection>
         )}
 
+        {/* Отображение ошибок */}
+        {saveError && (
+          <ErrorMessage style={{ marginBottom: 'var(--spacing-md)' }}>
+            {saveError}
+          </ErrorMessage>
+        )}
+        
+        {deleteError && (
+          <ErrorMessage style={{ marginBottom: 'var(--spacing-md)' }}>
+            {deleteError}
+          </ErrorMessage>
+        )}
+
         <ActionButtons>
           {!isEditing ? (
             <ButtonGroup>
               <DangerButton onClick={handleDeleteAccount} disabled={deleteLoading || loading}>
                 {deleteLoading ? t('profileDetails.deleting') : t('profileDetails.deleteProfile')}
               </DangerButton>
-              <Button onClick={() => setIsEditing(true)} disabled={loading}>
+              <Button onClick={() => {
+                setIsEditing(true);
+                setSaveError(null);
+                setDeleteError(null);
+              }} disabled={loading}>
                 {t('profileDetails.edit')}
               </Button>
             </ButtonGroup>

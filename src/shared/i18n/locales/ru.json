@@ -200,6 +200,22 @@
     "deleteProfile": "Удалить профиль",
     "deleting": "Удаление...",
     "deleteConfirm": "Вы уверены, что хотите удалить аккаунт? Это действие необратимо.",
-    "deleteAccount": "Удалить аккаунт"
+    "deleteAccount": "Удалить аккаунт",
+    "saveError": "Ошибка сохранения профиля",
+    "deleteError": "Ошибка удаления аккаунта",
+    "validationError": "Ошибка валидации данных",
+    "networkError": "Ошибка сети",
+    "serverError": "Ошибка сервера",
+    "fieldNames": {
+      "first_name": "Имя",
+      "last_name": "Фамилия",
+      "middle_name": "Отчество",
+      "email": "Email",
+      "actual_address": "Адрес",
+      "weight": "Вес",
+      "height": "Рост",
+      "blood_type": "Группа крови",
+      "inn": "ИНН"
+    }
   }
 } 
