@@ -173,5 +173,33 @@
   "main": {
     "title": "Добро пожаловать",
     "description": "Найдите лучших врачей и медицинские учреждения в вашем регионе"
+  },
+  "profileDetails": {
+    "title": "Мой профиль",
+    "personalInfo": "Личная информация",
+    "medicalInfo": "Медицинская информация",
+    "additionalInfo": "Дополнительная информация",
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "middleName": "Отчество",
+    "email": "Email",
+    "address": "Адрес",
+    "weight": "Вес (кг)",
+    "height": "Рост (см)",
+    "bloodType": "Группа крови",
+    "inn": "ИНН",
+    "phoneNumber": "Номер телефона",
+    "birthDate": "Дата рождения",
+    "gender": "Пол",
+    "district": "Район",
+    "subscription": "Подписка",
+    "edit": "Редактировать",
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "saving": "Сохранение...",
+    "deleteProfile": "Удалить профиль",
+    "deleting": "Удаление...",
+    "deleteConfirm": "Вы уверены, что хотите удалить аккаунт? Это действие необратимо.",
+    "deleteAccount": "Удалить аккаунт"
   }
 } 

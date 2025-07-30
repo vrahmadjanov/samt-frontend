@@ -61,7 +61,7 @@ const ProfileInfo = styled.div`
 `;
 
 const ProfileName = styled.h2`
-  font-size: var(--font-xl);
+  font-size: var(--font-lg);
   font-weight: ${({ theme }) => theme.font.weight.bold};
   color: ${({ theme }) => theme.colors.text};
   margin-bottom: var(--spacing-sm);

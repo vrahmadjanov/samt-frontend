@@ -94,6 +94,22 @@ const authService = {
   // Получение времени истечения токена
   getTokenExpirationTime() {
     return tokenService.getTokenExpirationTime();
+  },
+
+  // Удаление аккаунта
+  async deleteAccount() {
+    try {
+      const response = await tokenAPI.deleteAccount();
+      if (response.status === 'success') {
+        // Очищаем токены и перенаправляем на страницу входа
+        tokenService.clearTokens();
+        window.location.href = '/login';
+        return response;
+      }
+      throw new Error(response.message || 'Ошибка удаления аккаунта');
+    } catch (error) {
+      throw error;
+    }
   }
 };
 

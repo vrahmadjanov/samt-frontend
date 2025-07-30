@@ -99,6 +99,16 @@ export const tokenAPI = {
     } finally {
       tokenService.clearTokens();
     }
+  },
+
+  // Удаление аккаунта
+  async deleteAccount() {
+    try {
+      const response = await httpClient.delete('/users/delete-my-account/');
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   }
 };
 
