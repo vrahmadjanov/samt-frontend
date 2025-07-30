@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import RegistrationStepper from '../features/auth/ui/RegistrationForm';
-import VerificationForm from '../features/auth/ui/VerificationForm';
+import RegistrationStepper from '../shared/components/organisms/RegistrationForm';
+import VerificationForm from '../shared/components/organisms/VerificationForm';
 import { useRegister } from '../features/auth/model/useRegister';
 import { useVerification } from '../features/auth/model/useVerification';
 import { useDistricts } from '../features/auth/model/useDistricts';

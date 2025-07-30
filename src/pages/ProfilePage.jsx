@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from '../shared/i18n/useTranslation';
 import { usePatientProfile } from '../features/patient/model/usePatientProfile';

@@ -1,5 +1,5 @@
 import React from 'react';
-import LoginForm from '../features/auth/ui/LoginForm';
+import LoginForm from '../shared/components/organisms/LoginForm';
 import { useLogin } from '../features/auth/model/useLogin';
 import CenteredWrapper from '../shared/components/atoms/CenteredWrapper';
 

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import BaseForm from '../../../shared/components/molecules/BaseForm';
-import Input from '../../../shared/components/atoms/Input';
-import Button from '../../../shared/components/atoms/Button';
-import Select from '../../../shared/components/atoms/Select';
+import BaseForm from '../molecules/BaseForm';
+import Input from '../atoms/Input';
+import Button from '../atoms/Button';
+import Select from '../atoms/Select';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -209,4 +209,4 @@ const StyledLink = styled(Link)`
   }
 `;
 
-export default RegistrationStepper;
+export default RegistrationStepper; 

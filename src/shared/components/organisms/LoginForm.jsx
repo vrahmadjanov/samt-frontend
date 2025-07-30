@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import BaseForm from '../../../shared/components/molecules/BaseForm';
-import Input from '../../../shared/components/atoms/Input';
-import Button from '../../../shared/components/atoms/Button';
+import BaseForm from '../molecules/BaseForm';
+import Input from '../atoms/Input';
+import Button from '../atoms/Button';
 import { Link } from 'react-router-dom';
-import ErrorMessage from '../../../shared/components/atoms/ErrorMessage';
+import ErrorMessage from '../atoms/ErrorMessage';
 
 const LoginForm = ({ onLogin, error, loading }) => {
   const [formData, setFormData] = useState({
@@ -74,6 +74,4 @@ const StyledLink = styled(Link)`
   &:hover {
     text-decoration: underline;
   }
-`;
-
-
+`; 

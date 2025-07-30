@@ -4,7 +4,6 @@ import { useFavoriteDoctors } from '../features/doctor/model/useFavoriteDoctors'
 import DoctorList from '../shared/components/organisms/DoctorList';
 import SearchAndFilter from '../shared/components/molecules/SearchAndFilter';
 import FilterPanel from '../shared/components/organisms/FilterPanel';
-import styled from 'styled-components';
 import Pagination from '../shared/components/organisms/Pagination';
 import { mapUiFiltersToApi } from '../entities/doctor/filterMapper';
 import { useTranslation } from '../shared/i18n/useTranslation';

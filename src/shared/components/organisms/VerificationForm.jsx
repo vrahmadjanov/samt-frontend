@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import BaseForm from '../../../shared/components/molecules/BaseForm';
-import Input from '../../../shared/components/atoms/Input';
-import Button from '../../../shared/components/atoms/Button';
-import styled from 'styled-components';
-import ErrorMessage from '../../../shared/components/atoms/ErrorMessage';
+import BaseForm from '../molecules/BaseForm';
+import Input from '../atoms/Input';
+import Button from '../atoms/Button';
+import ErrorMessage from '../atoms/ErrorMessage';
 
 const VerificationForm = ({ phoneNumber, onVerify, error, loading }) => {
   const [confirmationCode, setConfirmationCode] = useState('');
@@ -36,6 +35,4 @@ const VerificationForm = ({ phoneNumber, onVerify, error, loading }) => {
   );
 };
 
-
-
-export default VerificationForm;
+export default VerificationForm; 

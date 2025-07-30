@@ -7,7 +7,6 @@ import { useFavoriteClinics } from '../features/clinic/model/useFavoriteClinics'
 import ClinicList from '../shared/components/organisms/ClinicList';
 import SearchAndFilter from '../shared/components/molecules/SearchAndFilter';
 import FilterPanel from '../shared/components/organisms/FilterPanel';
-import styled from 'styled-components';
 import Pagination from '../shared/components/organisms/Pagination';
 import { useTranslation } from '../shared/i18n/useTranslation';
 import { mapUiFiltersToApi } from '../entities/clinic/filterMapper';
