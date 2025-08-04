@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Label from './Label';
 
 const FilterOptionWrapper = styled.div`
   display: flex;
@@ -21,13 +22,6 @@ const Radio = styled.input`
   cursor: pointer;
 `;
 
-const Label = styled.label`
-  font-size: var(--font-base);
-  color: ${({ theme }) => theme.colors.text};
-  cursor: pointer;
-  user-select: none;
-`;
-
 const FilterOption = ({ 
   id, 
   name,
@@ -45,7 +39,7 @@ const FilterOption = ({
         checked={checked}
         onChange={() => onChange(true)}
       />
-      <Label htmlFor={id}>{label}</Label>
+      <Label htmlFor={id} clickable={true} noMargin={true}>{label}</Label>
     </FilterOptionWrapper>
   );
 };

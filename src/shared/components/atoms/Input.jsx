@@ -1,17 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: var(--spacing-sm);
-`;
-
-const Label = styled.label`
-  font-size: var(--font-base);
-  color: ${({ theme }) => theme.colors.label};
-  margin-bottom: var(--spacing-sm);
-`;
+import Label from './Label';
+import FormWrapper from './FormWrapper';
 
 const StyledInput = styled.input`
   padding: 10px 14px;
@@ -29,10 +19,10 @@ const StyledInput = styled.input`
 `;
 
 const Input = ({ label, ...props }) => (
-  <Wrapper>
+  <FormWrapper>
     {label && <Label>{label}</Label>}
     <StyledInput {...props} />
-  </Wrapper>
+  </FormWrapper>
 );
 
 export default Input;

@@ -1,17 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: var(--spacing-md);
-`;
-
-const Label = styled.label`
-  font-size: var(--font-base);
-  color: ${({ theme }) => theme.colors.label};
-  margin-bottom: var(--spacing-sm);
-`;
+import Label from './Label';
+import FormWrapper from './FormWrapper';
 
 const StyledSelect = styled.select`
   padding: 10px 36px 10px 14px;
@@ -34,7 +24,7 @@ const StyledSelect = styled.select`
 `;
 
 const Select = ({ label, options = [], ...props }) => (
-  <Wrapper>
+  <FormWrapper marginBottom="var(--spacing-md)">
     {label && <Label>{label}</Label>}
     <StyledSelect {...props}>
       {options.map(({ value, label }) => (
@@ -43,7 +33,7 @@ const Select = ({ label, options = [], ...props }) => (
         </option>
       ))}
     </StyledSelect>
-  </Wrapper>
+  </FormWrapper>
 );
 
 export default Select;

@@ -3,31 +3,14 @@ import styled from 'styled-components';
 import InfoBadge from '../molecules/InfoBadge';
 import RatingStars from '../atoms/RatingStars';
 import FavoriteButton from '../atoms/FavoriteButton';
+import Button from '../atoms/Button';
+import Badges from '../atoms/Badges';
+import CardName from '../atoms/CardName';
+import { CardFooter } from '../atoms/Card';
+import { Card, CardTopRow, CardInfo } from '../atoms/Card';
 import { addClinicToFavorites, removeClinicFromFavorites } from '../../../entities/clinic/favoritesApi';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
 import { ReactComponent as MapIcon } from '../../assets/icons/Map.svg';
-
-const Card = styled.div`
-  display: flex;
-  gap: var(--gap-md);
-  background: ${({ theme }) => theme.colors.white};
-  border-radius: ${({ theme }) => theme.radius.md};
-  box-shadow: ${({ theme }) => theme.shadow.sm};
-  padding: var(--spacing-lg);
-  margin-bottom: var(--spacing-sm);
-  flex-direction: column;
-  position: relative;
-  width: 100%;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-`;
-
-const TopRow = styled.div`
-  display: flex;
-  gap: var(--gap-md);
-  width: 100%;
-`;
 
 const ClinicImage = styled.div`
   width: 80px;
@@ -49,28 +32,9 @@ const ClinicImage = styled.div`
   }
 `;
 
-const Info = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-sm);
-`;
-
-const Name = styled.div`
-  font-size: var(--font-lg);
-  font-weight: 600;
-  color: ${({ theme }) => theme.colors.text};
-`;
-
 const Address = styled.div`
   font-size: var(--font-base);
   color: ${({ theme }) => theme.colors.textLight};
-`;
-
-const Badges = styled.div`
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
 `;
 
 const Description = styled.div`
@@ -100,34 +64,17 @@ const Schedule = styled.div`
     color: ${({ theme }) => theme.colors.textLight};
     font-weight: 400;
   }
-`;
-
-const CardFooter = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin-top: var(--spacing-md);
-  gap: 12px;
-  background: none;
-  border-radius: 0;
-  box-shadow: none;
-  padding: 0;
-`;
-
-const StyledButton = styled.button`
-  background: ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.white};
-  border: none;
-  border-radius: ${({ theme }) => theme.radius.md};
-  padding: 10px 18px;
-  font-size: var(--font-base);
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
-  min-width: 110px;
-  &:hover {
-    background: ${({ theme }) => theme.colors.primaryHover || theme.colors.primary};
-    opacity: 0.95;
+  
+  .schedule-status {
+    font-weight: 500;
+  }
+  
+  .schedule-status.open {
+    color: ${({ theme }) => theme.colors.success};
+  }
+  
+  .schedule-status.closed {
+    color: ${({ theme }) => theme.colors.error};
   }
 `;
 
@@ -230,7 +177,7 @@ const ClinicCard = memo(({ clinic, favorite, onFavorite }) => {
 
   return (
     <Card>
-      <TopRow>
+      <CardTopRow>
         <ClinicImage>
           {clinic.picture && !imageError ? (
             <img 
@@ -254,8 +201,8 @@ const ClinicCard = memo(({ clinic, favorite, onFavorite }) => {
             </div>
           )}
         </ClinicImage>
-        <Info>
-          <Name>{clinic.name}</Name>
+        <CardInfo>
+          <CardName>{clinic.name}</CardName>
           {clinic.address && <Address>{clinic.address}</Address>}
           <Badges>
             {clinic.clinic_type && <InfoBadge>{clinic.clinic_type.name}</InfoBadge>}
@@ -275,8 +222,8 @@ const ClinicCard = memo(({ clinic, favorite, onFavorite }) => {
                 : clinic.description}
             </Description>
           )}
-        </Info>
-      </TopRow>
+        </CardInfo>
+      </CardTopRow>
       <CardFooter>
         <FavoriteButton active={favorite} onClick={handleFavorite} disabled={loading} />
         {clinic.latitude && clinic.longitude && (
@@ -284,7 +231,7 @@ const ClinicCard = memo(({ clinic, favorite, onFavorite }) => {
             <MapIcon />
           </MapButton>
         )}
-        <StyledButton onClick={handleViewDoctors}>{t('clinics.card.viewDoctors')}</StyledButton>
+        <Button onClick={handleViewDoctors}>{t('clinics.card.viewDoctors')}</Button>
       </CardFooter>
     </Card>
   );
