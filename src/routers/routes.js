@@ -5,6 +5,7 @@ import DoctorsPage from '../pages/DoctorsPage';
 import ClinicsPage from '../pages/ClinicsPage';
 import ProfilePage from '../pages/ProfilePage';
 import PatientProfileDetailsPage from '../pages/PatientProfileDetailsPage';
+import AppointmentsPage from '../pages/AppointmentsPage';
 
 export const routes = [
   {
@@ -30,6 +31,11 @@ export const routes = [
   {
     path: '/clinics',
     element: <ClinicsPage />,
+    protected: true, // Защищенный маршрут - требует авторизации
+  },
+  {
+    path: '/appointments',
+    element: <AppointmentsPage />,
     protected: true, // Защищенный маршрут - требует авторизации
   },
   {

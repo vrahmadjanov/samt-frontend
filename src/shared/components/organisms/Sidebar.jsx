@@ -4,6 +4,7 @@ import MenuItem from '../atoms/MenuItem';
 import { ReactComponent as ProfileIcon } from '../../assets/icons/Profile.svg';
 import { ReactComponent as DoctorIcon } from '../../assets/icons/Doctor.svg';
 import { ReactComponent as ClinicIcon } from '../../assets/icons/Clinic.svg';
+import { ReactComponent as AppointmentIcon } from '../../assets/icons/Appointment.svg';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
 
 const SidebarWrapper = styled.div`
@@ -73,6 +74,7 @@ const Sidebar = ({ open, onClose }) => {
         <MenuItem key={`profile-${language}`} to="/profile" icon={ProfileIcon} onClick={handleMenuItemClick}>{t('navigation.profile')}</MenuItem>
         <MenuItem key={`doctors-${language}`} to="/doctors" icon={DoctorIcon} onClick={handleMenuItemClick}>{t('navigation.doctors')}</MenuItem>
         <MenuItem key={`clinics-${language}`} to="/clinics" icon={ClinicIcon} onClick={handleMenuItemClick}>{t('navigation.clinics')}</MenuItem>
+        <MenuItem key={`appointments-${language}`} to="/appointments" icon={AppointmentIcon} onClick={handleMenuItemClick}>{t('navigation.appointments')}</MenuItem>
       </Menu>
     </SidebarWrapper>
   );

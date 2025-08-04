@@ -2,11 +2,39 @@ import axios from 'axios';
 
 const httpClient = axios.create({
   baseURL: 'http://89.111.172.219/api',
-  timeout: 10000,
+  timeout: 30000, // Увеличиваем таймаут до 30 секунд
   headers: {
     'Content-Type': 'application/json',
   },
 });
+
+// Интерцептор для добавления токена авторизации
+httpClient.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('access_token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Интерцептор для обработки ответов
+httpClient.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    console.error('HTTP Client Error:', error);
+    if (error.code === 'ECONNABORTED') {
+      console.error('Request timeout - server may be slow or unavailable');
+    }
+    return Promise.reject(error);
+  }
+);
 
 // Функция для установки языка в заголовках
 export const setLanguageHeader = (language) => {
