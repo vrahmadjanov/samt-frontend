@@ -16,7 +16,17 @@ const PatientProfileDetailsPage = () => {
   const { t } = useTranslation();
   const { profile, loading, error, fetchProfile, updateProfile, uploadProfilePicture } = usePatientProfile();
   const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    first_name: '',
+    last_name: '',
+    middle_name: '',
+    email: '',
+    actual_address: '',
+    weight: '',
+    height: '',
+    blood_type: '',
+    inn: ''
+  });
   const [saveLoading, setSaveLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [saveError, setSaveError] = useState(null);
@@ -56,10 +66,25 @@ const PatientProfileDetailsPage = () => {
   // Функция для очистки пустых полей перед отправкой
   const cleanFormData = (data) => {
     const cleaned = {};
+    const numericFields = ['weight', 'height'];
+    
     Object.keys(data).forEach(key => {
       const value = data[key];
-      if (value !== '' && value !== null && value !== undefined) {
-        cleaned[key] = value;
+      if (value !== null && value !== undefined) {
+        // Для числовых полей конвертируем в число
+        if (numericFields.includes(key)) {
+          if (value === '') {
+            cleaned[key] = null; // Пустые числовые поля отправляем как null
+          } else {
+            const numValue = parseFloat(value);
+            if (!isNaN(numValue) && numValue > 0) {
+              cleaned[key] = numValue;
+            }
+          }
+        } else {
+          // Для текстовых полей пустые строки отправляем как null
+          cleaned[key] = value === '' ? null : value;
+        }
       }
     });
     return cleaned;
@@ -72,60 +97,10 @@ const PatientProfileDetailsPage = () => {
     try {
       // Очищаем данные перед отправкой
       const cleanedData = cleanFormData(formData);
-      console.log('Sending data:', cleanedData);
       await updateProfile(cleanedData);
       setIsEditing(false);
     } catch (error) {
-      console.error('Error saving profile:', error);
-      console.error('Error response:', error.response);
-      console.error('Error request:', error.request);
-      console.error('Error config:', error.config);
-      
-      // Детальная обработка ошибок
-      let errorMessage;
-      
-      if (error.response) {
-        // Ошибка от сервера
-        const status = error.response.status;
-        const data = error.response.data;
-        
-        if (status === 400) {
-          // Ошибка валидации
-          if (data.detail) {
-            errorMessage = data.detail;
-          } else if (data.message) {
-            errorMessage = data.message;
-          } else if (data.data) {
-            // Обработка ошибок валидации по полям
-            const fieldErrors = [];
-            Object.keys(data.data).forEach(field => {
-              if (Array.isArray(data.data[field])) {
-                const fieldName = t(`profileDetails.fieldNames.${field}`) || field;
-                fieldErrors.push(`${fieldName}: ${data.data[field].join(', ')}`);
-              }
-            });
-            errorMessage = fieldErrors.join('; ');
-          } else {
-            errorMessage = t('profileDetails.validationError');
-          }
-        } else if (status === 401) {
-          errorMessage = 'Необходима авторизация';
-        } else if (status === 404) {
-          errorMessage = 'Профиль не найден';
-        } else if (status >= 500) {
-          errorMessage = t('profileDetails.serverError');
-        } else {
-          errorMessage = data.detail || data.message || t('profileDetails.saveError');
-        }
-      } else if (error.request) {
-        // Ошибка сети
-        errorMessage = t('profileDetails.networkError');
-      } else {
-        // Другие ошибки
-        errorMessage = error.message || t('profileDetails.saveError');
-      }
-      
-      setSaveError(errorMessage);
+      setSaveError(t('profileDetails.saveError'));
     } finally {
       setSaveLoading(false);
     }
@@ -149,14 +124,15 @@ const PatientProfileDetailsPage = () => {
   };
 
   const bloodTypeOptions = [
-    { value: 'A+', label: 'A+' },
-    { value: 'A-', label: 'A-' },
-    { value: 'B+', label: 'B+' },
-    { value: 'B-', label: 'B-' },
-    { value: 'AB+', label: 'AB+' },
-    { value: 'AB-', label: 'AB-' },
-    { value: 'O+', label: 'O+' },
-    { value: 'O-', label: 'O-' }
+    { value: '', label: 'Не указано' },
+    { value: 'O(I) Rh-', label: 'O(I) Rh-' },
+    { value: 'O(I) Rh+', label: 'O(I) Rh+' },
+    { value: 'A(II) Rh-', label: 'A(II) Rh-' },
+    { value: 'A(II) Rh+', label: 'A(II) Rh+' },
+    { value: 'B(III) Rh-', label: 'B(III) Rh-' },
+    { value: 'B(III) Rh+', label: 'B(III) Rh+' },
+    { value: 'AB(IV) Rh-', label: 'AB(IV) Rh-' },
+    { value: 'AB(IV) Rh+', label: 'AB(IV) Rh+' }
   ];
 
 
