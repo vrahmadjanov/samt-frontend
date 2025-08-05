@@ -62,6 +62,10 @@ const StatusBadge = styled(InfoBadge)`
         return theme.colors.success;
       case 'cancelled':
         return theme.colors.error;
+      case 'noShow':
+        return theme.colors.warning || '#ff9800';
+      case 'confirmed':
+        return theme.colors.info || '#2196f3';
       default:
         return theme.colors.gray[300];
     }
@@ -85,13 +89,16 @@ const formatDateTime = (dateTimeString) => {
   };
 };
 
-const getStatusKey = (statusName) => {
+const getStatusKey = (statusId) => {
+  // Используем ID статуса для универсального решения
   const statusMap = {
-    'Завершен': 'completed',
-    'Предстоящий': 'upcoming',
-    'Отменен': 'cancelled'
+    1: 'upcoming',    // Предстоящий
+    2: 'completed',   // Завершен
+    3: 'cancelled',   // Отменен
+    4: 'noShow',      // Пациент не явился
+    5: 'confirmed'    // Подтвержден
   };
-  return statusMap[statusName] || 'unknown';
+  return statusMap[statusId] || 'unknown';
 };
 
 const AppointmentCard = memo(({ appointment, onCancel, onConfirm, onLeaveReview }) => {
@@ -113,7 +120,7 @@ const AppointmentCard = memo(({ appointment, onCancel, onConfirm, onLeaveReview 
   };
 
   const { date, time } = formatDateTime(appointment.appointment_time_start);
-  const statusKey = getStatusKey(appointment.status.name);
+  const statusKey = getStatusKey(appointment.status.id);
 
   return (
     <Card>
