@@ -288,7 +288,7 @@ const PatientProfileDetailsPage = () => {
                 <InfoValue>{profile.phone_number}</InfoValue>
               </InfoItem>
               <InfoItem>
-                <InfoLabel>{t('profileDetails.birthDate')}:</InfoLabel>
+                <InfoLabel>{t('profileDetails.dateOfBirth')}:</InfoLabel>
                 <InfoValue>{formatDate(profile.date_of_birth)}</InfoValue>
               </InfoItem>
               <InfoItem>
