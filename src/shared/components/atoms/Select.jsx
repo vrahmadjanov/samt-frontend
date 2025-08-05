@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import Label from './Label';
 import FormWrapper from './FormWrapper';
@@ -23,7 +23,7 @@ const StyledSelect = styled.select`
   }
 `;
 
-const Select = ({ label, options = [], ...props }) => (
+const Select = memo(({ label, options = [], ...props }) => (
   <FormWrapper marginBottom="var(--spacing-md)">
     {label && <Label>{label}</Label>}
     <StyledSelect {...props}>
@@ -34,6 +34,6 @@ const Select = ({ label, options = [], ...props }) => (
       ))}
     </StyledSelect>
   </FormWrapper>
-);
+));
 
 export default Select;

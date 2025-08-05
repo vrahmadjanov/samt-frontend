@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { fetchAppointments, cancelAppointment as cancelAppointmentAPI, confirmAppointmentByPatient, confirmAppointmentByDoctor } from '../../../entities/appointment/api';
 import { useLanguage } from '../../i18n/model/useLanguage';
 
@@ -11,7 +11,7 @@ export const useAppointments = (filters = {}) => {
   const pageSizeRef = useRef(null);
   const { language } = useLanguage();
 
-  const loadPage = async (p = 1, currentFilters = filters) => {
+  const loadPage = useCallback(async (p = 1, currentFilters = filters) => {
     setLoading(true);
     setError(null);
     try {
@@ -29,9 +29,9 @@ export const useAppointments = (filters = {}) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filters]);
 
-  const cancelAppointment = async (appointmentId) => {
+  const cancelAppointment = useCallback(async (appointmentId) => {
     try {
       await cancelAppointmentAPI(appointmentId);
       // Обновляем список после отмены
@@ -41,9 +41,9 @@ export const useAppointments = (filters = {}) => {
       console.error('Error canceling appointment:', err);
       return { success: false, error: err.message };
     }
-  };
+  }, [loadPage, page, filters]);
 
-  const confirmAppointment = async (appointmentId, isDoctor = false) => {
+  const confirmAppointment = useCallback(async (appointmentId, isDoctor = false) => {
     try {
       if (isDoctor) {
         await confirmAppointmentByDoctor(appointmentId);
@@ -57,25 +57,25 @@ export const useAppointments = (filters = {}) => {
       console.error('Error confirming appointment:', err);
       return { success: false, error: err.message };
     }
-  };
+  }, [loadPage, page, filters]);
 
   // Перезагружаем данные при изменении фильтров
   useEffect(() => {
     loadPage(1, filters);
     // eslint-disable-next-line
-  }, [filters]);
+  }, [filters, loadPage]);
 
   // Перезагружаем данные при изменении языка
   useEffect(() => {
     loadPage(1, filters);
     // eslint-disable-next-line
-  }, [language]);
+  }, [language, loadPage]);
 
   // Инициализация при первом рендере
   useEffect(() => {
     loadPage(1, filters);
     // eslint-disable-next-line
-  }, []);
+  }, [loadPage]);
 
   return { 
     appointments, 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import Label from './Label';
 import FormWrapper from './FormWrapper';
@@ -18,11 +18,11 @@ const StyledInput = styled.input`
   }
 `;
 
-const Input = ({ label, ...props }) => (
+const Input = memo(({ label, ...props }) => (
   <FormWrapper>
     {label && <Label>{label}</Label>}
     <StyledInput {...props} />
   </FormWrapper>
-);
+));
 
 export default Input;

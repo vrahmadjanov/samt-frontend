@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { useTranslation } from '../shared/i18n/useTranslation';
 import { useNotifications } from '../features/notification/model/useNotifications';
 import { useNotificationTypes } from '../features/notification/model/useNotificationTypes';
@@ -35,7 +35,7 @@ const NotificationsPage = () => {
   const { types } = useNotificationTypes();
 
   // Фильтры на основе типов из API
-  const filterGroups = [
+  const filterGroups = useMemo(() => [
     ...(types.length > 0 ? [{
       id: 'notificationType',
       title: t('notifications.filters.type'),
@@ -49,13 +49,13 @@ const NotificationsPage = () => {
         { id: 'read', label: t('notifications.status.read') }
       ]
     }
-  ];
+  ], [types, t]);
 
-  const handleSearchChange = (e) => {
+  const handleSearchChange = useCallback((e) => {
     setSearchValue(e.target.value);
-  };
+  }, []);
 
-  const handleSearchSubmit = (e) => {
+  const handleSearchSubmit = useCallback((e) => {
     e.preventDefault();
     const apiFilters = mapNotificationUiFiltersToApi({
       selectedFilters,
@@ -63,21 +63,21 @@ const NotificationsPage = () => {
       searchValue
     });
     setActiveFilters(apiFilters);
-  };
+  }, [selectedFilters, types, searchValue]);
 
-  const handleFilterClick = () => {
+  const handleFilterClick = useCallback(() => {
     setIsFilterPanelOpen(!isFilterPanelOpen);
     setIsFilterActive(!isFilterActive);
-  };
+  }, [isFilterPanelOpen, isFilterActive]);
 
-  const handleFilterChange = (groupId, optionId) => {
+  const handleFilterChange = useCallback((groupId, optionId) => {
     setSelectedFilters(prev => ({
       ...prev,
       [groupId]: optionId
     }));
-  };
+  }, []);
 
-  const handleApplyFilters = (filters) => {
+  const handleApplyFilters = useCallback((filters) => {
     setIsFilterPanelOpen(false);
     setIsFilterActive(true);
     const apiFilters = mapNotificationUiFiltersToApi({
@@ -86,27 +86,23 @@ const NotificationsPage = () => {
       searchValue
     });
     setActiveFilters(apiFilters);
-  };
+  }, [types, searchValue]);
 
-  const handleResetFilters = () => {
+  const handleResetFilters = useCallback(() => {
     setSelectedFilters({});
     setActiveFilters({});
     setSearchValue('');
     setIsFilterActive(false);
     setIsFilterPanelOpen(false);
-  };
+  }, []);
 
-
-
-
-
-  const handleNavigate = (url) => {
+  const handleNavigate = useCallback((url) => {
     // window.location.href = url; // или использовать роутер
-  };
+  }, []);
 
-  const handleDelete = async (notificationId) => {
+  const handleDelete = useCallback(async (notificationId) => {
     await deleteMultiple([notificationId]);
-  };
+  }, [deleteMultiple]);
 
   return (
     <PageWrapper>

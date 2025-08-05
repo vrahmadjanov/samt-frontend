@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 
 const PageWrapperStyled = styled.div`
@@ -10,8 +10,8 @@ const PageWrapperStyled = styled.div`
   }
 `;
 
-const PageWrapper = ({ children }) => {
+const PageWrapper = memo(({ children }) => {
   return <PageWrapperStyled>{children}</PageWrapperStyled>;
-};
+});
 
 export default PageWrapper; 

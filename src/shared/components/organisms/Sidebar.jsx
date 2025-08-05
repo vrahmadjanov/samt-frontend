@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import MenuItem from '../atoms/MenuItem';
 import { ReactComponent as ProfileIcon } from '../../assets/icons/Profile.svg';
@@ -59,15 +59,15 @@ const Menu = styled.ul`
   z-index: 1;
 `;
 
-const Sidebar = ({ open, onClose }) => {
+const Sidebar = memo(({ open, onClose }) => {
   const { t, language } = useTranslation();
 
-  const handleMenuItemClick = () => {
+  const handleMenuItemClick = useCallback(() => {
     // Закрываем меню при клике на пункт меню только на мобильных устройствах
     if (window.innerWidth <= 900) { // tablet breakpoint
       onClose?.();
     }
-  };
+  }, [onClose]);
 
   return (
     <SidebarWrapper open={open}>
@@ -80,6 +80,6 @@ const Sidebar = ({ open, onClose }) => {
       </Menu>
     </SidebarWrapper>
   );
-};
+});
 
 export default Sidebar; 

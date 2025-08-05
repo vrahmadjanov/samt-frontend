@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 
 const SearchWrapper = styled.div`
@@ -26,7 +26,7 @@ const SearchInput = styled.input`
   }
 `;
 
-const SearchInputComponent = ({ value, onChange, onSubmit, placeholder = "Поиск врачей...", ...props }) => {
+const SearchInputComponent = memo(({ value, onChange, onSubmit, placeholder = "Поиск врачей...", ...props }) => {
   const isActive = value && value.length > 0;
 
   const handleKeyDown = (e) => {
@@ -48,6 +48,6 @@ const SearchInputComponent = ({ value, onChange, onSubmit, placeholder = "Пои
       />
     </SearchWrapper>
   );
-};
+});
 
 export default SearchInputComponent; 

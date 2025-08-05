@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 
 const Badge = styled.div`
@@ -11,6 +11,6 @@ const Badge = styled.div`
   margin-right: 6px;
 `;
 
-const InfoBadge = ({ children }) => <Badge>{children}</Badge>;
+const InfoBadge = memo(({ children }) => <Badge>{children}</Badge>);
 
 export default InfoBadge; 

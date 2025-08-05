@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 
 const PageTitleStyled = styled.h1`
@@ -12,8 +12,8 @@ const PageTitleStyled = styled.h1`
   text-align: left;
 `;
 
-const PageTitle = ({ children }) => {
+const PageTitle = memo(({ children }) => {
   return <PageTitleStyled>{children}</PageTitleStyled>;
-};
+});
 
 export default PageTitle; 

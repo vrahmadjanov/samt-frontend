@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { useClinics } from '../features/clinic/model/useClinics';
 import { useRegions } from '../features/clinic/model/useRegions';
 import { useDistricts } from '../features/clinic/model/useDistricts';
@@ -15,12 +15,6 @@ import ErrorMessage from '../shared/components/atoms/ErrorMessage';
 import PageTitle from '../shared/components/atoms/PageTitle';
 import PageWrapper from '../shared/components/atoms/PageWrapper';
 
-
-
-
-
-
-
 const ClinicsPage = () => {
   const { t } = useTranslation();
   const [searchValue, setSearchValue] = useState('');
@@ -36,7 +30,7 @@ const ClinicsPage = () => {
   const { favoriteIds, addToFavorites, removeFromFavorites } = useFavoriteClinics();
 
   // Динамически формируем фильтры на основе загруженных данных
-  const filterGroups = [
+  const filterGroups = useMemo(() => [
     ...(regions.length > 0 ? [{
       id: 'region',
       title: t('clinics.filters.region'),
@@ -52,13 +46,13 @@ const ClinicsPage = () => {
       title: t('clinics.filters.type'),
       options: clinicTypes.map(ct => ({ id: ct.id, label: ct.name }))
     }] : [])
-  ];
+  ], [regions, districts, clinicTypes, t]);
 
-  const handleSearchChange = (e) => {
+  const handleSearchChange = useCallback((e) => {
     setSearchValue(e.target.value);
-  };
+  }, []);
 
-  const handleSearchSubmit = (e) => {
+  const handleSearchSubmit = useCallback((e) => {
     e.preventDefault();
     const apiFilters = mapUiFiltersToApi({
       selectedFilters,
@@ -68,21 +62,21 @@ const ClinicsPage = () => {
       searchValue
     });
     setActiveFilters(apiFilters);
-  };
+  }, [selectedFilters, regions, districts, clinicTypes, searchValue]);
 
-  const handleFilterClick = () => {
+  const handleFilterClick = useCallback(() => {
     setIsFilterPanelOpen(!isFilterPanelOpen);
     setIsFilterActive(!isFilterActive);
-  };
+  }, [isFilterPanelOpen, isFilterActive]);
 
-  const handleFilterChange = (groupId, optionId) => {
+  const handleFilterChange = useCallback((groupId, optionId) => {
     setSelectedFilters(prev => ({
       ...prev,
       [groupId]: optionId
     }));
-  };
+  }, []);
 
-  const handleApplyFilters = (filters) => {
+  const handleApplyFilters = useCallback((filters) => {
     setIsFilterPanelOpen(false);
     setIsFilterActive(true);
     const apiFilters = mapUiFiltersToApi({
@@ -93,23 +87,23 @@ const ClinicsPage = () => {
       searchValue
     });
     setActiveFilters(apiFilters);
-  };
+  }, [regions, districts, clinicTypes, searchValue]);
 
-  const handleResetFilters = () => {
+  const handleResetFilters = useCallback(() => {
     setSelectedFilters({});
     setActiveFilters({});
     setSearchValue('');
     setIsFilterActive(false);
     setIsFilterPanelOpen(false);
-  };
+  }, []);
 
-  const handleFavorite = (clinicId, isAdding) => {
+  const handleFavorite = useCallback((clinicId, isAdding) => {
     if (isAdding) {
       addToFavorites(clinicId);
     } else {
       removeFromFavorites(clinicId);
     }
-  };
+  }, [addToFavorites, removeFromFavorites]);
 
   return (
     <PageWrapper>

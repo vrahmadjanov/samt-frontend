@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { useDoctors } from '../features/doctor/model/useDoctors';
 import { useFavoriteDoctors } from '../features/doctor/model/useFavoriteDoctors';
 import DoctorList from '../shared/components/organisms/DoctorList';
@@ -14,12 +14,6 @@ import LoadingMessage from '../shared/components/atoms/LoadingMessage';
 import ErrorMessage from '../shared/components/atoms/ErrorMessage';
 import PageTitle from '../shared/components/atoms/PageTitle';
 import PageWrapper from '../shared/components/atoms/PageWrapper';
-
-
-
-
-
-
 
 const DoctorsPage = () => {
   const { t } = useTranslation();
@@ -38,7 +32,7 @@ const DoctorsPage = () => {
   const { experienceLevels } = useExperienceLevels();
 
   // Пример данных фильтров
-  const filterGroups = [
+  const filterGroups = useMemo(() => [
     ...(genders.length > 0 ? [{
       id: 'gender',
       title: t('doctors.filters.gender'),
@@ -54,14 +48,14 @@ const DoctorsPage = () => {
       title: t('doctors.filters.experience'),
       options: experienceLevels.map(e => ({ id: e.id, label: e.name }))
     }] : [])
-  ];
+  ], [genders, specialties, experienceLevels, t]);
 
-  const handleSearchChange = (e) => {
+  const handleSearchChange = useCallback((e) => {
     setSearchValue(e.target.value);
     // Убираем автоматическое применение поиска
-  };
+  }, []);
 
-  const handleSearchSubmit = (e) => {
+  const handleSearchSubmit = useCallback((e) => {
     e.preventDefault();
     const apiFilters = mapUiFiltersToApi({
       selectedFilters,
@@ -71,21 +65,21 @@ const DoctorsPage = () => {
       searchValue
     });
     setActiveFilters(apiFilters);
-  };
+  }, [selectedFilters, genders, specialties, experienceLevels, searchValue]);
 
-  const handleFilterClick = () => {
+  const handleFilterClick = useCallback(() => {
     setIsFilterPanelOpen(!isFilterPanelOpen);
     setIsFilterActive(!isFilterActive);
-  };
+  }, [isFilterPanelOpen, isFilterActive]);
 
-  const handleFilterChange = (groupId, optionId) => {
+  const handleFilterChange = useCallback((groupId, optionId) => {
     setSelectedFilters(prev => ({
       ...prev,
       [groupId]: optionId
     }));
-  };
+  }, []);
 
-  const handleApplyFilters = (filters) => {
+  const handleApplyFilters = useCallback((filters) => {
     setIsFilterPanelOpen(false);
     setIsFilterActive(true);
     const apiFilters = mapUiFiltersToApi({
@@ -96,23 +90,23 @@ const DoctorsPage = () => {
       searchValue
     });
     setActiveFilters(apiFilters);
-  };
+  }, [genders, specialties, experienceLevels, searchValue]);
 
-  const handleResetFilters = () => {
+  const handleResetFilters = useCallback(() => {
     setSelectedFilters({});
     setActiveFilters({});
     setSearchValue('');
     setIsFilterActive(false);
     setIsFilterPanelOpen(false);
-  };
+  }, []);
 
-  const handleFavorite = (doctorId, isAdding) => {
+  const handleFavorite = useCallback((doctorId, isAdding) => {
     if (isAdding) {
       addToFavorites(doctorId);
     } else {
       removeFromFavorites(doctorId);
     }
-  };
+  }, [addToFavorites, removeFromFavorites]);
 
   return (
     <PageWrapper>

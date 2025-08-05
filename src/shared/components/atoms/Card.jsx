@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 
 const CardWrapper = styled.div`
@@ -47,9 +47,9 @@ const CardFooter = styled.div`
   padding: 0;
 `;
 
-const Card = ({ children, ...props }) => {
+const Card = memo(({ children, ...props }) => {
   return <CardWrapper {...props}>{children}</CardWrapper>;
-};
+});
 
 export { Card, CardTopRow, CardInfo, CardFooter };
 export default Card; 

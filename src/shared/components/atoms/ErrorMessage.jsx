@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 
 const ErrorMessageWrapper = styled.div`
@@ -11,8 +11,8 @@ const ErrorMessageWrapper = styled.div`
   font-size: var(--font-base);
 `;
 
-const ErrorMessage = ({ children }) => {
+const ErrorMessage = memo(({ children }) => {
   return <ErrorMessageWrapper>{children}</ErrorMessageWrapper>;
-};
+});
 
 export default ErrorMessage; 

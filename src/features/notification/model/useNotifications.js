@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { fetchNotifications, markNotificationAsRead, markAllNotificationsAsRead, markNotificationsAsRead, deleteNotifications } from '../../../entities/notification/api';
 import { useLanguage } from '../../i18n/model/useLanguage';
 
@@ -11,7 +11,7 @@ export const useNotifications = (filters = {}) => {
   const pageSizeRef = useRef(null);
   const { language } = useLanguage();
 
-  const loadPage = async (p = 1, currentFilters = filters) => {
+  const loadPage = useCallback(async (p = 1, currentFilters = filters) => {
     setLoading(true);
     setError(null);
     try {
@@ -29,9 +29,9 @@ export const useNotifications = (filters = {}) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filters]);
 
-  const markAsRead = async (notificationId) => {
+  const markAsRead = useCallback(async (notificationId) => {
     try {
       await markNotificationAsRead(notificationId);
       // Обновляем список после отметки как прочитанное
@@ -40,9 +40,9 @@ export const useNotifications = (filters = {}) => {
     } catch (err) {
       return { success: false, error: err.message };
     }
-  };
+  }, [loadPage, page, filters]);
 
-  const markAllAsRead = async () => {
+  const markAllAsRead = useCallback(async () => {
     try {
       await markAllNotificationsAsRead();
       // Обновляем список после отметки всех как прочитанные
@@ -51,9 +51,9 @@ export const useNotifications = (filters = {}) => {
     } catch (err) {
       return { success: false, error: err.message };
     }
-  };
+  }, [loadPage, page, filters]);
 
-  const markMultipleAsRead = async (notificationIds) => {
+  const markMultipleAsRead = useCallback(async (notificationIds) => {
     try {
       await markNotificationsAsRead(notificationIds);
       // Обновляем список после отметки как прочитанные
@@ -62,9 +62,9 @@ export const useNotifications = (filters = {}) => {
     } catch (err) {
       return { success: false, error: err.message };
     }
-  };
+  }, [loadPage, page, filters]);
 
-  const deleteMultiple = async (notificationIds) => {
+  const deleteMultiple = useCallback(async (notificationIds) => {
     try {
       await deleteNotifications(notificationIds);
       // Обновляем список после удаления
@@ -73,25 +73,25 @@ export const useNotifications = (filters = {}) => {
     } catch (err) {
       return { success: false, error: err.message };
     }
-  };
+  }, [loadPage, page, filters]);
 
   // Перезагружаем данные при изменении фильтров
   useEffect(() => {
     loadPage(1, filters);
     // eslint-disable-next-line
-  }, [filters]);
+  }, [filters, loadPage]);
 
   // Перезагружаем данные при изменении языка
   useEffect(() => {
     loadPage(1, filters);
     // eslint-disable-next-line
-  }, [language]);
+  }, [language, loadPage]);
 
   // Инициализация при первом рендере
   useEffect(() => {
     loadPage(1, filters);
     // eslint-disable-next-line
-  }, []);
+  }, [loadPage]);
 
   return { 
     notifications, 

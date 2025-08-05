@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { useTranslation } from '../shared/i18n/useTranslation';
 import { useAppointments } from '../features/appointment/model/useAppointments';
 import { useAppointmentStatuses } from '../features/appointment/model/useAppointmentStatuses';
@@ -34,19 +34,19 @@ const AppointmentsPage = () => {
   const { statuses } = useAppointmentStatuses();
 
   // Фильтры на основе статусов из API
-  const filterGroups = [
+  const filterGroups = useMemo(() => [
     ...(statuses.length > 0 ? [{
       id: 'status',
       title: t('appointments.filters.status'),
       options: statuses.map(s => ({ id: s.id, label: s.name }))
     }] : [])
-  ];
+  ], [statuses, t]);
 
-  const handleSearchChange = (e) => {
+  const handleSearchChange = useCallback((e) => {
     setSearchValue(e.target.value);
-  };
+  }, []);
 
-  const handleSearchSubmit = (e) => {
+  const handleSearchSubmit = useCallback((e) => {
     e.preventDefault();
     const apiFilters = mapAppointmentUiFiltersToApi({
       selectedFilters,
@@ -54,21 +54,21 @@ const AppointmentsPage = () => {
       searchValue
     });
     setActiveFilters(apiFilters);
-  };
+  }, [selectedFilters, statuses, searchValue]);
 
-  const handleFilterClick = () => {
+  const handleFilterClick = useCallback(() => {
     setIsFilterPanelOpen(!isFilterPanelOpen);
     setIsFilterActive(!isFilterActive);
-  };
+  }, [isFilterPanelOpen, isFilterActive]);
 
-  const handleFilterChange = (groupId, optionId) => {
+  const handleFilterChange = useCallback((groupId, optionId) => {
     setSelectedFilters(prev => ({
       ...prev,
       [groupId]: optionId
     }));
-  };
+  }, []);
 
-  const handleApplyFilters = (filters) => {
+  const handleApplyFilters = useCallback((filters) => {
     setIsFilterPanelOpen(false);
     setIsFilterActive(true);
     const apiFilters = mapAppointmentUiFiltersToApi({
@@ -77,29 +77,29 @@ const AppointmentsPage = () => {
       searchValue
     });
     setActiveFilters(apiFilters);
-  };
+  }, [statuses, searchValue]);
 
-  const handleResetFilters = () => {
+  const handleResetFilters = useCallback(() => {
     setSelectedFilters({});
     setActiveFilters({});
     setSearchValue('');
     setIsFilterActive(false);
     setIsFilterPanelOpen(false);
-  };
+  }, []);
 
-  const handleCancelAppointment = async (appointmentId) => {
+  const handleCancelAppointment = useCallback(async (appointmentId) => {
     const result = await cancelAppointment(appointmentId);
     if (result.success) {
       console.log('Appointment cancelled successfully');
     } else {
       console.error('Failed to cancel appointment:', result.error);
     }
-  };
+  }, [cancelAppointment]);
 
-  const handleLeaveReview = async (appointmentId) => {
+  const handleLeaveReview = useCallback(async (appointmentId) => {
     // TODO: реализовать функциональность оставления отзыва
     console.log('Leave review for appointment:', appointmentId);
-  };
+  }, []);
 
   return (
     <PageWrapper>

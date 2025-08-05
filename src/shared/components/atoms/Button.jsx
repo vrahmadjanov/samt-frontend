@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 
 const StyledButton = styled.button`
@@ -22,8 +22,8 @@ const StyledButton = styled.button`
   }
 `;
 
-const Button = ({ children, ...props }) => (
+const Button = memo(({ children, ...props }) => (
   <StyledButton {...props}>{children}</StyledButton>
-);
+));
 
 export default Button;

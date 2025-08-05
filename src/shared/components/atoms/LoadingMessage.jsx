@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 
 const LoadingMessageWrapper = styled.div`
@@ -8,8 +8,8 @@ const LoadingMessageWrapper = styled.div`
   font-size: var(--font-lg);
 `;
 
-const LoadingMessage = ({ children }) => {
+const LoadingMessage = memo(({ children }) => {
   return <LoadingMessageWrapper>{children}</LoadingMessageWrapper>;
-};
+});
 
 export default LoadingMessage; 

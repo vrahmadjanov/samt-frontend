@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import SpecialtyIcon from '../atoms/SpecialtyIcon';
 
@@ -13,11 +13,11 @@ const Badge = styled.div`
   color: ${({ theme }) => theme.colors.primary};
 `;
 
-const SpecialtyBadge = ({ icon, name }) => (
+const SpecialtyBadge = memo(({ icon, name }) => (
   <Badge>
     <SpecialtyIcon src={icon} alt={name} />
     {name}
   </Badge>
-);
+));
 
 export default SpecialtyBadge; 

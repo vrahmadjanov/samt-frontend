@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useCallback } from 'react';
 import styled from 'styled-components';
 import FilterOption from '../atoms/FilterOption';
 
@@ -21,7 +21,7 @@ const OptionsContainer = styled.div`
   gap: 4px;
 `;
 
-const FilterGroup = ({ 
+const FilterGroup = memo(({ 
   title, 
   options = [], 
   selectedOption = null, 
@@ -29,11 +29,11 @@ const FilterGroup = ({
   name,
   ...props 
 }) => {
-  const handleOptionChange = (optionId) => {
+  const handleOptionChange = useCallback((optionId) => {
     if (onOptionChange) {
       onOptionChange(optionId);
     }
-  };
+  }, [onOptionChange]);
 
   return (
     <FilterGroupWrapper {...props}>
@@ -52,6 +52,6 @@ const FilterGroup = ({
       </OptionsContainer>
     </FilterGroupWrapper>
   );
-};
+});
 
 export default FilterGroup; 

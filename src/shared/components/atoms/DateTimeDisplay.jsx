@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as CalendarIcon } from '../../assets/icons/Calendar.svg';
 import { useTranslation } from '../../i18n/useTranslation';
@@ -79,7 +79,7 @@ const formatDate = (dateTimeString, t) => {
   return `${day} ${monthNames[month]}`;
 };
 
-const DateTimeDisplay = ({ startTime, endTime, className, showTime = true }) => {
+const DateTimeDisplay = memo(({ startTime, endTime, className, showTime = true }) => {
   const { t } = useTranslation();
   const startTimeFormatted = formatTime(startTime);
   const endTimeFormatted = endTime ? formatTime(endTime) : null;
@@ -101,6 +101,6 @@ const DateTimeDisplay = ({ startTime, endTime, className, showTime = true }) => 
       </DateTimeInfo>
     </DateTimeContainer>
   );
-};
+});
 
 export default DateTimeDisplay; 

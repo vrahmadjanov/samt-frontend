@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 
 const StyledLabel = styled.label`
@@ -10,10 +10,10 @@ const StyledLabel = styled.label`
   user-select: ${({ $clickable }) => $clickable ? 'none' : 'auto'};
 `;
 
-const Label = ({ children, clickable = false, noMargin = false, ...props }) => (
+const Label = memo(({ children, clickable = false, noMargin = false, ...props }) => (
   <StyledLabel $clickable={clickable} $noMargin={noMargin} {...props}>
     {children}
   </StyledLabel>
-);
+));
 
 export default Label; 
