@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { fetchNotifications, markNotificationAsRead, markAllNotificationsAsRead } from '../../../entities/notification/api';
+import { fetchNotifications, markNotificationAsRead, markAllNotificationsAsRead, markNotificationsAsRead, deleteNotifications } from '../../../entities/notification/api';
 import { useLanguage } from '../../i18n/model/useLanguage';
 
 export const useNotifications = (filters = {}) => {
@@ -38,7 +38,6 @@ export const useNotifications = (filters = {}) => {
       await loadPage(page, filters);
       return { success: true };
     } catch (err) {
-      console.error('Error marking notification as read:', err);
       return { success: false, error: err.message };
     }
   };
@@ -50,7 +49,28 @@ export const useNotifications = (filters = {}) => {
       await loadPage(page, filters);
       return { success: true };
     } catch (err) {
-      console.error('Error marking all notifications as read:', err);
+      return { success: false, error: err.message };
+    }
+  };
+
+  const markMultipleAsRead = async (notificationIds) => {
+    try {
+      await markNotificationsAsRead(notificationIds);
+      // Обновляем список после отметки как прочитанные
+      await loadPage(page, filters);
+      return { success: true };
+    } catch (err) {
+      return { success: false, error: err.message };
+    }
+  };
+
+  const deleteMultiple = async (notificationIds) => {
+    try {
+      await deleteNotifications(notificationIds);
+      // Обновляем список после удаления
+      await loadPage(page, filters);
+      return { success: true };
+    } catch (err) {
       return { success: false, error: err.message };
     }
   };
@@ -81,6 +101,8 @@ export const useNotifications = (filters = {}) => {
     error, 
     loadPage,
     markAsRead,
-    markAllAsRead
+    markAllAsRead,
+    markMultipleAsRead,
+    deleteMultiple
   };
 }; 

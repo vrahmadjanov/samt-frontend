@@ -17,7 +17,7 @@ const EmptyMessage = styled.div`
   font-size: var(--font-base);
 `;
 
-const NotificationsList = memo(({ notifications, onMarkAsRead, onNavigate }) => {
+const NotificationsList = memo(({ notifications, onMarkAsRead, onNavigate, onDelete }) => {
   const { t, language } = useTranslation();
   
   if (!notifications || notifications.length === 0) {
@@ -36,6 +36,7 @@ const NotificationsList = memo(({ notifications, onMarkAsRead, onNavigate }) => 
           notification={notification}
           onMarkAsRead={onMarkAsRead}
           onNavigate={onNavigate}
+          onDelete={onDelete}
         />
       ))}
     </ListContainer>

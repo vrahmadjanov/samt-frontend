@@ -27,7 +27,8 @@ const NotificationsPage = () => {
     page, 
     totalPages, 
     loadPage, 
-    markAsRead 
+    markMultipleAsRead,
+    deleteMultiple
   } = useNotifications(activeFilters);
 
   // Используем хук для загрузки типов уведомлений
@@ -95,21 +96,16 @@ const NotificationsPage = () => {
     setIsFilterPanelOpen(false);
   };
 
-  const handleMarkAsRead = async (notificationId) => {
-    const result = await markAsRead(notificationId);
-    if (result.success) {
-      console.log('Notification marked as read successfully');
-    } else {
-      console.error('Failed to mark notification as read:', result.error);
-    }
-  };
+
 
 
 
   const handleNavigate = (url) => {
-    // TODO: реализовать навигацию по URL
-    console.log('Navigate to:', url);
     // window.location.href = url; // или использовать роутер
+  };
+
+  const handleDelete = async (notificationId) => {
+    await deleteMultiple([notificationId]);
   };
 
   return (
@@ -139,8 +135,9 @@ const NotificationsPage = () => {
       {!loading && !error && (
         <NotificationsList
           notifications={notifications}
-          onMarkAsRead={handleMarkAsRead}
+          onMarkAsRead={markMultipleAsRead}
           onNavigate={handleNavigate}
+          onDelete={handleDelete}
         />
       )}
       

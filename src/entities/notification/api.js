@@ -57,4 +57,27 @@ export const markAllNotificationsAsRead = async () => {
     headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
   });
   return response.data;
+};
+
+export const markNotificationsAsRead = async (notificationIds) => {
+  const accessToken = tokenService.getAccessToken();
+  const currentLanguage = localStorage.getItem('app_language') || 'ru';
+  setLanguageHeader(currentLanguage);
+  
+  const response = await httpClient.post('/notifications/mark_as_read/', { ids: notificationIds }, {
+    headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
+  });
+  return response.data;
+};
+
+export const deleteNotifications = async (notificationIds) => {
+  const accessToken = tokenService.getAccessToken();
+  const currentLanguage = localStorage.getItem('app_language') || 'ru';
+  setLanguageHeader(currentLanguage);
+  
+  const response = await httpClient.delete('/notifications/delete_multiple/', {
+    headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
+    data: { ids: notificationIds },
+  });
+  return response.data;
 }; 
