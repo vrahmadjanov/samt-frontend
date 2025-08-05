@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useTranslation } from '../shared/i18n/useTranslation';
-import { useAppointments } from '../features/appointment/model/useAppointments';
-import { useAppointmentStatuses } from '../features/appointment/model/useAppointmentStatuses';
-import { mapAppointmentUiFiltersToApi } from '../entities/appointment/filterMapper';
-import AppointmentsList from '../shared/components/organisms/AppointmentsList';
+import { useNotifications } from '../features/notification/model/useNotifications';
+import { useNotificationTypes } from '../features/notification/model/useNotificationTypes';
+import { mapNotificationUiFiltersToApi } from '../entities/notification/filterMapper';
+import NotificationsList from '../shared/components/organisms/NotificationsList';
 import SearchAndFilter from '../shared/components/molecules/SearchAndFilter';
 import FilterPanel from '../shared/components/organisms/FilterPanel';
 import Pagination from '../shared/components/organisms/Pagination';
@@ -12,7 +12,7 @@ import ErrorMessage from '../shared/components/atoms/ErrorMessage';
 import PageTitle from '../shared/components/atoms/PageTitle';
 import PageWrapper from '../shared/components/atoms/PageWrapper';
 
-const AppointmentsPage = () => {
+const NotificationsPage = () => {
   const { t } = useTranslation();
   const [searchValue, setSearchValue] = useState('');
   const [isFilterActive, setIsFilterActive] = useState(false);
@@ -21,25 +21,33 @@ const AppointmentsPage = () => {
   const [activeFilters, setActiveFilters] = useState({});
 
   const { 
-    appointments, 
+    notifications, 
     loading, 
     error, 
     page, 
     totalPages, 
     loadPage, 
-    cancelAppointment 
-  } = useAppointments(activeFilters);
+    markAsRead 
+  } = useNotifications(activeFilters);
 
-  // Используем хук для загрузки статусов
-  const { statuses } = useAppointmentStatuses();
+  // Используем хук для загрузки типов уведомлений
+  const { types } = useNotificationTypes();
 
-  // Фильтры на основе статусов из API
+  // Фильтры на основе типов из API
   const filterGroups = [
-    ...(statuses.length > 0 ? [{
-      id: 'status',
-      title: t('appointments.filters.status'),
-      options: statuses.map(s => ({ id: s.id, label: s.name }))
-    }] : [])
+    ...(types.length > 0 ? [{
+      id: 'notificationType',
+      title: t('notifications.filters.type'),
+      options: types.map(t => ({ id: t.id, label: t.name }))
+    }] : []),
+    {
+      id: 'readStatus',
+      title: t('notifications.filters.status'),
+      options: [
+        { id: 'unread', label: t('notifications.status.unread') },
+        { id: 'read', label: t('notifications.status.read') }
+      ]
+    }
   ];
 
   const handleSearchChange = (e) => {
@@ -48,9 +56,9 @@ const AppointmentsPage = () => {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    const apiFilters = mapAppointmentUiFiltersToApi({
+    const apiFilters = mapNotificationUiFiltersToApi({
       selectedFilters,
-      statuses,
+      notificationTypes: types,
       searchValue
     });
     setActiveFilters(apiFilters);
@@ -71,9 +79,9 @@ const AppointmentsPage = () => {
   const handleApplyFilters = (filters) => {
     setIsFilterPanelOpen(false);
     setIsFilterActive(true);
-    const apiFilters = mapAppointmentUiFiltersToApi({
+    const apiFilters = mapNotificationUiFiltersToApi({
       selectedFilters: filters,
-      statuses,
+      notificationTypes: types,
       searchValue
     });
     setActiveFilters(apiFilters);
@@ -87,23 +95,26 @@ const AppointmentsPage = () => {
     setIsFilterPanelOpen(false);
   };
 
-  const handleCancelAppointment = async (appointmentId) => {
-    const result = await cancelAppointment(appointmentId);
+  const handleMarkAsRead = async (notificationId) => {
+    const result = await markAsRead(notificationId);
     if (result.success) {
-      console.log('Appointment cancelled successfully');
+      console.log('Notification marked as read successfully');
     } else {
-      console.error('Failed to cancel appointment:', result.error);
+      console.error('Failed to mark notification as read:', result.error);
     }
   };
 
-  const handleLeaveReview = async (appointmentId) => {
-    // TODO: реализовать функциональность оставления отзыва
-    console.log('Leave review for appointment:', appointmentId);
+
+
+  const handleNavigate = (url) => {
+    // TODO: реализовать навигацию по URL
+    console.log('Navigate to:', url);
+    // window.location.href = url; // или использовать роутер
   };
 
   return (
     <PageWrapper>
-      <PageTitle>{t('appointments.title')}</PageTitle>
+      <PageTitle>{t('notifications.title')}</PageTitle>
       
       <SearchAndFilter
         searchValue={searchValue}
@@ -111,7 +122,7 @@ const AppointmentsPage = () => {
         onSearchSubmit={handleSearchSubmit}
         isFilterActive={isFilterActive}
         onFilterClick={handleFilterClick}
-        searchPlaceholder={t('appointments.searchPlaceholder')}
+        searchPlaceholder={t('notifications.searchPlaceholder')}
       />
 
       <FilterPanel
@@ -126,10 +137,10 @@ const AppointmentsPage = () => {
       {loading && <LoadingMessage>{t('common.loading')}</LoadingMessage>}
       {error && <ErrorMessage>{t('common.error')}</ErrorMessage>}
       {!loading && !error && (
-        <AppointmentsList
-          appointments={appointments}
-          onCancel={handleCancelAppointment}
-          onLeaveReview={handleLeaveReview}
+        <NotificationsList
+          notifications={notifications}
+          onMarkAsRead={handleMarkAsRead}
+          onNavigate={handleNavigate}
         />
       )}
       
@@ -142,4 +153,4 @@ const AppointmentsPage = () => {
   );
 };
 
-export default AppointmentsPage; 
+export default NotificationsPage; 

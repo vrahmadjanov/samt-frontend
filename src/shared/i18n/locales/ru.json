@@ -22,6 +22,7 @@
     "clinics": "Клиники",
     "profile": "Профиль",
     "appointments": "Записи",
+    "notifications": "Уведомления",
     "favorites": "Избранное",
     "payments": "Платежи",
     "settings": "Настройки",
@@ -232,6 +233,23 @@
       "cardiology": "Кардиология",
       "dermatology": "Дерматология",
       "neurology": "Неврология"
+    }
+  },
+  "notifications": {
+    "title": "Уведомления",
+    "searchPlaceholder": "Поиск уведомлений...",
+    "notFound": "Уведомления не найдены",
+    "markAsRead": "Отметить как прочитанное",
+    "markAllAsRead": "Отметить все как прочитанные",
+    "view": "Подробнее",
+    "unknownType": "Неизвестный тип",
+    "filters": {
+      "type": "Тип уведомления",
+      "status": "Статус"
+    },
+    "status": {
+      "read": "Прочитанные",
+      "unread": "Непрочитанные"
     }
   },
   "months": {

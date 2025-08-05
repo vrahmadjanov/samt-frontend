@@ -6,6 +6,7 @@ import ClinicsPage from '../pages/ClinicsPage';
 import ProfilePage from '../pages/ProfilePage';
 import PatientProfileDetailsPage from '../pages/PatientProfileDetailsPage';
 import AppointmentsPage from '../pages/AppointmentsPage';
+import NotificationsPage from '../pages/NotificationsPage';
 
 export const routes = [
   {
@@ -46,6 +47,11 @@ export const routes = [
   {
     path: '/profile/details',
     element: <PatientProfileDetailsPage />,
+    protected: true, // Защищенный маршрут - требует авторизации
+  },
+  {
+    path: '/notifications',
+    element: <NotificationsPage />,
     protected: true, // Защищенный маршрут - требует авторизации
   },
 ];

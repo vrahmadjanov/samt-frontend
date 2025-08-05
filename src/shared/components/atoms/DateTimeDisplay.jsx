@@ -79,10 +79,10 @@ const formatDate = (dateTimeString, t) => {
   return `${day} ${monthNames[month]}`;
 };
 
-const DateTimeDisplay = ({ startTime, endTime, className }) => {
+const DateTimeDisplay = ({ startTime, endTime, className, showTime = true }) => {
   const { t } = useTranslation();
   const startTimeFormatted = formatTime(startTime);
-  const endTimeFormatted = formatTime(endTime);
+  const endTimeFormatted = endTime ? formatTime(endTime) : null;
   const dateFormatted = formatDate(startTime, t);
 
   return (
@@ -92,9 +92,12 @@ const DateTimeDisplay = ({ startTime, endTime, className }) => {
       </IconWrapper>
       <DateTimeInfo>
         <DateText>{dateFormatted}</DateText>
-        <TimeText>
-          {startTimeFormatted} - {endTimeFormatted}
-        </TimeText>
+        {showTime && (
+          <TimeText>
+            {startTimeFormatted}
+            {endTimeFormatted && ` - ${endTimeFormatted}`}
+          </TimeText>
+        )}
       </DateTimeInfo>
     </DateTimeContainer>
   );
