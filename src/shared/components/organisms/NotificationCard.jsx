@@ -6,13 +6,10 @@ import Button from '../atoms/Button';
 import DateTimeDisplay from '../atoms/DateTimeDisplay';
 import InfoBadge from '../molecules/InfoBadge';
 import Badges from '../atoms/Badges';
+import MessageIconComponent from '../atoms/MessageIcon';
 import { ReactComponent as ReadIcon } from '../../assets/icons/Read.svg';
 
-const NotificationInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-`;
+
 
 const NotificationTitle = styled.div`
   font-size: var(--font-lg);
@@ -24,14 +21,6 @@ const NotificationTitle = styled.div`
   overflow-wrap: break-word;
   hyphens: auto;
 `;
-
-
-
-
-
-
-
-
 
 const ReadButton = styled.button`
   background: ${({ theme }) => theme.colors.white};
@@ -85,23 +74,21 @@ const NotificationCard = memo(({ notification, onMarkAsRead, onNavigate }) => {
   return (
     <Card>
       <CardTopRow>
-        <NotificationInfo>
+        <MessageIconComponent />
+        <CardInfo>
           <NotificationTitle>{notification.title}</NotificationTitle>
           <Badges>
             <InfoBadge style={{ backgroundColor: 'var(--color-primary)', color: 'white' }}>
               {notification.notification_type?.name || t('notifications.unknownType')}
             </InfoBadge>
           </Badges>
-        </NotificationInfo>
+          <DateTimeDisplay 
+            startTime={notification.created_at}
+            endTime={null}
+            showTime={true}
+          />
+        </CardInfo>
       </CardTopRow>
-      
-      <CardInfo>
-        <DateTimeDisplay 
-          startTime={notification.created_at}
-          endTime={null}
-          showTime={true}
-        />
-      </CardInfo>
       
       <CardFooter>
         {!notification.is_read && (
