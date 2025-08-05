@@ -97,15 +97,6 @@ const AppointmentsPage = () => {
     }
   };
 
-  const handleConfirmAppointment = async (appointmentId, isDoctor = false) => {
-    const result = await confirmAppointment(appointmentId, isDoctor);
-    if (result.success) {
-      console.log('Appointment confirmed successfully');
-    } else {
-      console.error('Failed to confirm appointment:', result.error);
-    }
-  };
-
   const handleLeaveReview = async (appointmentId) => {
     // TODO: реализовать функциональность оставления отзыва
     console.log('Leave review for appointment:', appointmentId);
@@ -139,7 +130,6 @@ const AppointmentsPage = () => {
         <AppointmentsList
           appointments={appointments}
           onCancel={handleCancelAppointment}
-          onConfirm={handleConfirmAppointment}
           onLeaveReview={handleLeaveReview}
         />
       )}

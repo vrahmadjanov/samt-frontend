@@ -80,17 +80,13 @@ const getStatusKey = (statusId) => {
   return statusMap[statusId] || 'unknown';
 };
 
-const AppointmentCard = memo(({ appointment, onCancel, onConfirm, onLeaveReview }) => {
+const AppointmentCard = memo(({ appointment, onCancel, onLeaveReview }) => {
   const { t } = useTranslation();
 
   const handleCancel = () => {
     if (window.confirm(t('appointments.confirmCancel'))) {
       onCancel(appointment.id);
     }
-  };
-
-  const handleConfirm = () => {
-    onConfirm(appointment.id, false);
   };
 
   const handleLeaveReview = () => {
@@ -139,16 +135,9 @@ const AppointmentCard = memo(({ appointment, onCancel, onConfirm, onLeaveReview 
       <CardFooter>
         <ActionButtons>
           {statusKey === 'upcoming' && (
-            <>
-              {!appointment.is_confirmed_by_patient && (
-                <Button onClick={handleConfirm}>
-                  {t('appointments.confirm')}
-                </Button>
-              )}
-              <Button onClick={handleCancel}>
-                {t('appointments.cancel')}
-              </Button>
-            </>
+            <Button onClick={handleCancel}>
+              {t('appointments.cancel')}
+            </Button>
           )}
           {statusKey === 'completed' && (
             <Button onClick={handleLeaveReview}>
