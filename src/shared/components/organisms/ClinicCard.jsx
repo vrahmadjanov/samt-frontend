@@ -30,6 +30,16 @@ const ClinicImage = styled.div`
     object-fit: cover;
     border-radius: ${({ theme }) => theme.radius.md};
   }
+  
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 64px;
+    height: 64px;
+  }
+  
+  @media (max-width: 480px) {
+    width: 56px;
+    height: 56px;
+  }
 `;
 
 const Address = styled.div`

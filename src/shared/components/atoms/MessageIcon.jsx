@@ -20,6 +20,26 @@ const IconWrapper = styled.div`
     height: 32px;
     color: ${({ theme }) => theme.colors.primary};
   }
+  
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 64px;
+    height: 64px;
+    
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    width: 56px;
+    height: 56px;
+    
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
 `;
 
 const MessageIconComponent = () => (

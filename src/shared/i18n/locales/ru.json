@@ -164,8 +164,7 @@
     "profileUpdated": "Профиль обновлен",
     "profileUpdateError": "Ошибка обновления профиля",
     "pictureUpdated": "Фотография обновлена",
-    "pictureUpdateError": "Ошибка обновления фотографии",
-    "loading": "Загрузка..."
+    "pictureUpdateError": "Ошибка обновления фотографии"
   },
   "language": {
     "ru": "Ру",
