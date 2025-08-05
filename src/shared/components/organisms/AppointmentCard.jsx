@@ -94,7 +94,7 @@ const getStatusKey = (statusName) => {
   return statusMap[statusName] || 'unknown';
 };
 
-const AppointmentCard = memo(({ appointment, onCancel, onConfirm }) => {
+const AppointmentCard = memo(({ appointment, onCancel, onConfirm, onLeaveReview }) => {
   const { t } = useTranslation();
 
   const handleCancel = () => {
@@ -105,6 +105,11 @@ const AppointmentCard = memo(({ appointment, onCancel, onConfirm }) => {
 
   const handleConfirm = () => {
     onConfirm(appointment.id, false);
+  };
+
+  const handleLeaveReview = () => {
+    // TODO: реализовать функциональность оставления отзыва
+    alert('Функция оставления отзыва будет реализована позже');
   };
 
   const { date, time } = formatDateTime(appointment.appointment_time_start);
@@ -159,6 +164,11 @@ const AppointmentCard = memo(({ appointment, onCancel, onConfirm }) => {
                 {t('appointments.cancel')}
               </Button>
             </>
+          )}
+          {statusKey === 'completed' && (
+            <Button onClick={handleLeaveReview}>
+              {t('appointments.leaveReview')}
+            </Button>
           )}
         </ActionButtons>
       </CardFooter>

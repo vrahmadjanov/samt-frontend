@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from '../shared/i18n/useTranslation';
 import { useAppointments } from '../features/appointment/model/useAppointments';
+import { useAppointmentStatuses } from '../features/appointment/model/useAppointmentStatuses';
+import { mapAppointmentUiFiltersToApi } from '../entities/appointment/filterMapper';
 import AppointmentsList from '../shared/components/organisms/AppointmentsList';
 import SearchAndFilter from '../shared/components/molecules/SearchAndFilter';
 import FilterPanel from '../shared/components/organisms/FilterPanel';
@@ -29,17 +31,16 @@ const AppointmentsPage = () => {
     confirmAppointment 
   } = useAppointments(activeFilters);
 
+  // Используем хук для загрузки статусов
+  const { statuses } = useAppointmentStatuses();
+
   // Фильтры на основе статусов из API
   const filterGroups = [
-    {
+    ...(statuses.length > 0 ? [{
       id: 'status',
       title: t('appointments.filters.status'),
-      options: [
-        { id: 'upcoming', label: t('appointments.status.upcoming') },
-        { id: 'completed', label: t('appointments.status.completed') },
-        { id: 'cancelled', label: t('appointments.status.cancelled') }
-      ]
-    }
+      options: statuses.map(s => ({ id: s.id, label: s.name }))
+    }] : [])
   ];
 
   const handleSearchChange = (e) => {
@@ -48,13 +49,12 @@ const AppointmentsPage = () => {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    const newFilters = { ...activeFilters };
-    if (searchValue.trim()) {
-      newFilters.search = searchValue.trim();
-    } else {
-      delete newFilters.search;
-    }
-    setActiveFilters(newFilters);
+    const apiFilters = mapAppointmentUiFiltersToApi({
+      selectedFilters,
+      statuses,
+      searchValue
+    });
+    setActiveFilters(apiFilters);
   };
 
   const handleFilterClick = () => {
@@ -72,20 +72,11 @@ const AppointmentsPage = () => {
   const handleApplyFilters = (filters) => {
     setIsFilterPanelOpen(false);
     setIsFilterActive(true);
-    
-    const apiFilters = { ...activeFilters };
-    
-    if (filters.status) {
-      const statusMap = {
-        'upcoming': 1,
-        'completed': 2,
-        'cancelled': 3
-      };
-      apiFilters.status = statusMap[filters.status];
-    } else {
-      delete apiFilters.status;
-    }
-    
+    const apiFilters = mapAppointmentUiFiltersToApi({
+      selectedFilters: filters,
+      statuses,
+      searchValue
+    });
     setActiveFilters(apiFilters);
   };
 
@@ -113,6 +104,11 @@ const AppointmentsPage = () => {
     } else {
       console.error('Failed to confirm appointment:', result.error);
     }
+  };
+
+  const handleLeaveReview = async (appointmentId) => {
+    // TODO: реализовать функциональность оставления отзыва
+    console.log('Leave review for appointment:', appointmentId);
   };
 
   return (
@@ -144,6 +140,7 @@ const AppointmentsPage = () => {
           appointments={appointments}
           onCancel={handleCancelAppointment}
           onConfirm={handleConfirmAppointment}
+          onLeaveReview={handleLeaveReview}
         />
       )}
       

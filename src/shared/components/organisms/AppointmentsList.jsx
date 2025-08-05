@@ -17,7 +17,7 @@ const EmptyMessage = styled.div`
   font-size: var(--font-base);
 `;
 
-const AppointmentsList = memo(({ appointments, onCancel, onConfirm }) => {
+const AppointmentsList = memo(({ appointments, onCancel, onConfirm, onLeaveReview }) => {
   const { t, language } = useTranslation();
   
   if (!appointments || appointments.length === 0) {
@@ -36,6 +36,7 @@ const AppointmentsList = memo(({ appointments, onCancel, onConfirm }) => {
           appointment={appointment}
           onCancel={onCancel}
           onConfirm={onConfirm}
+          onLeaveReview={onLeaveReview}
         />
       ))}
     </ListContainer>

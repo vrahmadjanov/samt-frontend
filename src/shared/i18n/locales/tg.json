@@ -217,7 +217,13 @@
     "confirmCancel": "Шумо мутмаин ҳастед, ки мехоҳед қабулро бекор кунед?",
     "confirm": "Тасдиқ кардан",
     "cancel": "Бекор кардан",
+    "leaveReview": "Баҳо додан",
     "totalCount": "Ҳамагӣ қабулҳо: {{count}}",
+    "specialties": {
+      "cardiology": "Кардиология",
+      "dermatology": "Дерматология",
+      "neurology": "Неврология"
+    },
     "filters": {
       "status": "Ҳолат",
       "specialty": "Ихтисос"
@@ -226,11 +232,6 @@
       "upcoming": "Оянда",
       "completed": "Тамомшуда",
       "cancelled": "Бекоршуда"
-    },
-    "specialties": {
-      "cardiology": "Кардиология",
-      "dermatology": "Дерматология",
-      "neurology": "Неврология"
     }
   }
 } 

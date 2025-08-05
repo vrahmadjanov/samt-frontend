@@ -217,6 +217,7 @@
     "confirmCancel": "Вы уверены, что хотите отменить запись?",
     "confirm": "Подтвердить",
     "cancel": "Отменить",
+    "leaveReview": "Оставить отзыв",
     "totalCount": "Всего записей: {{count}}",
     "filters": {
       "status": "Статус",
