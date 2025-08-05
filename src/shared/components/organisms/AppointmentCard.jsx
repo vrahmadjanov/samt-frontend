@@ -5,6 +5,7 @@ import { Card, CardTopRow, CardInfo, CardFooter } from '../atoms/Card';
 import Button from '../atoms/Button';
 import DoctorAvatar from '../atoms/DoctorAvatar';
 import InfoBadge from '../molecules/InfoBadge';
+import DateTimeDisplay from '../atoms/DateTimeDisplay';
 
 const DoctorInfo = styled.div`
   display: flex;
@@ -31,20 +32,7 @@ const DoctorSpecialties = styled.div`
 `;
 
 const AppointmentDetails = styled.div`
-  margin-top: var(--spacing-md);
-`;
-
-const AppointmentTime = styled.div`
-  font-size: var(--font-base);
-  color: ${({ theme }) => theme.colors.text};
-  font-weight: 500;
-  margin-bottom: var(--spacing-xs);
-`;
-
-const AppointmentDate = styled.div`
-  font-size: var(--font-sm);
-  color: ${({ theme }) => theme.colors.textLight};
-  margin-bottom: var(--spacing-sm);
+  margin-top: 0;
 `;
 
 const ClinicInfo = styled.div`
@@ -78,16 +66,7 @@ const ActionButtons = styled.div`
   gap: var(--spacing-sm);
 `;
 
-const formatDateTime = (dateTimeString) => {
-  const date = new Date(dateTimeString);
-  return {
-    date: date.toLocaleDateString('ru-RU'),
-    time: date.toLocaleTimeString('ru-RU', { 
-      hour: '2-digit', 
-      minute: '2-digit' 
-    })
-  };
-};
+
 
 const getStatusKey = (statusId) => {
   // Используем ID статуса для универсального решения
@@ -119,7 +98,6 @@ const AppointmentCard = memo(({ appointment, onCancel, onConfirm, onLeaveReview 
     alert('Функция оставления отзыва будет реализована позже');
   };
 
-  const { date, time } = formatDateTime(appointment.appointment_time_start);
   const statusKey = getStatusKey(appointment.status.id);
 
   return (
@@ -145,10 +123,10 @@ const AppointmentCard = memo(({ appointment, onCancel, onConfirm, onLeaveReview 
       
       <CardInfo>
         <AppointmentDetails>
-          <AppointmentTime>
-            {time} - {formatDateTime(appointment.appointment_time_end).time}
-          </AppointmentTime>
-          <AppointmentDate>{date}</AppointmentDate>
+          <DateTimeDisplay 
+            startTime={appointment.appointment_time_start}
+            endTime={appointment.appointment_time_end}
+          />
           <ClinicInfo>
             {appointment.clinic.name} - {appointment.clinic.address}
           </ClinicInfo>

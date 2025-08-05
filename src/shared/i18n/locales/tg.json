@@ -233,5 +233,19 @@
       "completed": "Тамомшуда",
       "cancelled": "Бекоршуда"
     }
+  },
+  "months": {
+    "january": "январ",
+    "february": "феврал",
+    "march": "март",
+    "april": "апрел",
+    "may": "май",
+    "june": "июн",
+    "july": "июл",
+    "august": "август",
+    "september": "сентябр",
+    "october": "октябр",
+    "november": "ноябр",
+    "december": "декабр"
   }
 } 
