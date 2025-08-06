@@ -60,6 +60,7 @@ code {
     --font-base: 16px;
     --font-lg: 18px;
     --font-xl: 20px;
+    --font-2xl: 24px;
     --font-title: 24px;
     --font-header: 1.2rem;
     --spacing-xs: 4px;
@@ -81,6 +82,7 @@ code {
     --font-base: 16px;
     --font-lg: 20px;
     --font-xl: 24px;
+    --font-2xl: 28px;
     --font-title: 28px;
     --font-header: 1.5rem;
     --spacing-xs: 6px;
@@ -102,6 +104,7 @@ code {
     --font-base: 18px;
     --font-lg: 22px;
     --font-xl: 26px;
+    --font-2xl: 32px;
     --font-title: 32px;
     --font-header: 2rem;
     --spacing-xs: 8px;

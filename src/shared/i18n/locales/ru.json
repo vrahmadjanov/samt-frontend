@@ -17,7 +17,8 @@
     "of": "из",
     "page": "Страница",
     "minutes": "минут",
-    "currency": "сом"
+    "currency": "сом",
+    "book": "Записаться"
   },
   "navigation": {
     "doctors": "Врачи",
@@ -65,7 +66,7 @@
     "district": "Район",
     "titlesAndMerits": "Звания и награды",
     "languages": "Языки",
-    "workplaces": "Места работы",
+    "workplaces": "Мест работы",
     "quickAppointment": "Быстрая запись",
     "position": "Должность",
     "office": "Кабинет",
@@ -80,10 +81,16 @@
     "graduationYear": "Год окончания",
     "bookAppointment": "Записаться на прием",
     "appointmentSlots": "Время для записи",
+    "workTime": "Время работы",
     "noAvailableSlots": "Нет доступных слотов на выбранную дату",
     "noSlotsTitle": "Нет доступных слотов",
     "noSlotsDescription": "На выбранную дату нет свободного времени для записи. Попробуйте выбрать другую дату.",
-    "selectDate": "Выберите дату"
+    "selectDate": "Выберите дату",
+    "specialist": "Специалист",
+    "reviews": "Отзывов",
+    "appointments": "Приемов",
+    "patients": "Пациентов",
+    "yearsExperience": "Лет опыта"
   },
   "schedule": {
     "monday": "Понедельник",

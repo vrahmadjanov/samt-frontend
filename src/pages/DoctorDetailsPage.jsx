@@ -9,8 +9,7 @@ import ErrorMessage from '../shared/components/atoms/ErrorMessage';
 import DoctorHeader from '../shared/components/organisms/DoctorHeader';
 import DoctorAboutSection from '../shared/components/organisms/DoctorAboutSection';
 import DoctorBasicInfoSection from '../shared/components/organisms/DoctorBasicInfoSection';
-import DoctorWorkplacesSection from '../shared/components/organisms/DoctorWorkplacesSection';
-import DoctorWorkplaceCards from '../shared/components/organisms/DoctorWorkplaceCards';
+import QuickAppointmentSection from '../shared/components/organisms/QuickAppointmentSection';
 import DoctorTitlesSection from '../shared/components/organisms/DoctorTitlesSection';
 import DoctorLanguagesSection from '../shared/components/organisms/DoctorLanguagesSection';
 import DoctorServicesSection from '../shared/components/organisms/DoctorServicesSection';
@@ -58,12 +57,11 @@ const DoctorDetailsPage = () => {
       </PageTitle>
       
       <DoctorHeader doctor={doctor} />
-      <DoctorWorkplaceCards 
+      <QuickAppointmentSection 
         doctor={doctor} 
         selectedWorkplace={selectedWorkplace}
         onWorkplaceSelect={setSelectedWorkplace}
       />
-      <DoctorWorkplacesSection doctor={doctor} selectedWorkplace={selectedWorkplace} />
       <DoctorAboutSection doctor={doctor} />
       <DoctorBasicInfoSection doctor={doctor} />
       <DoctorServicesSection doctor={doctor} />

@@ -17,7 +17,8 @@
     "of": "аз",
     "page": "Саҳифа",
     "minutes": "дақиқа",
-    "currency": "сомонӣ"
+    "currency": "сомонӣ",
+    "book": "Қайд кунед"
   },
   "navigation": {
     "doctors": "Духтурҳо",
@@ -80,10 +81,16 @@
     "graduationYear": "Соли хатм",
     "bookAppointment": "Ба қабул қайд кунед",
     "appointmentSlots": "Вақти қабул",
+    "workTime": "Вақти кор",
     "noAvailableSlots": "Дар ин рӯз слотҳои дастрас нестанд",
     "noSlotsTitle": "Вақти озод нест",
     "noSlotsDescription": "Дар рӯзи интихобшуда вақти озод барои қабул нест. Лутфан рӯзи дигарро интихоб кунед.",
-    "selectDate": "Рӯзро интихоб кунед"
+    "selectDate": "Рӯзро интихоб кунед",
+    "specialist": "Ихтисос",
+    "reviews": "шарҳҳо",
+    "appointments": "Қабулҳо",
+    "patients": "Беморон",
+    "yearsExperience": "Солҳои таҷриба"
   },
   "schedule": {
     "monday": "Душанбе",
