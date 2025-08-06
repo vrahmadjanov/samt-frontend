@@ -1,4 +1,5 @@
 import React, { useState, memo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import DoctorAvatar from '../atoms/DoctorAvatar';
 import SpecialtyBadge from '../molecules/SpecialtyBadge';
@@ -26,6 +27,7 @@ const Workplace = styled.div`
 
 const DoctorCard = memo(({ doctor, favorite, onFavorite }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const handleFavorite = async () => {
@@ -47,8 +49,8 @@ const DoctorCard = memo(({ doctor, favorite, onFavorite }) => {
   };
 
   const handleBook = () => {
-    // TODO: реализовать запись к врачу
-    alert('Функция записи будет реализована позже');
+    // Переходим на страницу деталей врача
+    navigate(`/doctors/${doctor.id}`);
   };
 
   return (

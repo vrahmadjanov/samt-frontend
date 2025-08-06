@@ -22,4 +22,17 @@ export const fetchDoctors = async (page = 1, filters = {}) => {
     headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
   });
   return response.data; // предполагается, что data = { count, next, previous, results }
+};
+
+export const fetchDoctorById = async (doctorId) => {
+  const accessToken = tokenService.getAccessToken();
+  
+  // Устанавливаем заголовок языка
+  const currentLanguage = localStorage.getItem('app_language') || 'ru';
+  setLanguageHeader(currentLanguage);
+  
+  const response = await httpClient.get(`/doctors/${doctorId}/`, {
+    headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
+  });
+  return response.data;
 }; 

@@ -15,7 +15,9 @@
     "next": "Далее",
     "previous": "Предыдущая",
     "of": "из",
-    "page": "Страница"
+    "page": "Страница",
+    "minutes": "минут",
+    "currency": "сом"
   },
   "navigation": {
     "doctors": "Врачи",
@@ -54,6 +56,46 @@
       "female": "Женский"
     }
   },
+  "doctor": {
+    "profile": "Профиль врача",
+    "basicInfo": "Основная информация",
+
+    "birthDate": "Дата рождения",
+    "gender": "Пол",
+    "district": "Район",
+    "titlesAndMerits": "Звания и награды",
+    "languages": "Языки",
+    "workplaces": "Места работы",
+    "quickAppointment": "Быстрая запись",
+    "position": "Должность",
+    "office": "Кабинет",
+    "appointmentInterval": "Длительность",
+    "schedule": "Расписание",
+    "about": "О враче",
+    "services": "Услуги",
+    "servicePlace": "Место оказания услуги",
+    "price": "Стоимость",
+    "education": "Образование",
+    "specialty": "Специальность",
+    "graduationYear": "Год окончания",
+    "bookAppointment": "Записаться на прием",
+    "appointmentSlots": "Время для записи",
+    "noAvailableSlots": "Нет доступных слотов на выбранную дату",
+    "noSlotsTitle": "Нет доступных слотов",
+    "noSlotsDescription": "На выбранную дату нет свободного времени для записи. Попробуйте выбрать другую дату.",
+    "selectDate": "Выберите дату"
+  },
+  "schedule": {
+    "monday": "Понедельник",
+    "tuesday": "Вторник",
+    "wednesday": "Среда",
+    "thursday": "Четверг",
+    "friday": "Пятница",
+    "saturday": "Суббота",
+    "sunday": "Воскресенье",
+    "closed": "Закрыто"
+  },
+
   "clinics": {
     "title": "Клиники",
     "searchPlaceholder": "Поиск клиник...",

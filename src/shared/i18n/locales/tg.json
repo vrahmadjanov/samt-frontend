@@ -15,7 +15,9 @@
     "next": "Баъдӣ",
     "previous": "Пеш",
     "of": "аз",
-    "page": "Саҳифа"
+    "page": "Саҳифа",
+    "minutes": "дақиқа",
+    "currency": "сомонӣ"
   },
   "navigation": {
     "doctors": "Духтурҳо",
@@ -54,6 +56,46 @@
       "female": "Зан"
     }
   },
+  "doctor": {
+    "profile": "Профили духтур",
+    "basicInfo": "Маълумоти асосӣ",
+
+    "birthDate": "Таърихи таваллуд",
+    "gender": "Ҷинс",
+    "district": "Ноҳия",
+    "titlesAndMerits": "Унвонҳо ва мукофотҳо",
+    "languages": "Забонҳо",
+    "workplaces": "Ҷойҳои кор",
+    "quickAppointment": "Зуд бақайдгирӣ",
+    "position": "Вазифа",
+    "office": "Кабинет",
+    "appointmentInterval": "Давра",
+    "schedule": "Ҷадвали кор",
+    "about": "Дар бораи духтур",
+    "services": "Хизматҳо",
+    "servicePlace": "Ҷойи пешниҳоди хизмат",
+    "price": "Нарх",
+    "education": "Маълумот",
+    "specialty": "Ихтисос",
+    "graduationYear": "Соли хатм",
+    "bookAppointment": "Ба қабул қайд кунед",
+    "appointmentSlots": "Вақти қабул",
+    "noAvailableSlots": "Дар ин рӯз слотҳои дастрас нестанд",
+    "noSlotsTitle": "Вақти озод нест",
+    "noSlotsDescription": "Дар рӯзи интихобшуда вақти озод барои қабул нест. Лутфан рӯзи дигарро интихоб кунед.",
+    "selectDate": "Рӯзро интихоб кунед"
+  },
+  "schedule": {
+    "monday": "Душанбе",
+    "tuesday": "Сешанбе",
+    "wednesday": "Чоршанбе",
+    "thursday": "Панҷшанбе",
+    "friday": "Ҷумъа",
+    "saturday": "Шанбе",
+    "sunday": "Якшанбе",
+    "closed": "Пӯшида"
+  },
+
   "clinics": {
     "title": "Марказҳои тиббӣ",
     "searchPlaceholder": "Ҷустуҷӯи марказҳои тиббӣ...",
