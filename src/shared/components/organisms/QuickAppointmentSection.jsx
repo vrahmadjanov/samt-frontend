@@ -25,6 +25,10 @@ const SectionTitle = styled.h3`
   font-weight: ${({ theme }) => theme.font.weight.semibold};
   color: ${({ theme }) => theme.colors.text};
   margin-bottom: var(--spacing-md);
+  
+  @media (max-width: 480px) {
+    font-size: var(--font-base);
+  }
 `;
 
 // Объединенный контейнер для места работы и слотов
@@ -96,11 +100,11 @@ const ClinicName = styled.h3`
   line-height: 1.3;
   
   @media (max-width: 768px) {
-    font-size: var(--font-base);
+    font-size: var(--font-lg);
   }
   
   @media (max-width: 480px) {
-    font-size: var(--font-sm);
+    font-size: var(--font-base);
   }
 `;
 
@@ -111,8 +115,12 @@ const ClinicAddress = styled.p`
   margin: 0;
   line-height: 1.4;
   
+  @media (max-width: 768px) {
+    font-size: var(--font-sm);
+  }
+  
   @media (max-width: 480px) {
-    font-size: var(--font-xs);
+    font-size: var(--font-base);
   }
 `;
 
@@ -140,8 +148,12 @@ const ClinicDetail = styled.div`
   font-size: var(--font-sm);
   color: ${({ theme }) => theme.colors.textLight};
   
+  @media (max-width: 768px) {
+    font-size: var(--font-sm);
+  }
+  
   @media (max-width: 480px) {
-    font-size: var(--font-xs);
+    font-size: var(--font-base);
   }
 `;
 
@@ -150,14 +162,34 @@ const DetailIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   color: ${({ theme }) => theme.colors.primary};
   
   svg {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     stroke-width: 2;
+  }
+  
+  @media (max-width: 768px) {
+    width: 20px;
+    height: 20px;
+    
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    width: 22px;
+    height: 22px;
+    
+    svg {
+      width: 20px;
+      height: 20px;
+    }
   }
 `;
 

@@ -102,11 +102,11 @@ const DoctorName = styled.h1`
   line-height: 1.2;
   
   @media (max-width: 768px) {
-    font-size: var(--font-base);
+    font-size: var(--font-lg);
   }
   
   @media (max-width: 480px) {
-    font-size: var(--font-sm);
+    font-size: var(--font-base);
   }
 `;
 
@@ -162,7 +162,7 @@ const RatingText = styled.span`
   font-weight: 500;
   
   @media (max-width: 480px) {
-    font-size: var(--font-sm);
+    font-size: var(--font-base);
   }
 `;
 
@@ -230,11 +230,11 @@ const StatNumber = styled.span`
   color: ${({ theme }) => theme.colors.primary};
   
   @media (max-width: 768px) {
-    font-size: var(--font-sm);
+    font-size: var(--font-base);
   }
   
   @media (max-width: 480px) {
-    font-size: var(--font-xs);
+    font-size: var(--font-sm);
   }
 `;
 
@@ -245,11 +245,11 @@ const StatLabel = styled.span`
   margin-top: var(--spacing-xs);
   
   @media (max-width: 768px) {
-    font-size: var(--font-xs);
+    font-size: var(--font-sm);
   }
   
   @media (max-width: 480px) {
-    font-size: var(--font-xs);
+    font-size: var(--font-base);
   }
 `;
 
