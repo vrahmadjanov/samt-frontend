@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from '../shared/i18n/useTranslation';
 import { useDoctorDetails } from '../features/doctor/model/useDoctorDetails';
@@ -20,6 +20,13 @@ const DoctorDetailsPage = () => {
   const { t } = useTranslation();
   const { doctor, loading, error } = useDoctorDetails(id);
   const [selectedWorkplace, setSelectedWorkplace] = useState(null);
+
+  // Автоматически выбираем первое место работы, если еще не выбрано
+  useEffect(() => {
+    if (doctor?.workplaces && doctor.workplaces.length > 0 && !selectedWorkplace) {
+      setSelectedWorkplace(doctor.workplaces[0]);
+    }
+  }, [doctor, selectedWorkplace]);
 
   if (loading) {
     return (
@@ -45,10 +52,6 @@ const DoctorDetailsPage = () => {
     );
   }
 
-  // Автоматически выбираем первое место работы, если еще не выбрано
-  if (doctor.workplaces && doctor.workplaces.length > 0 && !selectedWorkplace) {
-    setSelectedWorkplace(doctor.workplaces[0]);
-  }
 
   return (
     <PageWrapper>

@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { API_BASE_URL } from '../config/env';
 
 const httpClient = axios.create({
-  baseURL: 'http://89.111.172.219/api',
+  baseURL: API_BASE_URL,
   timeout: 30000, // Увеличиваем таймаут до 30 секунд
   headers: {
     'Content-Type': 'application/json',
