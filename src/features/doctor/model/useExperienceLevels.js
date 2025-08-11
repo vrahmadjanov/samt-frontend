@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import experienceService from '../../../entities/experience/service';
 import { useLanguage } from '../../i18n/model/useLanguage';
 
@@ -7,8 +7,12 @@ export const useExperienceLevels = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { language } = useLanguage();
+  const lastRequestKeyRef = useRef(null);
 
-  const loadExperienceLevels = async () => {
+  const loadExperienceLevels = useCallback(async () => {
+    const requestKey = JSON.stringify({ language });
+    if (lastRequestKeyRef.current === requestKey) return;
+    lastRequestKeyRef.current = requestKey;
     setLoading(true);
     setError(null);
     try {
@@ -20,12 +24,12 @@ export const useExperienceLevels = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [language]);
 
   // Загружаем уровни опыта при изменении языка
   useEffect(() => {
     loadExperienceLevels();
-  }, [language]);
+  }, [loadExperienceLevels]);
 
   return { experienceLevels, loading, error, reload: loadExperienceLevels };
 }; 

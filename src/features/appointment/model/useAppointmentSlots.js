@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { fetchAppointmentSlots } from '../../../entities/appointment/slotsApi';
 import { useLanguage } from '../../i18n/model/useLanguage';
 
@@ -7,8 +7,14 @@ export const useAppointmentSlots = (workplaceId, date) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { language } = useLanguage();
+  const lastRequestKeyRef = useRef(null);
 
   const loadSlots = useCallback(async () => {
+    const requestKey = JSON.stringify({ workplaceId, date, language });
+    if (lastRequestKeyRef.current === requestKey) {
+      return;
+    }
+    lastRequestKeyRef.current = requestKey;
     if (!workplaceId || !date) {
       setSlots(null);
       setError(null);
@@ -27,7 +33,7 @@ export const useAppointmentSlots = (workplaceId, date) => {
     } finally {
       setLoading(false);
     }
-  }, [workplaceId, date]);
+  }, [workplaceId, date, language]);
 
   useEffect(() => {
     loadSlots();

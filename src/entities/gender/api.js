@@ -1,13 +1,9 @@
-import httpClient, { setLanguageHeader } from '../../shared/utils/httpClient';
+import { createApiClient } from '../../shared/utils/apiClient';
 
 const genderService = {
   async fetchGenders() {
-    // Устанавливаем заголовок языка
-    const currentLanguage = localStorage.getItem('app_language') || 'ru';
-    setLanguageHeader(currentLanguage);
-    
-    const response = await httpClient.get('/genders/');
-    return response.data;
+    const api = createApiClient('/genders/');
+    return await api.get();
   },
 };
 

@@ -1,11 +1,12 @@
 import httpClient from '../../shared/utils/httpClient';
 import tokenService from './tokenService';
 import axios from 'axios';
+import { API_BASE_URL } from '../../shared/config/env';
 
 let isRefreshing = false;
 let failedQueue = [];
 
-const BASE_URL = 'http://89.111.172.219/api';
+const BASE_URL = API_BASE_URL;
 
 const processQueue = (error, token = null) => {
   failedQueue.forEach(prom => {

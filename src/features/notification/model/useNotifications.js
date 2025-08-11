@@ -9,9 +9,14 @@ export const useNotifications = (filters = {}) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const pageSizeRef = useRef(null);
+  const lastRequestKeyRef = useRef(null);
   const { language } = useLanguage();
 
   const loadPage = useCallback(async (p = 1, currentFilters = filters) => {
+    const requestKey = JSON.stringify({ p, currentFilters, language });
+    if (lastRequestKeyRef.current === requestKey) return;
+    lastRequestKeyRef.current = requestKey;
+
     setLoading(true);
     setError(null);
     try {
@@ -29,7 +34,7 @@ export const useNotifications = (filters = {}) => {
     } finally {
       setLoading(false);
     }
-  }, [filters]);
+  }, [filters, language]);
 
   const markAsRead = useCallback(async (notificationId) => {
     try {
@@ -75,23 +80,10 @@ export const useNotifications = (filters = {}) => {
     }
   }, [loadPage, page, filters]);
 
-  // Перезагружаем данные при изменении фильтров
+  // Единый эффект: инициализация и обновление при смене фильтров/языка
   useEffect(() => {
     loadPage(1, filters);
-    // eslint-disable-next-line
-  }, [filters, loadPage]);
-
-  // Перезагружаем данные при изменении языка
-  useEffect(() => {
-    loadPage(1, filters);
-    // eslint-disable-next-line
-  }, [language, loadPage]);
-
-  // Инициализация при первом рендере
-  useEffect(() => {
-    loadPage(1, filters);
-    // eslint-disable-next-line
-  }, [loadPage]);
+  }, [filters, language, loadPage]);
 
   return { 
     notifications, 

@@ -9,19 +9,9 @@ const httpClient = axios.create({
   },
 });
 
-// Интерцептор для добавления токена авторизации
-httpClient.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('access_token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+// Примечание: авторизационный заголовок добавляется в перехватчиках
+// setupAuthInterceptors() из entities/user/api.js, чтобы использовать
+// единый источник токенов (tokenService) и корректно обрабатывать refresh.
 
 // Интерцептор для обработки ответов
 httpClient.interceptors.response.use(

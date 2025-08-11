@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getFavoriteClinicsIds } from '../../../entities/clinic/favoritesApi';
 
 export const useFavoriteClinics = () => {
   const [favoriteIds, setFavoriteIds] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const firstLoadRef = useRef(false);
 
   useEffect(() => {
     const loadFavoriteIds = async () => {
@@ -21,7 +23,10 @@ export const useFavoriteClinics = () => {
       }
     };
 
-    loadFavoriteIds();
+    if (!firstLoadRef.current) {
+      firstLoadRef.current = true;
+      loadFavoriteIds();
+    }
   }, []);
 
   const addToFavorites = (clinicId) => {

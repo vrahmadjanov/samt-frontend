@@ -1,28 +1,11 @@
-import axios from 'axios';
-import tokenService from '../user/tokenService';
-
-const BASE_URL = 'http://89.111.172.219/api';
+import { createApiClient } from '../../shared/utils/apiClient';
 
 export const markNotificationsAsRead = async (notificationIds) => {
-  const accessToken = tokenService.getAccessToken();
-  const response = await axios.post(
-    `${BASE_URL}/notifications/mark_as_read/`,
-    { ids: notificationIds },
-    {
-      headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
-    }
-  );
-  return response.data;
+  const api = createApiClient('/notifications/mark_as_read/');
+  return await api.post({ ids: notificationIds });
 };
 
 export const deleteNotifications = async (notificationIds) => {
-  const accessToken = tokenService.getAccessToken();
-  const response = await axios.delete(
-    `${BASE_URL}/notifications/delete_multiple/`,
-    {
-      headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
-      data: { ids: notificationIds },
-    }
-  );
-  return response.data;
-}; 
+  const api = createApiClient('/notifications/delete_multiple/');
+  return await api.delete({ ids: notificationIds });
+};

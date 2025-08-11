@@ -1,83 +1,32 @@
-import httpClient, { setLanguageHeader } from '../../shared/utils/httpClient';
-import tokenService from '../user/tokenService';
+import { createApiClient } from '../../shared/utils/apiClient';
 
 export const fetchNotificationTypes = async () => {
-  const accessToken = tokenService.getAccessToken();
-  
-  // Устанавливаем заголовок языка
-  const currentLanguage = localStorage.getItem('app_language') || 'ru';
-  setLanguageHeader(currentLanguage);
-  
-  const response = await httpClient.get('/notification_types/', {
-    headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
-  });
-  return response.data;
+  const api = createApiClient('/notification_types/');
+  return await api.get();
 };
 
 export const fetchNotifications = async (page = 1, filters = {}) => {
-  const accessToken = tokenService.getAccessToken();
-  
-  // Устанавливаем заголовок языка
-  const currentLanguage = localStorage.getItem('app_language') || 'ru';
-  setLanguageHeader(currentLanguage);
-  
-  // Формируем URL с параметрами
-  const params = new URLSearchParams();
-  params.append('page', page);
-  // Динамически добавляем все фильтры
-  Object.entries(filters).forEach(([key, value]) => {
-    if (value !== undefined && value !== null && value !== '') {
-      params.append(key, value);
-    }
-  });
-  
-  const response = await httpClient.get(`/notifications-paginated/?${params.toString()}`, {
-    headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
-  });
-  return response.data; // предполагается, что data = { count, next, previous, results }
+  const api = createApiClient('/notifications-paginated/');
+  const params = { page, ...filters };
+  return await api.get(params); // ожидается { count, next, previous, results }
 };
 
 export const markNotificationAsRead = async (notificationId) => {
-  const accessToken = tokenService.getAccessToken();
-  const currentLanguage = localStorage.getItem('app_language') || 'ru';
-  setLanguageHeader(currentLanguage);
-  
-  const response = await httpClient.post(`/notifications/${notificationId}/mark-read/`, {}, {
-    headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
-  });
-  return response.data;
+  const api = createApiClient(`/notifications/${notificationId}/mark-read/`);
+  return await api.post({});
 };
 
 export const markAllNotificationsAsRead = async () => {
-  const accessToken = tokenService.getAccessToken();
-  const currentLanguage = localStorage.getItem('app_language') || 'ru';
-  setLanguageHeader(currentLanguage);
-  
-  const response = await httpClient.post('/notifications/mark-all-read/', {}, {
-    headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
-  });
-  return response.data;
+  const api = createApiClient('/notifications/mark-all-read/');
+  return await api.post({});
 };
 
 export const markNotificationsAsRead = async (notificationIds) => {
-  const accessToken = tokenService.getAccessToken();
-  const currentLanguage = localStorage.getItem('app_language') || 'ru';
-  setLanguageHeader(currentLanguage);
-  
-  const response = await httpClient.post('/notifications/mark_as_read/', { ids: notificationIds }, {
-    headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
-  });
-  return response.data;
+  const api = createApiClient('/notifications/mark_as_read/');
+  return await api.post({ ids: notificationIds });
 };
 
 export const deleteNotifications = async (notificationIds) => {
-  const accessToken = tokenService.getAccessToken();
-  const currentLanguage = localStorage.getItem('app_language') || 'ru';
-  setLanguageHeader(currentLanguage);
-  
-  const response = await httpClient.delete('/notifications/delete_multiple/', {
-    headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
-    data: { ids: notificationIds },
-  });
-  return response.data;
-}; 
+  const api = createApiClient('/notifications/delete_multiple/');
+  return await api.delete({ ids: notificationIds });
+};

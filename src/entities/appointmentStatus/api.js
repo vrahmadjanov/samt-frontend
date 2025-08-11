@@ -1,13 +1,9 @@
-import httpClient, { setLanguageHeader } from '../../shared/utils/httpClient';
+import { createApiClient } from '../../shared/utils/apiClient';
 
 const appointmentStatusApi = {
   async fetchAppointmentStatuses() {
-    // Устанавливаем заголовок языка
-    const currentLanguage = localStorage.getItem('app_language') || 'ru';
-    setLanguageHeader(currentLanguage);
-    
-    const response = await httpClient.get('/appointment_statuses/');
-    return response.data;
+    const api = createApiClient('/appointment_statuses/');
+    return await api.get();
   },
 };
 

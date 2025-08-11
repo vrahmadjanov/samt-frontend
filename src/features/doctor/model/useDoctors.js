@@ -9,9 +9,17 @@ export const useDoctors = (filters = {}) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const pageSizeRef = useRef(null);
+  const lastRequestKeyRef = useRef(null);
   const { language } = useLanguage();
 
   const loadPage = useCallback(async (p = 1, currentFilters = filters) => {
+    // Ключ запроса для защиты от дублей (StrictMode и параллельные вызовы)
+    const requestKey = JSON.stringify({ p, currentFilters, language });
+    if (lastRequestKeyRef.current === requestKey) {
+      return; // уже выполняли этот же запрос
+    }
+    lastRequestKeyRef.current = requestKey;
+
     setLoading(true);
     setError(null);
     try {
@@ -29,25 +37,12 @@ export const useDoctors = (filters = {}) => {
     } finally {
       setLoading(false);
     }
-  }, [filters]);
+  }, [filters, language]);
 
-  // Перезагружаем данные при изменении фильтров
+  // Единый эффект: инициализация и обновление при смене фильтров/языка
   useEffect(() => {
     loadPage(1, filters);
-    // eslint-disable-next-line
-  }, [filters, loadPage]);
-
-  // Перезагружаем данные при изменении языка
-  useEffect(() => {
-    loadPage(1, filters);
-    // eslint-disable-next-line
-  }, [language, loadPage]);
-
-  // Инициализация при первом рендере
-  useEffect(() => {
-    loadPage(1, filters);
-    // eslint-disable-next-line
-  }, [loadPage]);
+  }, [filters, language, loadPage]);
 
   return { doctors, page, totalPages, loading, error, loadPage };
 }; 

@@ -5,7 +5,7 @@ export const patientService = {
   async getMyProfile() {
     try {
       const response = await patientAPI.getMyProfile();
-      return response.data;
+      return response;
     } catch (error) {
       console.error('Error fetching patient profile:', error);
       throw error;
@@ -16,7 +16,7 @@ export const patientService = {
   async updateMyProfile(profileData) {
     try {
       const response = await patientAPI.updateMyProfile(profileData);
-      return response.data;
+      return response;
     } catch (error) {
       console.error('Error updating patient profile:', error);
       throw error;
@@ -27,7 +27,7 @@ export const patientService = {
   async uploadProfilePicture(file) {
     try {
       const response = await patientAPI.uploadProfilePicture(file);
-      return response.data;
+      return response;
     } catch (error) {
       console.error('Error uploading profile picture:', error);
       throw error;

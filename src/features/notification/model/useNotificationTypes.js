@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { fetchNotificationTypes } from '../../../entities/notification/api';
 import { useLanguage } from '../../i18n/model/useLanguage';
 
@@ -7,8 +7,12 @@ export const useNotificationTypes = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { language } = useLanguage();
+  const lastRequestKeyRef = useRef(null);
 
-  const loadTypes = async () => {
+  const loadTypes = useCallback(async () => {
+    const requestKey = JSON.stringify({ language });
+    if (lastRequestKeyRef.current === requestKey) return;
+    lastRequestKeyRef.current = requestKey;
     setLoading(true);
     setError(null);
     try {
@@ -19,19 +23,12 @@ export const useNotificationTypes = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  // Перезагружаем данные при изменении языка
-  useEffect(() => {
-    loadTypes();
-    // eslint-disable-next-line
   }, [language]);
 
-  // Инициализация при первом рендере
+  // Единый эффект: инициализация и обновление при смене языка
   useEffect(() => {
     loadTypes();
-    // eslint-disable-next-line
-  }, []);
+  }, [loadTypes]);
 
   return { types, loading, error };
 }; 
