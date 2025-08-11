@@ -2,6 +2,7 @@ import httpClient from '../../shared/utils/httpClient';
 import tokenService from './tokenService';
 import axios from 'axios';
 import { API_BASE_URL } from '../../shared/config/env';
+import { createApiError } from '../../shared/utils/errors';
 
 let isRefreshing = false;
 let failedQueue = [];
@@ -33,16 +34,18 @@ export const tokenAPI = {
         tokenService.setTokens({ access, refresh, user });
         return response.data.data;
       } else {
-        throw new Error(response.data.message || 'Ошибка авторизации');
+        throw createApiError(response.data?.message || 'Ошибка авторизации', {
+          code: response.status || 'UNKNOWN',
+          raw: response,
+        });
       }
     } catch (error) {
-      if (error.response?.status === 401) {
-        const errors = error.response.data.errors || [];
-        const credentialsError = errors.find(e => e.field === 'credentials');
-        const message = credentialsError?.message || 'Неверные учетные данные';
-        throw new Error(message);
-      }
-      throw error;
+      const status = error.response?.status;
+      const data = error.response?.data || {};
+      throw createApiError(
+        data?.errors?.find?.(e => e.field === 'credentials')?.message || data.message || 'Неверные учетные данные',
+        { code: status || 'UNKNOWN', raw: error }
+      );
     }
   },
 
@@ -63,11 +66,12 @@ export const tokenAPI = {
       return { access, refresh };
     } catch (error) {
       // Если refresh токен истек, очищаем все токены
-      if (error.response?.status === 401) {
+      const status = error.response?.status;
+      if (status === 401) {
         tokenService.clearTokens();
-        throw new Error('Сессия истекла. Необходима повторная авторизация');
+        throw createApiError('Сессия истекла. Необходима повторная авторизация', { code: 401, raw: error });
       }
-      throw error;
+      throw createApiError(error.response?.data?.message || 'Ошибка обновления токена', { code: status || 'UNKNOWN', raw: error });
     }
   },
 

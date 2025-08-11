@@ -20,7 +20,7 @@ export const usePatientProfile = () => {
       const data = await patientService.getMyProfile();
       setProfile(data);
     } catch (err) {
-      setError(err.response?.data?.detail || err.message || 'Ошибка загрузки профиля');
+      setError(err.message || 'Ошибка загрузки профиля');
     } finally {
       setLoading(false);
     }
@@ -39,7 +39,7 @@ export const usePatientProfile = () => {
       setProfile(prev => ({ ...prev, ...updated }));
       return updated;
     } catch (err) {
-      setError(err.response?.data?.detail || 'Ошибка обновления профиля');
+      setError(err.message || 'Ошибка обновления профиля');
       throw err;
     } finally {
       setLoading(false);
@@ -55,7 +55,7 @@ export const usePatientProfile = () => {
       setProfile(prev => ({ ...prev, profile_picture: updated.profile_picture }));
       return updated;
     } catch (err) {
-      setError(err.response?.data?.detail || 'Ошибка загрузки фотографии');
+      setError(err.message || 'Ошибка загрузки фотографии');
       throw err;
     } finally {
       setLoading(false);

@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { DEFAULT_LANGUAGE, isLanguageSupported } from '../../../shared/i18n/i18n';
 import { setLanguageHeader } from '../../../shared/utils/httpClient';
+import { APP_LANGUAGE_KEY } from '../../../shared/config/keys';
 
 // Создаем контекст
 export const LanguageContext = createContext();
@@ -11,7 +12,7 @@ export const LanguageProvider = ({ children }) => {
 
   // Загружаем язык из localStorage при инициализации
   useEffect(() => {
-    const savedLanguage = localStorage.getItem('app_language');
+    const savedLanguage = localStorage.getItem(APP_LANGUAGE_KEY);
     if (savedLanguage && isLanguageSupported(savedLanguage)) {
       setLanguage(savedLanguage);
       setLanguageHeader(savedLanguage);
@@ -22,7 +23,7 @@ export const LanguageProvider = ({ children }) => {
   const changeLanguage = (newLanguage) => {
     if (isLanguageSupported(newLanguage)) {
       setLanguage(newLanguage);
-      localStorage.setItem('app_language', newLanguage);
+      localStorage.setItem(APP_LANGUAGE_KEY, newLanguage);
       setLanguageHeader(newLanguage);
     }
   };

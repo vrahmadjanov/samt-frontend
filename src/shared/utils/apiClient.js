@@ -1,4 +1,4 @@
-import httpClient, { setLanguageHeader } from './httpClient';
+import httpClient from './httpClient';
 
 // Общий API клиент с обработкой ошибок и языков
 export class ApiClient {
@@ -6,17 +6,13 @@ export class ApiClient {
     this.endpoint = endpoint;
   }
 
-  // Установка языка для запроса
-  setLanguage(language = 'ru') {
-    setLanguageHeader(language);
-  }
+  // Язык заголовка управляется централизованно через LanguageProvider/httpClient
+  // Оставляем метод-заглушку для обратной совместимости
+  setLanguage() {}
 
   // GET запрос
   async get(params = {}) {
     try {
-      const currentLanguage = localStorage.getItem('app_language') || 'ru';
-      this.setLanguage(currentLanguage);
-      
       const response = await httpClient.get(this.endpoint, { params });
       return response.data;
     } catch (error) {
@@ -27,9 +23,6 @@ export class ApiClient {
   // POST запрос
   async post(data, params = {}) {
     try {
-      const currentLanguage = localStorage.getItem('app_language') || 'ru';
-      this.setLanguage(currentLanguage);
-      
       const response = await httpClient.post(this.endpoint, data, { params });
       return response.data;
     } catch (error) {
@@ -40,9 +33,6 @@ export class ApiClient {
   // PATCH запрос
   async patch(data, params = {}) {
     try {
-      const currentLanguage = localStorage.getItem('app_language') || 'ru';
-      this.setLanguage(currentLanguage);
-      
       const response = await httpClient.patch(this.endpoint, data, { params });
       return response.data;
     } catch (error) {
@@ -53,9 +43,6 @@ export class ApiClient {
   // DELETE запрос
   async delete(params = {}) {
     try {
-      const currentLanguage = localStorage.getItem('app_language') || 'ru';
-      this.setLanguage(currentLanguage);
-      
       const response = await httpClient.delete(this.endpoint, { params });
       return response.data;
     } catch (error) {
@@ -66,24 +53,36 @@ export class ApiClient {
   // Централизованная обработка ошибок
   handleError(error) {
     console.error(`API Error (${this.endpoint}):`, error);
-    
-    if (error.response?.status === 401) {
-      throw new Error('Необходима авторизация');
+    const status = error.response?.status;
+    const data = error.response?.data || {};
+
+    // Единый формат ошибки
+    const unifiedError = {
+      message: data.message || data.detail || 'Произошла ошибка при выполнении запроса',
+      code: status || 'UNKNOWN',
+      fields: undefined,
+      raw: error,
+    };
+
+    if (status === 401) {
+      unifiedError.message = 'Необходима авторизация';
+      throw unifiedError;
     }
-    
-    if (error.response?.status === 422) {
-      const errors = {};
-      error.response.data.errors?.forEach(({ field, message }) => {
-        errors[field] = message;
-      });
-      throw errors;
+
+    if (status === 422) {
+      // Маппим ошибки полей в единый вид
+      const fields = {};
+      if (Array.isArray(data.errors)) {
+        data.errors.forEach(({ field, message }) => {
+          fields[field] = message;
+        });
+      }
+      unifiedError.fields = fields;
+      throw unifiedError;
     }
-    
-    if (error.response?.data?.message) {
-      throw new Error(error.response.data.message);
-    }
-    
-    throw new Error('Произошла ошибка при выполнении запроса');
+
+    // Общий случай
+    throw unifiedError;
   }
 }
 

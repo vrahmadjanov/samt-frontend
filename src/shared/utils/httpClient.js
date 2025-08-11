@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API_BASE_URL } from '../config/env';
+import { APP_LANGUAGE_KEY } from '../config/keys';
 
 const httpClient = axios.create({
   baseURL: API_BASE_URL,
@@ -34,7 +35,7 @@ export const setLanguageHeader = (language) => {
 
 // Функция для получения текущего языка из localStorage
 export const getCurrentLanguage = () => {
-  return localStorage.getItem('app_language') || 'ru';
+  return localStorage.getItem(APP_LANGUAGE_KEY) || 'ru';
 };
 
 // Инициализируем язык по умолчанию

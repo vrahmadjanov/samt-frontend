@@ -145,9 +145,7 @@ const PatientProfileDetailsPage = () => {
         await authService.deleteAccount();
       } catch (error) {
         console.error('Error deleting account:', error);
-        const errorMessage = error.response?.data?.detail || 
-                           error.response?.data?.message || 
-                           error.message || 
+        const errorMessage = error?.message || 
                            t('profileDetails.deleteError');
         setDeleteError(errorMessage);
       } finally {

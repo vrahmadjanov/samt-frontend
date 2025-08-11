@@ -5,10 +5,11 @@ import {
   extractUserInfoFromToken,
   isValidJWTStructure 
 } from '../../shared/utils/jwtUtils';
+import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY, USER_DATA_KEY } from '../../shared/config/keys';
 
-const ACCESS_KEY = 'accessToken';
-const REFRESH_KEY = 'refreshToken';
-const USER_KEY = 'userData';
+const ACCESS_KEY = ACCESS_TOKEN_KEY;
+const REFRESH_KEY = REFRESH_TOKEN_KEY;
+const USER_KEY = USER_DATA_KEY;
 
 const tokenService = {
   getAccessToken: () => localStorage.getItem(ACCESS_KEY),
