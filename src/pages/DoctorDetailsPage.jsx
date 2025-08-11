@@ -6,7 +6,7 @@ import PageWrapper from '../shared/components/atoms/PageWrapper';
 import PageTitle from '../shared/components/atoms/PageTitle';
 import LoadingMessage from '../shared/components/atoms/LoadingMessage';
 import ErrorMessage from '../shared/components/atoms/ErrorMessage';
-import DoctorHeader from '../shared/components/organisms/DoctorHeader';
+import DoctorHeaderSection from '../shared/components/organisms/DoctorHeaderSection';
 import DoctorAboutSection from '../shared/components/organisms/DoctorAboutSection';
 import DoctorBasicInfoSection from '../shared/components/organisms/DoctorBasicInfoSection';
 import QuickAppointmentSection from '../shared/components/organisms/QuickAppointmentSection';
@@ -59,7 +59,7 @@ const DoctorDetailsPage = () => {
         {t('doctor.profile')}
       </PageTitle>
       
-      <DoctorHeader doctor={doctor} />
+      <DoctorHeaderSection doctor={doctor} />
       <QuickAppointmentSection 
         doctor={doctor} 
         selectedWorkplace={selectedWorkplace}

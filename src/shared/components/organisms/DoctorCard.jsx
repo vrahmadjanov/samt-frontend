@@ -8,7 +8,7 @@ import RatingStars from '../atoms/RatingStars';
 import FavoriteButton from '../atoms/FavoriteButton';
 import Button from '../atoms/Button';
 import Badges from '../atoms/Badges';
-import CardName from '../atoms/CardName';
+import EntityName from '../atoms/EntityName';
 import { CardFooter } from '../atoms/Card';
 import { Card, CardTopRow, CardInfo } from '../atoms/Card';
 import { addDoctorToFavorites, removeDoctorFromFavorites } from '../../../entities/doctor/favoritesApi';
@@ -58,7 +58,7 @@ const DoctorCard = memo(({ doctor, favorite, onFavorite }) => {
       <CardTopRow>
         <DoctorAvatar src={doctor.profile_picture} alt={doctor.first_name + ' ' + doctor.last_name} />
         <CardInfo>
-          <CardName>{doctor.last_name} {doctor.first_name} {doctor.middle_name}</CardName>
+          <EntityName>{doctor.last_name} {doctor.first_name} {doctor.middle_name}</EntityName>
           <SpecialtyList>
             {doctor.specialties.map(s => (
               <SpecialtyBadge key={s.id} icon={s.icon} name={s.name} />

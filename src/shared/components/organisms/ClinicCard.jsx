@@ -5,7 +5,7 @@ import RatingStars from '../atoms/RatingStars';
 import FavoriteButton from '../atoms/FavoriteButton';
 import Button from '../atoms/Button';
 import Badges from '../atoms/Badges';
-import CardName from '../atoms/CardName';
+import EntityName from '../atoms/EntityName';
 import { CardFooter } from '../atoms/Card';
 import { Card, CardTopRow, CardInfo } from '../atoms/Card';
 import { addClinicToFavorites, removeClinicFromFavorites } from '../../../entities/clinic/favoritesApi';
@@ -212,7 +212,7 @@ const ClinicCard = memo(({ clinic, favorite, onFavorite }) => {
           )}
         </ClinicImage>
         <CardInfo>
-          <CardName>{clinic.name}</CardName>
+          <EntityName>{clinic.name}</EntityName>
           {clinic.address && <Address>{clinic.address}</Address>}
           <Badges>
             {clinic.clinic_type && <InfoBadge>{clinic.clinic_type.name}</InfoBadge>}

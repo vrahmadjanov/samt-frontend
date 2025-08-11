@@ -40,10 +40,10 @@ export class ApiClient {
     }
   }
 
-  // DELETE запрос
-  async delete(params = {}) {
+  // DELETE запрос (поддержка JSON-body и query-параметров)
+  async delete(data = {}, params = {}) {
     try {
-      const response = await httpClient.delete(this.endpoint, { params });
+      const response = await httpClient.delete(this.endpoint, { data, params });
       return response.data;
     } catch (error) {
       this.handleError(error);

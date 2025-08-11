@@ -1,25 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import Section from '../molecules/Section';
 import { useTranslation } from '../../i18n/useTranslation';
-
-const Section = styled.div`
-  background: ${({ theme }) => theme.colors.surface};
-  border-radius: ${({ theme }) => theme.radius.lg};
-  box-shadow: ${({ theme }) => theme.shadow.card};
-  padding: var(--spacing-lg);
-  margin-bottom: var(--spacing-lg);
-  width: 100%;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-`;
-
-const SectionTitle = styled.h3`
-  font-size: var(--font-lg);
-  font-weight: ${({ theme }) => theme.font.weight.semibold};
-  color: ${({ theme }) => theme.colors.text};
-  margin-bottom: var(--spacing-md);
-`;
 
 const EducationCard = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.borderLight};
@@ -74,8 +56,7 @@ const DoctorEducationSection = ({ doctor }) => {
   }
 
   return (
-    <Section>
-      <SectionTitle>{t('doctor.education')}</SectionTitle>
+    <Section title={t('doctor.education')}>
       {doctor.educations.map(education => (
         <EducationCard key={education.id}>
           <UniversityName>{education.university.name}</UniversityName>
