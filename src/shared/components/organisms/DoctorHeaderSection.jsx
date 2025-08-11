@@ -71,6 +71,10 @@ const RatingWrap = styled.div`
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    justify-content: center;
+    width: 100%;
+  }
 `;
 
 const RatingText = styled.span`
@@ -79,35 +83,49 @@ const RatingText = styled.span`
   font-weight: 500;
 `;
 
+// Лаконичная обёртка статистики
 const StatsRow = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, minmax(80px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: var(--spacing-md);
-  margin-top: var(--spacing-sm);
-  padding-top: var(--spacing-sm);
-  border-top: 1px solid ${({ theme }) => theme.colors.border};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    grid-template-columns: 1fr;
-    justify-items: center;
-  }
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid ${({ theme }) => theme.colors.borderLight};
 `;
 
 const StatItem = styled.div`
-  display: grid;
-  justify-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: var(--spacing-xs);
 `;
 
 const StatNumber = styled.span`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: ${({ theme }) => theme.colors.surface};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  box-shadow: ${({ theme }) => theme.shadow.xs};
+  color: ${({ theme }) => theme.colors.primary};
   font-size: var(--font-base);
   font-weight: ${({ theme }) => theme.font.weight.bold};
-  color: ${({ theme }) => theme.colors.primary};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 36px;
+    height: 36px;
+    font-size: var(--font-sm);
+  }
 `;
 
 const StatLabel = styled.span`
   font-size: var(--font-xs);
   color: ${({ theme }) => theme.colors.textLight};
+  text-align: center;
 `;
 
 function formatFullName(firstName, lastName, middleName) {
@@ -146,11 +164,12 @@ const DoctorHeaderSection = memo(({ doctor }) => {
             ))}
           </TagsRow>
 
-          <MetaRow>
             <RatingWrap>
-              <RatingStars rating={doctor.rating} />
-              <RatingText>{doctor.rating}</RatingText>
+                <RatingStars rating={doctor.rating} />
+                <RatingText>{doctor.rating}</RatingText>
             </RatingWrap>
+
+          <MetaRow>
 
             {doctor.medical_category && <InfoBadge>{doctor.medical_category.name}</InfoBadge>}
             {doctor.academic_degree && <InfoBadge>{doctor.academic_degree.name}</InfoBadge>}

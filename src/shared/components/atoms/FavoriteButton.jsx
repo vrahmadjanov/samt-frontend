@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ReactComponent as StarIcon } from '../../assets/icons/FavouriteButton.svg';
-import { ReactComponent as StarActiveIcon } from '../../assets/icons/FavouriteButtonActive.svg';
+import { ReactComponent as StarIcon } from '../../assets/icons/Favorite.svg';
+import { ReactComponent as StarActiveIcon } from '../../assets/icons/FavoriteActive.svg';
 
 const Btn = styled.button`
   background: ${({ theme }) => theme.colors.white};

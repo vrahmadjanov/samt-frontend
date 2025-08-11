@@ -5,7 +5,7 @@ import { useLanguage } from '../../../features/i18n/model/useLanguage';
 import authService from '../../../entities/user/service';
 import { ReactComponent as ProfileIcon } from '../../assets/icons/Profile.svg';
 import { ReactComponent as SubscriptionIcon } from '../../assets/icons/Payment.svg';
-import { ReactComponent as FavouriteIcon } from '../../assets/icons/Favourite.svg';
+import { ReactComponent as FavouriteIcon } from '../../assets/icons/Favorite.svg';
 import { ReactComponent as SupportIcon } from '../../assets/icons/Help.svg';
 import { ReactComponent as InfoIcon } from '../../assets/icons/Info.svg';
 import { ReactComponent as FAQIcon } from '../../assets/icons/FAQ.svg';
