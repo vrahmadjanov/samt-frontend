@@ -35,7 +35,7 @@ const PageButton = styled.button`
   }
 `;
 
-const Pagination = memo(({ page, totalPages, onPage }) => {
+const Pagination = memo(({ page, totalPages, onPage, loading = false }) => {
   const pages = [];
   for (let i = 1; i <= totalPages; i++) {
     if (i === 1 || i === totalPages || Math.abs(i - page) <= 2) {
@@ -54,7 +54,16 @@ const Pagination = memo(({ page, totalPages, onPage }) => {
         {pages.map((p, idx) =>
           p === '...'
             ? <span key={`ellipsis-${idx}`} style={{ minWidth: 24, textAlign: 'center' }}>...</span>
-            : <PageButton key={`page-${p}`} $active={p === page} onClick={() => onPage(p)}>{p}</PageButton>
+            : (
+              <PageButton
+                key={`page-${p}`}
+                $active={p === page}
+                onClick={() => onPage(p)}
+                disabled={loading}
+              >
+                {p}
+              </PageButton>
+            )
         )}
       </PagesRow>
     </PaginationWrapper>
@@ -63,7 +72,8 @@ const Pagination = memo(({ page, totalPages, onPage }) => {
   // Кастомная функция сравнения для оптимизации
   return (
     prevProps.page === nextProps.page &&
-    prevProps.totalPages === nextProps.totalPages
+    prevProps.totalPages === nextProps.totalPages &&
+    prevProps.loading === nextProps.loading
   );
 });
 

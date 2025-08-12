@@ -108,6 +108,11 @@ const DoctorsPage = () => {
     }
   }, [addToFavorites, removeFromFavorites]);
 
+  const handlePageChange = useCallback((p) => {
+    if (loading) return;
+    loadPage(p);
+  }, [loading, loadPage]);
+
   return (
     <PageWrapper>
       <PageTitle>{t('doctors.title')}</PageTitle>
@@ -141,7 +146,8 @@ const DoctorsPage = () => {
       <Pagination
         page={page}
         totalPages={totalPages}
-        onPage={loadPage}
+        onPage={handlePageChange}
+        loading={loading}
       />
     </PageWrapper>
   );
