@@ -23,11 +23,21 @@ const CardSkeleton = styled.div`
   display: flex;
   flex-direction: column;
   gap: var(--gap-md);
+  box-sizing: border-box;
+  
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: var(--spacing-md);
+  }
 `;
 
 const TopRow = styled.div`
   display: flex;
   gap: var(--gap-md);
+  
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    flex-direction: column;
+    gap: var(--gap-sm);
+  }
 `;
 
 const InfoCol = styled.div`
@@ -41,6 +51,79 @@ const FooterRow = styled.div`
   align-items: center;
   justify-content: flex-end;
   gap: 12px;
+  
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    justify-content: flex-end;
+    gap: var(--gap-sm);
+  }
+`;
+
+// Адаптивные скелетоны под элементы карточки
+const AvatarSkeleton = styled(Skeleton)`
+  width: 80px;
+  height: 80px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 64px;
+    height: 64px;
+  }
+`;
+
+const NameSkeleton = styled(Skeleton)`
+  width: 55%;
+  height: 22px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 70%;
+    height: 20px;
+  }
+`;
+
+const BadgeRow = styled.div`
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+`;
+
+const BadgeSkeleton = styled(Skeleton)`
+  width: 90px;
+  height: 20px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    height: 18px;
+  }
+`;
+
+const RatingSkeleton = styled(Skeleton)`
+  width: 120px;
+  height: 16px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 100px;
+  }
+`;
+
+const WorkplaceSkeleton = styled(Skeleton)`
+  width: 65%;
+  height: 16px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 80%;
+  }
+`;
+
+const FavSkeleton = styled(Skeleton)`
+  width: 42px;
+  height: 42px;
+  border-radius: ${({ theme }) => theme.radius.md};
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 38px;
+    height: 38px;
+  }
+`;
+
+const PrimaryBtnSkeleton = styled(Skeleton)`
+  width: 160px;
+  height: 42px;
+  border-radius: ${({ theme }) => theme.radius.md};
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 140px;
+  }
 `;
 
 const EmptyMessage = styled.div`
@@ -56,30 +139,24 @@ const DoctorList = memo(({ doctors, favorites = [], onFavorite, loading = false 
   if (loading) {
     return (
       <ListContainer>
-        {Array.from({ length: 10 }).map((_, i) => (
+        {Array.from({ length: 20 }).map((_, i) => (
           <CardSkeleton key={i}>
             <TopRow>
-              <Skeleton width={80} height={80} circle />
+              <AvatarSkeleton circle />
               <InfoCol>
-                {/* Имя врача */}
-                <Skeleton width={'55%'} height={22} />
-                {/* Бейджи специализаций */}
-                <div style={{ display: 'flex', gap: 8 }}>
-                  <Skeleton width={90} height={20} />
-                  <Skeleton width={90} height={20} />
-                  <Skeleton width={90} height={20} />
-                </div>
-                {/* Рейтинг */}
-                <Skeleton width={120} height={16} />
-                {/* Workplace строка */}
-                <Skeleton width={'65%'} height={16} />
+                <NameSkeleton />
+                <BadgeRow>
+                  <BadgeSkeleton />
+                  <BadgeSkeleton />
+                  <BadgeSkeleton />
+                </BadgeRow>
+                <RatingSkeleton />
+                <WorkplaceSkeleton />
               </InfoCol>
             </TopRow>
             <FooterRow>
-              {/* Favorite button placeholder */}
-              <Skeleton width={42} height={42} />
-              {/* Primary action button placeholder */}
-              <Skeleton width={160} height={42} />
+              <FavSkeleton />
+              <PrimaryBtnSkeleton />
             </FooterRow>
           </CardSkeleton>
         ))}

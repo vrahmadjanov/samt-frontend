@@ -20,7 +20,9 @@ export const useDoctors = (filters = {}) => {
     }
     lastRequestKeyRef.current = requestKey;
 
+    // Показываем скелетоны сразу при смене страницы/фильтров
     setLoading(true);
+    setDoctors([]);
     setError(null);
     try {
       const data = await fetchDoctors(p, currentFilters);

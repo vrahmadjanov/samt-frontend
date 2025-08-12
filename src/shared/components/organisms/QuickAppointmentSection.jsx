@@ -7,7 +7,7 @@ import Section from '../molecules/Section';
 import ClinicInfo from '../molecules/ClinicInfo';
 import Badges from '../atoms/Badges';
 import InfoBadge from '../molecules/InfoBadge';
-import LoadingMessage from '../atoms/LoadingMessage';
+import Skeleton from '../atoms/Skeleton';
 import ErrorMessage from '../atoms/ErrorMessage';
 import { ReactComponent as NotFoundIcon } from '../../assets/icons/NotFound.svg';
 import WorkplaceSwitcher from '../molecules/WorkplaceSwitcher';
@@ -346,7 +346,11 @@ const QuickAppointmentSection = ({ doctor, selectedWorkplace, onWorkplaceSelect 
               )}
 
               {loading && (
-                <LoadingMessage>{t('common.loading')}</LoadingMessage>
+                <SlotsGrid>
+                  {Array.from({ length: 12 }).map((_, i) => (
+                    <Skeleton key={i} height={36} />
+                  ))}
+                </SlotsGrid>
               )}
 
               {error && (
