@@ -36,7 +36,7 @@ const Brand = styled.div`
   align-items: center;
   font-size: var(--font-header);
   font-weight: ${({ theme }) => theme.font.weight.bold};
-  color: ${({ theme }) => theme.colors.primary};
+  color: #38424D;
   letter-spacing: 1px;
   gap: var(--gap-sm);
   position: relative;
