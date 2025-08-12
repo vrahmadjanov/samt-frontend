@@ -1,22 +1,15 @@
 import React, { memo } from 'react';
 import styled from 'styled-components';
-import ClinicIconComponent from '../atoms/ClinicIcon';
 
 const ClinicContainer = styled.div`
   display: flex;
-  align-items: flex-start;
-  gap: var(--spacing-md);
+  flex-direction: column;
+  gap: var(--spacing-xs);
   margin-bottom: var(--spacing-md);
 `;
 
 
-
-const ClinicDetails = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
-  flex: 1;
-`;
+// removed unused ClinicDetails
 
 const ClinicName = styled.h4`
   font-size: var(--font-lg);
@@ -44,14 +37,10 @@ const ClinicAddress = styled.p`
 const ClinicInfo = memo(({ clinic }) => {
   return (
     <ClinicContainer>
-      <ClinicIconComponent />
-      
-      <ClinicDetails>
         <ClinicName>{clinic.name}</ClinicName>
         <ClinicAddress>{clinic.address}</ClinicAddress>
-      </ClinicDetails>
     </ClinicContainer>
   );
 });
 
-export default ClinicInfo; 
+export default ClinicInfo;

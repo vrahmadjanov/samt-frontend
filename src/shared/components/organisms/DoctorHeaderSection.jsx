@@ -77,12 +77,6 @@ const RatingWrap = styled.div`
   }
 `;
 
-const RatingText = styled.span`
-  font-size: var(--font-xs);
-  color: ${({ theme }) => theme.colors.textLight};
-  font-weight: 500;
-`;
-
 // Лаконичная обёртка статистики
 const StatsRow = styled.div`
   display: flex;
@@ -166,7 +160,6 @@ const DoctorHeaderSection = memo(({ doctor }) => {
 
             <RatingWrap>
                 <RatingStars rating={doctor.rating} />
-                <RatingText>{doctor.rating}</RatingText>
             </RatingWrap>
 
           <MetaRow>
