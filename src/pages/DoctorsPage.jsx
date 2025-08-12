@@ -10,7 +10,7 @@ import { useTranslation } from '../shared/i18n/useTranslation';
 import { useGenders } from '../features/clinic/model/useGenders';
 import { useSpecialties } from '../features/main/model/useSpecialties';
 import { useExperienceLevels } from '../features/doctor/model/useExperienceLevels';
-import LoadingMessage from '../shared/components/atoms/LoadingMessage';
+// removed unused LoadingMessage
 import ErrorMessage from '../shared/components/atoms/ErrorMessage';
 import PageTitle from '../shared/components/atoms/PageTitle';
 import PageWrapper from '../shared/components/atoms/PageWrapper';
@@ -130,9 +130,13 @@ const DoctorsPage = () => {
         onResetFilters={handleResetFilters}
       />
 
-      {loading && <LoadingMessage>{t('common.loading')}</LoadingMessage>}
       {error && <ErrorMessage>{t('common.error')}</ErrorMessage>}
-      {!loading && !error && <DoctorList doctors={doctors} favorites={favoriteIds} onFavorite={handleFavorite} />}
+      <DoctorList
+        loading={loading}
+        doctors={doctors}
+        favorites={favoriteIds}
+        onFavorite={handleFavorite}
+      />
       
       <Pagination
         page={page}

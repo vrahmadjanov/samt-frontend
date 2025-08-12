@@ -145,10 +145,10 @@ const DoctorHeaderSection = memo(({ doctor }) => {
   return (
     <Section>
       <HeaderGrid>
-        <Avatar src={doctor.profile_picture} alt={fullName} />
+        <Avatar src={doctor.profile_picture || ''} alt={fullName} />
 
         <InfoCol>
-          <EntityName>{fullName}</EntityName>
+          <EntityName>{fullName || ' '}</EntityName>
 
           <TagsRow>
             {doctor.specialties?.map((s) => (
