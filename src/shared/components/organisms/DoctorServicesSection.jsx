@@ -2,13 +2,30 @@ import React from 'react';
 import styled from 'styled-components';
 import Section from '../molecules/Section';
 import { useTranslation } from '../../i18n/useTranslation';
+import { ReactComponent as HomeIcon } from '../../assets/icons/Home.svg';
+import { ReactComponent as ClinicIcon } from '../../assets/icons/Clinic.svg';
+import { ReactComponent as MonitorIcon } from '../../assets/icons/Monitor.svg';
+import IconBadge from '../atoms/IconBadge';
+
+const ServicesGrid = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+`;
 
 const ServiceCard = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.borderLight};
   border-radius: ${({ theme }) => theme.radius.md};
   padding: var(--spacing-md);
   background: ${({ theme }) => theme.colors.white};
-  margin-bottom: var(--spacing-sm);
+  box-shadow: ${({ theme }) => theme.shadow.sm};
+  transition: box-shadow ${({ theme }) => theme.transition.normal}, transform ${({ theme }) => theme.transition.fast};
+  will-change: transform;
+
+  &:hover {
+    box-shadow: ${({ theme }) => theme.shadow.cardHover};
+    transform: translateY(-1px);
+  }
 `;
 
 const ServiceName = styled.h4`
@@ -24,29 +41,43 @@ const ServiceDescription = styled.p`
   margin: 0 0 var(--spacing-sm) 0;
 `;
 
-const ServiceInfo = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--spacing-md);
-`;
-
-const InfoItem = styled.div`
+const ServiceFooter = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-sm);
+
+  @media (max-width: 400px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+  }
 `;
 
-const InfoLabel = styled.span`
-  font-size: var(--font-sm);
-  color: ${({ theme }) => theme.colors.textLight};
-  font-weight: 500;
-`;
-
-const InfoValue = styled.span`
-  font-size: var(--font-base);
+const PriceTag = styled.div`
+  margin-left: auto;
+  font-weight: 700;
   color: ${({ theme }) => theme.colors.text};
-  font-weight: 500;
+  font-size: var(--font-base);
+
+  @media (max-width: 400px) {
+    margin-left: 0;
+  }
 `;
+
+const getPlaceIconById = (id) => {
+  switch (id) {
+    case 1:
+      return HomeIcon;
+    case 2:
+      return ClinicIcon;
+    case 3:
+      return MonitorIcon;
+    default:
+      return ClinicIcon;
+  }
+};
 
 const DoctorServicesSection = ({ doctor }) => {
   const { t } = useTranslation();
@@ -57,24 +88,31 @@ const DoctorServicesSection = ({ doctor }) => {
 
   return (
     <Section title={t('doctor.services')}>
-      {doctor.services.map(service => (
-        <ServiceCard key={service.id}>
-          <ServiceName>{service.name}</ServiceName>
-          <ServiceDescription>{service.description}</ServiceDescription>
-          <ServiceInfo>
-            <InfoItem>
-              <InfoLabel>{t('doctor.servicePlace')}</InfoLabel>
-              <InfoValue>{service.service_place.name}</InfoValue>
-            </InfoItem>
-            {service.price && (
-              <InfoItem>
-                <InfoLabel>{t('doctor.price')}</InfoLabel>
-                <InfoValue>{service.price} {t('common.currency')}</InfoValue>
-              </InfoItem>
-            )}
-          </ServiceInfo>
-        </ServiceCard>
-      ))}
+      <ServicesGrid>
+        {doctor.services.map((service) => {
+          const PlaceIcon = getPlaceIconById(service?.service_place?.id);
+          return (
+            <ServiceCard key={service.id} role="group" aria-label={service.name}>
+              <ServiceName>{service.name}</ServiceName>
+              {service.description && (
+                <ServiceDescription>{service.description}</ServiceDescription>
+              )}
+
+              <ServiceFooter>
+                <IconBadge
+                  icon={<PlaceIcon />}
+                  label={service?.service_place?.name}
+                />
+                {service.price ? (
+                  <PriceTag>
+                    {service.price} {t('common.currency')}
+                  </PriceTag>
+                ) : null}
+              </ServiceFooter>
+            </ServiceCard>
+          );
+        })}
+      </ServicesGrid>
     </Section>
   );
 };

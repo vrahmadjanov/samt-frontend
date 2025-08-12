@@ -2,7 +2,7 @@ import React, { useState, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import DoctorAvatar from '../atoms/DoctorAvatar';
-import SpecialtyBadge from '../molecules/SpecialtyBadge';
+import IconBadge from '../atoms/IconBadge';
 import InfoBadge from '../molecules/InfoBadge';
 import RatingStars from '../atoms/RatingStars';
 import FavoriteButton from '../atoms/FavoriteButton';
@@ -61,7 +61,7 @@ const DoctorCard = memo(({ doctor, favorite, onFavorite }) => {
           <EntityName>{doctor.last_name} {doctor.first_name} {doctor.middle_name}</EntityName>
           <SpecialtyList>
             {doctor.specialties.map(s => (
-              <SpecialtyBadge key={s.id} icon={s.icon} name={s.name} />
+              <IconBadge key={s.id} icon={<img src={s.icon} alt={s.name} />} label={s.name} />
             ))}
           </SpecialtyList>
           <Badges>

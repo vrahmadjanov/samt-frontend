@@ -5,7 +5,11 @@ import Section from '../molecules/Section';
 import EntityName from '../atoms/EntityName';
 import RatingStars from '../atoms/RatingStars';
 import InfoBadge from '../molecules/InfoBadge';
-import SpecialtyBadge from '../molecules/SpecialtyBadge';
+import IconBadge from '../atoms/IconBadge';
+import FavoriteButton from '../atoms/FavoriteButton';
+import { addDoctorToFavorites, removeDoctorFromFavorites } from '../../../entities/doctor/favoritesApi';
+import { ReactComponent as PhoneIcon } from '../../assets/icons/Phone.svg';
+import { ReactComponent as ChatIcon } from '../../assets/icons/Chat.svg';
 
 const HeaderGrid = styled.div`
   display: grid;
@@ -78,48 +82,40 @@ const RatingWrap = styled.div`
 `;
 
 // Лаконичная обёртка статистики
-const StatsRow = styled.div`
+const ActionsRow = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--spacing-md);
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
   margin-top: var(--spacing-md);
   padding-top: var(--spacing-md);
   border-top: 1px solid ${({ theme }) => theme.colors.borderLight};
+  width: 100%;
 `;
 
-const StatItem = styled.div`
+const GhostIconButton = styled.button`
+  background: ${({ theme }) => theme.colors.white};
+  border: 2px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.radius.md};
+  padding: 0;
+  cursor: pointer;
+  width: 42px;
+  height: 42px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--spacing-xs);
-`;
-
-const StatNumber = styled.span`
-  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: ${({ theme }) => theme.colors.surface};
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  box-shadow: ${({ theme }) => theme.shadow.xs};
-  color: ${({ theme }) => theme.colors.primary};
-  font-size: var(--font-base);
-  font-weight: ${({ theme }) => theme.font.weight.bold};
+  transition: all ${({ theme }) => theme.transition.fast};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    width: 36px;
-    height: 36px;
-    font-size: var(--font-sm);
+  &:hover {
+    background: ${({ theme }) => theme.colors.hover.surface};
+    border-color: ${({ theme }) => theme.colors.primary};
+    transform: translateY(-1px);
+    box-shadow: ${({ theme }) => theme.shadow.sm};
   }
-`;
 
-const StatLabel = styled.span`
-  font-size: var(--font-xs);
-  color: ${({ theme }) => theme.colors.textLight};
-  text-align: center;
+  &:active { transform: scale(0.95); }
+
+  svg { width: 20px; height: 20px; display: block; color: ${({ theme }) => theme.colors.textLight}; }
 `;
 
 function formatFullName(firstName, lastName, middleName) {
@@ -137,7 +133,9 @@ function formatExperience(experienceLevel) {
 }
 
 const DoctorHeaderSection = memo(({ doctor }) => {
-  const { t } = useTranslation();
+  useTranslation();
+  const [favorite, setFavorite] = React.useState(!!doctor?.is_favorite);
+  const [favLoading, setFavLoading] = React.useState(false);
 
   const fullName = useMemo(
     () => formatFullName(doctor.first_name, doctor.last_name, doctor.middle_name),
@@ -154,7 +152,7 @@ const DoctorHeaderSection = memo(({ doctor }) => {
 
           <TagsRow>
             {doctor.specialties?.map((s) => (
-              <SpecialtyBadge key={s.id} icon={s.icon} name={s.name} />
+              <IconBadge key={s.id} icon={<img src={s.icon} alt={s.name} />} label={s.name} />
             ))}
           </TagsRow>
 
@@ -171,20 +169,34 @@ const DoctorHeaderSection = memo(({ doctor }) => {
             )}
           </MetaRow>
 
-          <StatsRow>
-            <StatItem>
-              <StatNumber>{doctor.workplaces?.length || 0}</StatNumber>
-              <StatLabel>{t('doctor.workplaces')}</StatLabel>
-            </StatItem>
-            <StatItem>
-              <StatNumber>{doctor.appointments_count || 0}</StatNumber>
-              <StatLabel>{t('doctor.appointments')}</StatLabel>
-            </StatItem>
-            <StatItem>
-              <StatNumber>{doctor.reviews_count || 0}</StatNumber>
-              <StatLabel>{t('doctor.reviews')}</StatLabel>
-            </StatItem>
-          </StatsRow>
+          <ActionsRow>
+            <GhostIconButton type="button" title="Позвонить">
+              <PhoneIcon />
+            </GhostIconButton>
+            <GhostIconButton type="button" title="Написать">
+              <ChatIcon />
+            </GhostIconButton>
+            <FavoriteButton
+              active={favorite}
+              onClick={async () => {
+                setFavLoading(true);
+                try {
+                  if (favorite) {
+                    await removeDoctorFromFavorites(doctor.id);
+                    setFavorite(false);
+                  } else {
+                    await addDoctorToFavorites(doctor.id);
+                    setFavorite(true);
+                  }
+                } catch (e) {
+                  console.error('Error handling favorite:', e);
+                } finally {
+                  setFavLoading(false);
+                }
+              }}
+              disabled={favLoading}
+            />
+          </ActionsRow>
         </InfoCol>
       </HeaderGrid>
     </Section>
@@ -192,5 +204,3 @@ const DoctorHeaderSection = memo(({ doctor }) => {
 });
 
 export default DoctorHeaderSection;
-
-
