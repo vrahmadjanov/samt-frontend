@@ -6,6 +6,7 @@ import { useDoctorDetails } from '../features/doctor/model/useDoctorDetails';
 import PageWrapper from '../shared/components/atoms/PageWrapper';
 import PageTitle from '../shared/components/atoms/PageTitle';
 import Skeleton from '../shared/components/atoms/Skeleton';
+import SectionSkeleton from '../shared/components/atoms/SectionSkeleton';
 import ErrorMessage from '../shared/components/atoms/ErrorMessage';
 import DoctorHeaderSection from '../shared/components/organisms/DoctorHeaderSection';
 import DoctorAboutSection from '../shared/components/organisms/DoctorAboutSection';
@@ -15,20 +16,6 @@ import DoctorLanguagesSection from '../shared/components/organisms/DoctorLanguag
 import DoctorServicesSection from '../shared/components/organisms/DoctorServicesSection';
 import DoctorEducationSection from '../shared/components/organisms/DoctorEducationSection';
 import { useFavoriteDoctors } from '../features/doctor/model/useFavoriteDoctors';
-
-// Styled skeleton containers matching section styles
-const SectionSkeleton = styled.div`
-  background: ${({ theme }) => theme.colors.surface};
-  border-radius: ${({ theme }) => theme.radius.lg};
-  box-shadow: ${({ theme }) => theme.shadow.card};
-  padding: var(--spacing-lg);
-  margin-bottom: var(--spacing-lg);
-  width: 100%;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-  box-sizing: border-box;
-`;
 
 const HeaderSkGrid = styled.div`
   display: grid;

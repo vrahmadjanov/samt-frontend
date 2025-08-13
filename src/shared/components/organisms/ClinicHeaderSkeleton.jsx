@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import styled from 'styled-components';
-import Section from '../molecules/Section';
+import SectionSkeleton from '../atoms/SectionSkeleton';
 import Skeleton from '../atoms/Skeleton';
 
 const HeaderSkGrid = styled.div`
@@ -82,7 +82,7 @@ const IconBtnSk = styled(Skeleton)`
 `;
 
 const ClinicHeaderSkeleton = memo(() => (
-  <Section>
+  <SectionSkeleton>
     <HeaderSkGrid>
       <ImageSk />
       <div style={{ display: 'grid', gap: 8, width: '100%' }}>
@@ -100,7 +100,7 @@ const ClinicHeaderSkeleton = memo(() => (
       <IconBtnSk />
       <IconBtnSk />
     </ActionsRowSk>
-  </Section>
+  </SectionSkeleton>
 ));
 
 export default ClinicHeaderSkeleton;

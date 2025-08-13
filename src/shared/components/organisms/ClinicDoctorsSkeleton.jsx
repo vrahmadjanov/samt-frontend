@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import styled from 'styled-components';
-import DoctorList from './DoctorList';
+import SkeletonCard from '../atoms/SkeletonCard';
 import { useTranslation } from '../../i18n/useTranslation';
 
 const BlockWrap = styled.div`
@@ -28,7 +28,9 @@ const ClinicDoctorsSkeleton = memo(() => {
       <BlockHeader>
         <BlockTitle>{t('clinics.doctorsSectionTitle') || 'Врачи клиники'}</BlockTitle>
       </BlockHeader>
-      <DoctorList loading={true} doctors={[]} favorites={[]} onFavorite={() => {}} />
+      {Array.from({ length: 3 }).map((_, i) => (
+        <SkeletonCard key={i} avatarSize="md" avatarRound footerButtons={2} />
+      ))}
     </BlockWrap>
   );
 });
