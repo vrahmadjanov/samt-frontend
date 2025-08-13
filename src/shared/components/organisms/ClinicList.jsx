@@ -1,6 +1,8 @@
 import React, { memo } from 'react';
 import styled from 'styled-components';
 import ClinicCard from './ClinicCard';
+import EmptyState from '../atoms/EmptyState';
+import { ReactComponent as NotFoundIcon } from '../../assets/icons/NotFound.svg';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
 import Skeleton from '../atoms/Skeleton';
 
@@ -9,13 +11,6 @@ const ListContainer = styled.div`
   flex-direction: column;
   gap: var(--gap-md);
   margin-bottom: var(--spacing-lg);
-`;
-
-const EmptyMessage = styled.div`
-  text-align: center;
-  padding: var(--spacing-xl);
-  color: ${({ theme }) => theme.colors.textLight};
-  font-size: var(--font-base);
 `;
 
 const CardSkeleton = styled.div`
@@ -145,9 +140,7 @@ const ClinicList = memo(({ clinics, favorites = [], onFavorite, loading = false 
 
   if (!clinics || clinics.length === 0) {
     return (
-      <EmptyMessage>
-        {t('clinics.notFound', 'Клиники не найдены')}
-      </EmptyMessage>
+      <EmptyState icon={<NotFoundIcon />} title={t('clinics.notFound', 'Клиники не найдены')} />
     );
   }
 

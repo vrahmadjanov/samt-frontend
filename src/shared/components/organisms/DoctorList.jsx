@@ -1,6 +1,8 @@
 import React, { memo } from 'react';
 import styled from 'styled-components';
 import DoctorCard from './DoctorCard';
+import EmptyState from '../atoms/EmptyState';
+import { ReactComponent as NotFoundIcon } from '../../assets/icons/NotFound.svg';
 import Skeleton from '../atoms/Skeleton';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
 
@@ -126,13 +128,6 @@ const PrimaryBtnSkeleton = styled(Skeleton)`
   }
 `;
 
-const EmptyMessage = styled.div`
-  text-align: center;
-  padding: var(--spacing-xl);
-  color: ${({ theme }) => theme.colors.textLight};
-  font-size: var(--font-base);
-`;
-
 const DoctorList = memo(({ doctors, favorites = [], onFavorite, loading = false }) => {
   const { t } = useTranslation();
   
@@ -166,9 +161,7 @@ const DoctorList = memo(({ doctors, favorites = [], onFavorite, loading = false 
 
   if (!doctors || doctors.length === 0) {
     return (
-      <EmptyMessage>
-        {t('doctors.notFound', 'Врачи не найдены')}
-      </EmptyMessage>
+      <EmptyState icon={<NotFoundIcon />} title={t('doctors.notFound', 'Врачи не найдены')} />
     );
   }
 

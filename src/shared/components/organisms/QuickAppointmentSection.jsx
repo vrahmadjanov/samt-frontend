@@ -10,6 +10,7 @@ import InfoBadge from '../molecules/InfoBadge';
 import Skeleton from '../atoms/Skeleton';
 import ErrorMessage from '../atoms/ErrorMessage';
 import { ReactComponent as NotFoundIcon } from '../../assets/icons/NotFound.svg';
+import EmptyState from '../atoms/EmptyState';
 import WorkplaceSwitcher from '../molecules/WorkplaceSwitcher';
 
 // Вложенная карточка: шапка (инфо о месте работы) + тело (слоты)
@@ -170,31 +171,6 @@ const SlotButton = styled.button`
   }
 `;
 
-// Сообщение об отсутствии слотов
-const NoSlotsMessage = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: ${({ theme }) => theme.colors.textLight};
-`;
-
-// Описание сообщения
-const NoSlotsDescription = styled.div`
-  font-size: var(--font-sm);
-  color: ${({ theme }) => theme.colors.textLight};
-  line-height: 1.4;
-  max-width: 300px;
-  margin: 0 auto;
-  
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    font-size: var(--font-xs);
-  }
-`;
-
-// Используем готовые атомы LoadingMessage / ErrorMessage
-
 // Форматирование времени
 const formatTime = (timeString) => {
   if (!timeString) return '';
@@ -337,10 +313,11 @@ const QuickAppointmentSection = ({ doctor, selectedWorkplace, onWorkplaceSelect 
                       </SlotsGrid>
                     </SlotsGridContainer>
                   ) : (
-                    <NoSlotsMessage>
-                      <NotFoundIcon style={{ width: 40, height: 40, marginBottom: 'var(--spacing-sm)' }} />
-                      <NoSlotsDescription>{t('doctor.noSlotsDescription')}</NoSlotsDescription>
-                    </NoSlotsMessage>
+                    <EmptyState
+                      icon={<NotFoundIcon />}
+                      title={t('doctor.noSlotsTitle') || t('doctor.noSlotsDescription')}
+                      subtitle={t('doctor.noSlotsDescription')}
+                    />
                   )}
                 </>
               )}
