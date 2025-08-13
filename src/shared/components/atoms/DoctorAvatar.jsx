@@ -9,6 +9,8 @@ const Img = styled.img`
   border: 2px solid ${({ theme }) => theme.colors.primary};
 `;
 
-const DoctorAvatar = ({ src, alt }) => <Img src={src} alt={alt} />;
+const DoctorAvatar = ({ src, alt }) => (
+  <Img src={src} alt={alt} loading="lazy" width={64} height={64} />
+);
 
 export default DoctorAvatar; 

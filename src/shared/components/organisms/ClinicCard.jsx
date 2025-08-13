@@ -193,6 +193,9 @@ const ClinicCard = memo(({ clinic, favorite, onFavorite }) => {
             <img 
               src={clinic.picture} 
               alt={clinic.name}
+              loading="lazy"
+              width={80}
+              height={80}
               onError={() => setImageError(true)}
             />
           ) : (

@@ -10,7 +10,6 @@ import { useTranslation } from '../shared/i18n/useTranslation';
 import { useGenders } from '../features/clinic/model/useGenders';
 import { useSpecialties } from '../features/main/model/useSpecialties';
 import { useExperienceLevels } from '../features/doctor/model/useExperienceLevels';
-// removed unused LoadingMessage
 import ErrorMessage from '../shared/components/atoms/ErrorMessage';
 import PageTitle from '../shared/components/atoms/PageTitle';
 import PageWrapper from '../shared/components/atoms/PageWrapper';

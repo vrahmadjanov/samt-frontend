@@ -1,8 +1,9 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import PageWrapper from './PageWrapper';
 import Header from './Header';
 import Sidebar from './Sidebar';
+import { useLocation } from 'react-router-dom';
 
 const LayoutContainer = styled.div`
   display: flex;
@@ -53,6 +54,8 @@ const SidebarContainer = styled.div`
 
 const Layout = ({ children }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const mainRef = useRef(null);
+  const location = useLocation();
 
   // Закрытие меню по Esc
   useEffect(() => {
@@ -80,6 +83,14 @@ const Layout = ({ children }) => {
   const handleMenuToggle = useCallback(() => setMenuOpen((v) => !v), []);
   const handleMenuClose = useCallback(() => setMenuOpen(false), []);
 
+  // Прокрутка основного контейнера к верху при смене маршрута
+  useEffect(() => {
+    if (!mainRef.current) return;
+    // Если есть якорь в URL — не мешаем переходу к нему
+    if (location.hash) return;
+    mainRef.current.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [location.pathname, location.hash]);
+
   return (
     <PageWrapper>
       <Header menuOpen={menuOpen} onMenuToggle={handleMenuToggle} />
@@ -87,7 +98,7 @@ const Layout = ({ children }) => {
         <SidebarContainer>
           <Sidebar open={menuOpen} onClose={handleMenuClose} />
         </SidebarContainer>
-        <Main>
+        <Main ref={mainRef}>
           {children}
         </Main>
       </LayoutContainer>

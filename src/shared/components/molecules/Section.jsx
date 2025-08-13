@@ -18,6 +18,7 @@ const SectionHeader = styled.header`
   align-items: center;
   justify-content: space-between;
   margin-bottom: var(--spacing-md);
+  min-height: 48px; /* фиксируем высоту заголовка для стабильности каркаса */
 `;
 
 const SectionTitle = styled.h3`
@@ -25,6 +26,10 @@ const SectionTitle = styled.h3`
   font-weight: ${({ theme }) => theme.font.weight.semibold};
   color: ${({ theme }) => theme.colors.text};
   margin: 0;
+  line-height: 1.2;
+  display: flex;
+  align-items: center;
+  min-height: 32px; /* минимальная высота текста заголовка */
 `;
 
 const SectionContent = styled.div``;
