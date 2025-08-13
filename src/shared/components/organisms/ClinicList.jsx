@@ -113,7 +113,7 @@ const PrimaryBtnSk = styled(Skeleton)`
 `;
 
 const ClinicList = memo(({ clinics, favorites = [], onFavorite, loading = false }) => {
-  const { t, language } = useTranslation();
+  const { t } = useTranslation();
   
   if (loading) {
     return (
@@ -155,7 +155,7 @@ const ClinicList = memo(({ clinics, favorites = [], onFavorite, loading = false 
     <ListContainer>
       {clinics.map((clinic) => (
         <ClinicCard 
-          key={`${clinic.id}-${language}`} 
+          key={clinic.id} 
           clinic={clinic} 
           favorite={favorites.includes(clinic.id)}
           onFavorite={onFavorite}

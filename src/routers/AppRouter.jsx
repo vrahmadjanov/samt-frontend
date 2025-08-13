@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, BrowserRouter as Router, Navigate, useLocation } from 'react-router-dom';
+import { Routes, Route, BrowserRouter as Router, Navigate } from 'react-router-dom';
 import { routes } from './routes';
 import ProtectedRoute from './ProtectedRoute';
 import PublicRoute from './PublicRoute';
@@ -10,16 +10,6 @@ import AuthRedirectHandler from '../features/auth/model/AuthRedirectHandler';
 const AppRouterInner = () => {
   const { isAuthenticated, loading } = useAuthContext();
 
-  // Прокрутка страницы к верху при смене маршрута
-  const ScrollToTop = () => {
-    const { pathname, hash } = useLocation();
-    React.useEffect(() => {
-      // Если используется якорь — не мешаем штатной прокрутке к нему
-      if (hash) return;
-      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-    }, [pathname, hash]);
-    return null;
-  };
 
   // Показываем загрузку пока проверяется авторизация
   if (loading) {
@@ -28,7 +18,6 @@ const AppRouterInner = () => {
 
   return (
     <>
-      <ScrollToTop />
       <AuthRedirectHandler />
       <Routes>
         {routes.map(({ path, element, protected: isProtected, public: isPublic }) => {

@@ -12,6 +12,7 @@ import { Card, CardTopRow, CardInfo } from '../atoms/Card';
 import { addClinicToFavorites, removeClinicFromFavorites } from '../../../entities/clinic/favoritesApi';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
 import { ReactComponent as MapIcon } from '../../assets/icons/Map.svg';
+import IconButton from '../atoms/IconButton';
 
 const ClinicImage = styled.div`
   width: 80px;
@@ -89,37 +90,6 @@ const Schedule = styled.div`
   }
 `;
 
-const MapButton = styled.button`
-  background: ${({ theme }) => theme.colors.white};
-  border: 2px solid ${({ theme }) => theme.colors.border};
-  border-radius: ${({ theme }) => theme.radius.md};
-  padding: 0;
-  cursor: pointer;
-  width: 42px;
-  height: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all ${({ theme }) => theme.transition.fast};
-  
-  &:hover {
-    background: ${({ theme }) => theme.colors.hover.surface};
-    border-color: ${({ theme }) => theme.colors.primary};
-    transform: translateY(-1px);
-    box-shadow: ${({ theme }) => theme.shadow.sm};
-  }
-  
-  &:active {
-    transform: scale(0.95);
-  }
-  
-  svg {
-    width: 20px;
-    height: 20px;
-    display: block;
-    color: ${({ theme }) => theme.colors.textLight};
-  }
-`;
 
 const ClinicCard = memo(({ clinic, favorite, onFavorite }) => {
   const { t } = useTranslation();
@@ -241,9 +211,9 @@ const ClinicCard = memo(({ clinic, favorite, onFavorite }) => {
       <CardFooter>
         <FavoriteButton active={favorite} onClick={handleFavorite} disabled={loading} />
         {clinic.latitude && clinic.longitude && (
-          <MapButton onClick={handleOpenMap} title="Открыть на карте">
+          <IconButton onClick={handleOpenMap} title="Открыть на карте">
             <MapIcon />
-          </MapButton>
+          </IconButton>
         )}
         <Button onClick={handleViewDoctors}>{t('clinics.card.viewDoctors')}</Button>
       </CardFooter>

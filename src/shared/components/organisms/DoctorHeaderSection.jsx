@@ -10,6 +10,7 @@ import FavoriteButton from '../atoms/FavoriteButton';
 import { addDoctorToFavorites, removeDoctorFromFavorites } from '../../../entities/doctor/favoritesApi';
 import { ReactComponent as PhoneIcon } from '../../assets/icons/Phone.svg';
 import { ReactComponent as ChatIcon } from '../../assets/icons/Chat.svg';
+import IconButton from '../atoms/IconButton';
 
 const HeaderGrid = styled.div`
   display: grid;
@@ -93,30 +94,6 @@ const ActionsRow = styled.div`
   width: 100%;
 `;
 
-const GhostIconButton = styled.button`
-  background: ${({ theme }) => theme.colors.white};
-  border: 2px solid ${({ theme }) => theme.colors.border};
-  border-radius: ${({ theme }) => theme.radius.md};
-  padding: 0;
-  cursor: pointer;
-  width: 42px;
-  height: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all ${({ theme }) => theme.transition.fast};
-
-  &:hover {
-    background: ${({ theme }) => theme.colors.hover.surface};
-    border-color: ${({ theme }) => theme.colors.primary};
-    transform: translateY(-1px);
-    box-shadow: ${({ theme }) => theme.shadow.sm};
-  }
-
-  &:active { transform: scale(0.95); }
-
-  svg { width: 20px; height: 20px; display: block; color: ${({ theme }) => theme.colors.textLight}; }
-`;
 
 function formatFullName(firstName, lastName, middleName) {
   const parts = [lastName, firstName].filter(Boolean);
@@ -174,12 +151,12 @@ const DoctorHeaderSection = memo(({ doctor, initialFavorite, onFavoriteChange })
           </MetaRow>
 
           <ActionsRow>
-            <GhostIconButton type="button" title="Позвонить">
+            <IconButton title="Позвонить">
               <PhoneIcon />
-            </GhostIconButton>
-            <GhostIconButton type="button" title="Написать">
+            </IconButton>
+            <IconButton title="Написать">
               <ChatIcon />
-            </GhostIconButton>
+            </IconButton>
             <FavoriteButton
               active={favorite}
               onClick={async () => {

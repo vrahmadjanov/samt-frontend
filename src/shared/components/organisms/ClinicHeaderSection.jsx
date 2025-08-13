@@ -5,6 +5,7 @@ import EntityName from '../atoms/EntityName';
 import InfoBadge from '../molecules/InfoBadge';
 import RatingStars from '../atoms/RatingStars';
 import FavoriteButton from '../atoms/FavoriteButton';
+import IconButton from '../atoms/IconButton';
 import { addClinicToFavorites, removeClinicFromFavorites } from '../../../entities/clinic/favoritesApi';
 import { ReactComponent as PhoneIcon } from '../../assets/icons/Phone.svg';
 import { ReactComponent as MapIcon } from '../../assets/icons/Map.svg';
@@ -64,30 +65,6 @@ const ActionsRow = styled.div`
   border-top: 1px solid ${({ theme }) => theme.colors.borderLight};
 `;
 
-const GhostIconButton = styled.button`
-  background: ${({ theme }) => theme.colors.white};
-  border: 2px solid ${({ theme }) => theme.colors.border};
-  border-radius: ${({ theme }) => theme.radius.md};
-  padding: 0;
-  cursor: pointer;
-  width: 42px;
-  height: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all ${({ theme }) => theme.transition.fast};
-
-  &:hover {
-    background: ${({ theme }) => theme.colors.hover.surface};
-    border-color: ${({ theme }) => theme.colors.primary};
-    transform: translateY(-1px);
-    box-shadow: ${({ theme }) => theme.shadow.sm};
-  }
-
-  &:active { transform: scale(0.95); }
-
-  svg { width: 20px; height: 20px; display: block; color: ${({ theme }) => theme.colors.textLight}; }
-`;
 
 const ClinicHeaderSection = memo(({ clinic, initialFavorite, onFavoriteChange }) => {
   const [favorite, setFavorite] = React.useState(Boolean(initialFavorite));
@@ -125,12 +102,12 @@ const ClinicHeaderSection = memo(({ clinic, initialFavorite, onFavoriteChange })
       </HeaderGrid>
 
       <ActionsRow>
-        <GhostIconButton type="button" title="Позвонить" onClick={handleCall}>
+        <IconButton title="Позвонить" onClick={handleCall}>
           <PhoneIcon />
-        </GhostIconButton>
-        <GhostIconButton type="button" title="Открыть на карте" onClick={handleOpenMap}>
+        </IconButton>
+        <IconButton title="Открыть на карте" onClick={handleOpenMap}>
           <MapIcon />
-        </GhostIconButton>
+        </IconButton>
         <FavoriteButton
           active={favorite}
           onClick={async () => {

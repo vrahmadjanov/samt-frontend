@@ -134,7 +134,7 @@ const EmptyMessage = styled.div`
 `;
 
 const DoctorList = memo(({ doctors, favorites = [], onFavorite, loading = false }) => {
-  const { t, language } = useTranslation();
+  const { t } = useTranslation();
   
   if (loading) {
     return (
@@ -176,7 +176,7 @@ const DoctorList = memo(({ doctors, favorites = [], onFavorite, loading = false 
     <ListContainer>
       {doctors.map(doctor => (
         <DoctorCard
-          key={`${doctor.id}-${language}`}
+          key={doctor.id}
           doctor={doctor}
           favorite={favorites.includes(doctor.id)}
           onFavorite={onFavorite}
