@@ -49,6 +49,10 @@ const BadgeSk = styled(Skeleton)`
 const RatingSk = styled(Skeleton)`
   width: 120px;
   height: 16px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    margin-left: auto;
+    margin-right: auto;
+  }
 `;
 
 const AddressSk = styled(Skeleton)`

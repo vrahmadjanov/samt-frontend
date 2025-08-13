@@ -3,18 +3,9 @@ import styled from 'styled-components';
 import DoctorList from './DoctorList';
 import { useClinicDoctors } from '../../../features/clinic/model/useClinicDoctors';
 import { useTranslation } from '../../i18n/useTranslation';
-import { ReactComponent as NotFoundIcon } from '../../assets/icons/NotFound.svg';
+import EmptyClinicDoctors from '../molecules/EmptyClinicDoctors';
 import { useFavoriteDoctors } from '../../../features/doctor/model/useFavoriteDoctors';
 
-const EmptyWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: ${({ theme }) => theme.colors.textLight};
-  gap: var(--spacing-sm);
-`;
 
 const BlockWrap = styled.div`
   width: 100%;
@@ -56,10 +47,7 @@ const ClinicDoctorsSection = memo(({ clinicId }) => {
           }}
         />
       ) : (
-        <EmptyWrap>
-          <NotFoundIcon style={{ width: 40, height: 40 }} />
-          <div>{t('clinics.doctorsNotFound') || 'Врачи данной клиники не найдены'}</div>
-        </EmptyWrap>
+        <EmptyClinicDoctors />
       )}
     </BlockWrap>
   );

@@ -35,6 +35,9 @@ const Image = styled.img`
 const InfoCol = styled.div`
   display: grid;
   gap: var(--spacing-sm);
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    justify-items: center;
+  }
 `;
 
 const Badges = styled.div`
