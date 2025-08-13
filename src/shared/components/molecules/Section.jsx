@@ -2,10 +2,10 @@ import React, { memo } from 'react';
 import styled from 'styled-components';
 
 const SectionWrap = styled.section`
-  background: ${({ theme }) => theme.colors.surface};
-  border-radius: ${({ theme }) => theme.radius.lg};
-  box-shadow: ${({ theme }) => theme.shadow.card};
-  padding: var(--spacing-lg);
+  background: ${({ theme, $frameless }) => ($frameless ? 'transparent' : theme.colors.surface)};
+  border-radius: ${({ theme, $frameless }) => ($frameless ? 0 : theme.radius.lg)};
+  box-shadow: ${({ theme, $noShadow, $frameless }) => ($frameless || $noShadow ? theme.shadow.none : theme.shadow.card)};
+  padding: ${({ $frameless, $compact }) => ($frameless ? '0' : $compact ? 'var(--spacing-md)' : 'var(--spacing-lg)')};
   margin-bottom: var(--spacing-lg);
   width: 100%;
   max-width: 700px;
@@ -34,8 +34,8 @@ const SectionTitle = styled.h3`
 
 const SectionContent = styled.div``;
 
-const Section = memo(({ title, actions, children }) => (
-  <SectionWrap>
+const Section = memo(({ title, actions, children, compact = false, frameless = false, noShadow = false }) => (
+  <SectionWrap $compact={compact} $frameless={frameless} $noShadow={noShadow}>
     {(title || actions) && (
       <SectionHeader>
         {title && <SectionTitle>{title}</SectionTitle>}

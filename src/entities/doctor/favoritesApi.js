@@ -1,39 +1,16 @@
-import axios from 'axios';
-import tokenService from '../user/tokenService';
-
-const BASE_URL = 'http://89.111.172.219/api';
+import { createApiClient } from '../../shared/utils/apiClient';
 
 export const addDoctorToFavorites = async (doctorId) => {
-  const accessToken = tokenService.getAccessToken();
-  const response = await axios.post(
-    `${BASE_URL}/patients/favorites/doctors/add/`,
-    { doctor_id: doctorId },
-    {
-      headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
-    }
-  );
-  return response.data;
+  const api = createApiClient('/patients/favorites/doctors/add/');
+  return await api.post({ doctor_id: doctorId });
 };
 
 export const removeDoctorFromFavorites = async (doctorId) => {
-  const accessToken = tokenService.getAccessToken();
-  const response = await axios.delete(
-    `${BASE_URL}/patients/favorites/doctors/add/`,
-    {
-      headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
-      data: { doctor_id: doctorId },
-    }
-  );
-  return response.data;
+  const api = createApiClient('/patients/favorites/doctors/add/');
+  return await api.delete({ doctor_id: doctorId });
 };
 
 export const getFavoriteDoctorsIds = async () => {
-  const accessToken = tokenService.getAccessToken();
-  const response = await axios.get(
-    `${BASE_URL}/patients/favorites/doctors/ids/`,
-    {
-      headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
-    }
-  );
-  return response.data;
-}; 
+  const api = createApiClient('/patients/favorites/doctors/ids/');
+  return await api.get();
+};

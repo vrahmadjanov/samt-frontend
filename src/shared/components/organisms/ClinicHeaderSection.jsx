@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import Section from '../molecules/Section';
 import EntityName from '../atoms/EntityName';
 import InfoBadge from '../molecules/InfoBadge';
+import IconBadge from '../atoms/IconBadge';
+import { ReactComponent as ClinicTypeIcon } from '../../assets/icons/Clinic.svg';
 import RatingStars from '../atoms/RatingStars';
 import FavoriteButton from '../atoms/FavoriteButton';
 import IconButton from '../atoms/IconButton';
@@ -94,7 +96,9 @@ const ClinicHeaderSection = memo(({ clinic, initialFavorite, onFavoriteChange })
         <InfoCol>
           <EntityName>{clinic.name}</EntityName>
           <Badges>
-            {clinic.clinic_type && <InfoBadge>{clinic.clinic_type.name}</InfoBadge>}
+            {clinic.clinic_type && (
+              <IconBadge icon={<ClinicTypeIcon />} label={clinic.clinic_type.name} />
+            )}
           </Badges>
           {clinic.rating && <RatingStars rating={clinic.rating} />}
           {clinic.address && <Address>{clinic.address}</Address>}

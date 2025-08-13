@@ -19,7 +19,7 @@ const ClinicList = memo(({ clinics, favorites = [], onFavorite, loading = false 
   
   if (loading) {
     return (
-      <ListContainer>
+      <ListContainer aria-busy="true">
         {Array.from({ length: 10 }).map((_, i) => (
           <SkeletonCard key={i} avatarSize="md" avatarRound={false} footerButtons={3} />
         ))}
@@ -34,7 +34,7 @@ const ClinicList = memo(({ clinics, favorites = [], onFavorite, loading = false 
   }
 
   return (
-    <ListContainer>
+    <ListContainer aria-busy="false">
       {clinics.map((clinic) => (
         <ClinicCard 
           key={clinic.id} 
