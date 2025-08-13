@@ -116,7 +116,9 @@
       "viewDoctors": "Подробнее",
       "doctorsCount": "Врачей",
       "scheduleToday": "Сегодня:"
-    }
+    },
+    "doctorsSectionTitle": "Врачи клиники",
+    "doctorsNotFound": "Врачи данной клиники не найдены"
   },
   "auth": {
     "login": "Войти",

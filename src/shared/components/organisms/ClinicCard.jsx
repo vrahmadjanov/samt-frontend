@@ -1,4 +1,5 @@
 import React, { useState, memo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import InfoBadge from '../molecules/InfoBadge';
 import RatingStars from '../atoms/RatingStars';
@@ -122,6 +123,7 @@ const MapButton = styled.button`
 
 const ClinicCard = memo(({ clinic, favorite, onFavorite }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [imageError, setImageError] = useState(false);
 
@@ -144,8 +146,7 @@ const ClinicCard = memo(({ clinic, favorite, onFavorite }) => {
   };
 
   const handleViewDoctors = () => {
-    // TODO: реализовать переход к врачам клиники
-    alert('Функция просмотра врачей клиники будет реализована позже');
+    navigate(`/clinics/${clinic.id}`);
   };
 
   const handleOpenMap = () => {

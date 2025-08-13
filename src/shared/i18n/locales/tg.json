@@ -116,7 +116,9 @@
       "viewDoctors": "Муфассал",
       "doctorsCount": "Духтурҳо",
       "scheduleToday": "Имрӯз:"
-    }
+    },
+    "doctorsSectionTitle": "Духтурҳои клиника",
+    "doctorsNotFound": "Духтурҳои ин клиника ёфт нашуд"
   },
   "auth": {
     "login": "Даромад",

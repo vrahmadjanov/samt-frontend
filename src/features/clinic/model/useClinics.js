@@ -20,6 +20,7 @@ export const useClinics = (filters = {}) => {
     lastRequestKeyRef.current = requestKey;
 
     setLoading(true);
+    setClinics([]);
     setError(null);
     try {
       const data = await fetchClinics(p, currentFilters);

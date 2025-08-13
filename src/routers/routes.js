@@ -8,6 +8,7 @@ import PatientProfileDetailsPage from '../pages/PatientProfileDetailsPage';
 import AppointmentsPage from '../pages/AppointmentsPage';
 import NotificationsPage from '../pages/NotificationsPage';
 import DoctorDetailsPage from '../pages/DoctorDetailsPage';
+import ClinicDetailsPage from '../pages/ClinicDetailsPage';
 
 export const routes = [
   {
@@ -38,6 +39,11 @@ export const routes = [
   {
     path: '/clinics',
     element: <ClinicsPage />,
+    protected: true, // Защищенный маршрут - требует авторизации
+  },
+  {
+    path: '/clinics/:id',
+    element: <ClinicDetailsPage />,
     protected: true, // Защищенный маршрут - требует авторизации
   },
   {

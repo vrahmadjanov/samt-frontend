@@ -10,7 +10,6 @@ import FilterPanel from '../shared/components/organisms/FilterPanel';
 import Pagination from '../shared/components/organisms/Pagination';
 import { useTranslation } from '../shared/i18n/useTranslation';
 import { mapUiFiltersToApi } from '../entities/clinic/filterMapper';
-import LoadingMessage from '../shared/components/atoms/LoadingMessage';
 import ErrorMessage from '../shared/components/atoms/ErrorMessage';
 import PageTitle from '../shared/components/atoms/PageTitle';
 import PageWrapper from '../shared/components/atoms/PageWrapper';
@@ -105,6 +104,11 @@ const ClinicsPage = () => {
     }
   }, [addToFavorites, removeFromFavorites]);
 
+  const handlePageChange = useCallback((p) => {
+    if (loading) return;
+    loadPage(p);
+  }, [loading, loadPage]);
+
   return (
     <PageWrapper>
       <PageTitle>{t('clinics.title')}</PageTitle>
@@ -127,14 +131,19 @@ const ClinicsPage = () => {
         onResetFilters={handleResetFilters}
       />
 
-      {loading && <LoadingMessage>{t('common.loading')}</LoadingMessage>}
       {error && <ErrorMessage>{t('common.error')}</ErrorMessage>}
-      {!loading && !error && <ClinicList clinics={clinics} favorites={favoriteIds} onFavorite={handleFavorite} />}
+      <ClinicList
+        loading={loading}
+        clinics={clinics}
+        favorites={favoriteIds}
+        onFavorite={handleFavorite}
+      />
       
       <Pagination
         page={page}
         totalPages={totalPages}
-        onPage={loadPage}
+        onPage={handlePageChange}
+        loading={loading}
       />
     </PageWrapper>
   );
