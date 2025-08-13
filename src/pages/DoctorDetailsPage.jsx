@@ -14,6 +14,7 @@ import DoctorTitlesSection from '../shared/components/organisms/DoctorTitlesSect
 import DoctorLanguagesSection from '../shared/components/organisms/DoctorLanguagesSection';
 import DoctorServicesSection from '../shared/components/organisms/DoctorServicesSection';
 import DoctorEducationSection from '../shared/components/organisms/DoctorEducationSection';
+import { useFavoriteDoctors } from '../features/doctor/model/useFavoriteDoctors';
 
 // Styled skeleton containers matching section styles
 const SectionSkeleton = styled.div`
@@ -118,6 +119,7 @@ const DoctorDetailsPage = () => {
   const { id } = useParams();
   const { t } = useTranslation();
   const { doctor, loading, error } = useDoctorDetails(id);
+  const { isFavorite, addToFavorites, removeFromFavorites } = useFavoriteDoctors();
   const [selectedWorkplace, setSelectedWorkplace] = useState(null);
 
   // Автоматически выбираем первое место работы, если еще не выбрано
@@ -174,7 +176,14 @@ const DoctorDetailsPage = () => {
           </ActionsRowSk>
         </SectionSkeleton>
       ) : (
-        <DoctorHeaderSection doctor={doctor} />
+        <DoctorHeaderSection
+          doctor={doctor}
+          initialFavorite={isFavorite(doctor.id)}
+          onFavoriteChange={(doctorId, added) => {
+            if (added) addToFavorites(doctorId);
+            else removeFromFavorites(doctorId);
+          }}
+        />
       )}
 
       {isLoading ? (

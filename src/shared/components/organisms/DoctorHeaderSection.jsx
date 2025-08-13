@@ -132,10 +132,14 @@ function formatExperience(experienceLevel) {
   return String(experienceLevel);
 }
 
-const DoctorHeaderSection = memo(({ doctor }) => {
+const DoctorHeaderSection = memo(({ doctor, initialFavorite, onFavoriteChange }) => {
   useTranslation();
-  const [favorite, setFavorite] = React.useState(!!doctor?.is_favorite);
+  const [favorite, setFavorite] = React.useState(Boolean(initialFavorite ?? doctor?.is_favorite));
   const [favLoading, setFavLoading] = React.useState(false);
+
+  React.useEffect(() => {
+    setFavorite(Boolean(initialFavorite ?? doctor?.is_favorite));
+  }, [initialFavorite, doctor?.is_favorite, doctor?.id]);
 
   const fullName = useMemo(
     () => formatFullName(doctor.first_name, doctor.last_name, doctor.middle_name),
@@ -184,9 +188,11 @@ const DoctorHeaderSection = memo(({ doctor }) => {
                   if (favorite) {
                     await removeDoctorFromFavorites(doctor.id);
                     setFavorite(false);
+                    onFavoriteChange && onFavoriteChange(doctor.id, false);
                   } else {
                     await addDoctorToFavorites(doctor.id);
                     setFavorite(true);
+                    onFavoriteChange && onFavoriteChange(doctor.id, true);
                   }
                 } catch (e) {
                   console.error('Error handling favorite:', e);

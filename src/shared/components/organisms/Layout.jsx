@@ -23,7 +23,6 @@ const Main = styled.main`
   overflow-y: auto;
   position: relative;
   
-  /* Создаем эффект глубины */
   &::before {
     content: '';
     position: absolute;
