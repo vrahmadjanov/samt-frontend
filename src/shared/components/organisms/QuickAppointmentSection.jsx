@@ -51,8 +51,8 @@ const NavButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border: none;
   border-radius: ${({ theme }) => theme.radius.md};
   background: ${({ theme, $isDisabled }) => 
@@ -81,6 +81,10 @@ const NavButton = styled.button`
     stroke-width: 2.5;
   }
   
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 40px;
+    height: 40px;
+  }
 `;
 
 // Контейнер для датапикера
@@ -89,8 +93,8 @@ const DatePickerWrapper = styled.div``;
 // Стилизованный датапикер
 const DateInput = styled.input`
   width: 100%;
-  height: 40px;
-  padding: 0;
+  height: 44px;
+  padding: var(--spacing-sm) var(--spacing-xs);
   border: none;
   border-radius: ${({ theme }) => theme.radius.md};
   background: ${({ theme }) => theme.colors.white};
@@ -99,13 +103,22 @@ const DateInput = styled.input`
   font-weight: 500;
   cursor: pointer;
   text-align: center;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.primary};
+  }
   
   &:focus {
     outline: none;
+    border-color: ${({ theme }) => theme.colors.primary};
+    box-shadow: 0 0 0 3px ${({ theme }) => theme.colors.primary + '15'};
   }
   
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    height: 40px;
     font-size: var(--font-sm);
+    padding: var(--spacing-xs) 0;
   }
 `;
 
@@ -116,12 +129,17 @@ const SlotsGridContainer = styled.div`
 // Сетка слотов
 const SlotsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
   gap: var(--spacing-sm);
+  justify-items: center;
   
   @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     gap: var(--spacing-xs);
+  }
+  
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
   }
 `;
 
@@ -130,7 +148,8 @@ const SlotButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-sm) var(--spacing-xs);
+  height: 44px;
+  padding: 0 var(--spacing-md);
   border: 1px solid ${({ theme, $isAvailable, $isSelected }) => {
     if ($isSelected) return theme.colors.primary;
     return $isAvailable ? theme.colors.border : theme.colors.borderLight;
@@ -144,11 +163,13 @@ const SlotButton = styled.button`
     if ($isSelected) return theme.colors.white;
     return $isAvailable ? theme.colors.text : theme.colors.textLight;
   }};
-  font-size: var(--font-xs);
-  font-weight: 600;
+  font-size: var(--font-base);
+  font-weight: 500;
   cursor: ${({ $isAvailable }) => $isAvailable ? 'pointer' : 'not-allowed'};
   transition: all 0.2s ease;
-  min-height: 36px;
+  width: 100%;
+  max-width: 150px;
+  min-width: 104px;
   
   &:hover:not(:disabled) {
     background: ${({ theme, $isSelected }) => 
@@ -166,8 +187,17 @@ const SlotButton = styled.button`
   }
   
   @media (max-width: 768px) {
-    min-height: 36px;
-    font-size: var(--font-xs);
+    height: 44px;
+    font-size: var(--font-base);
+    max-width: 140px;
+    min-width: 100px;
+  }
+  
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    height: 40px;
+    padding: 0 var(--spacing-sm);
+    max-width: 136px;
+    min-width: 92px;
   }
 `;
 
@@ -325,7 +355,7 @@ const QuickAppointmentSection = ({ doctor, selectedWorkplace, onWorkplaceSelect 
               {loading && (
                 <SlotsGrid>
                   {Array.from({ length: 12 }).map((_, i) => (
-                    <Skeleton key={i} height={36} />
+                    <Skeleton key={i} height={44} />
                   ))}
                 </SlotsGrid>
               )}

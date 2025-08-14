@@ -16,6 +16,8 @@ import DoctorLanguagesSection from '../shared/components/organisms/DoctorLanguag
 import DoctorServicesSection from '../shared/components/organisms/DoctorServicesSection';
 import DoctorEducationSection from '../shared/components/organisms/DoctorEducationSection';
 import { useFavoriteDoctors } from '../features/doctor/model/useFavoriteDoctors';
+import DoctorWorkplacesListSection from '../shared/components/organisms/DoctorWorkplacesListSection';
+import DoctorClinicsSection from '../shared/components/organisms/DoctorClinicsSection';
 
 const HeaderSkGrid = styled.div`
   display: grid;
@@ -185,6 +187,10 @@ const DoctorDetailsPage = () => {
         />
       )}
 
+      {!isLoading && (
+        <DoctorWorkplacesListSection doctor={doctor} />
+      )}
+
       {isLoading ? (
         <SectionSkeleton>
           <BlockSk height={20} />
@@ -228,6 +234,10 @@ const DoctorDetailsPage = () => {
         </SectionSkeleton>
       ) : (
         <DoctorEducationSection doctor={doctor} />
+      )}
+
+      {!isLoading && (
+        <DoctorClinicsSection doctor={doctor} />
       )}
     </PageWrapper>
   );

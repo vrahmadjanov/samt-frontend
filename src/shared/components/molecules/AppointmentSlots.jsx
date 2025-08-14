@@ -133,17 +133,18 @@ const SlotsContainer = styled.div`
 // Сетка слотов
 const SlotsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
   gap: var(--spacing-sm);
   margin-top: var(--spacing-md);
+  justify-items: center;
   
   @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     gap: var(--spacing-xs);
   }
   
   @media (max-width: 480px) {
-    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
   }
 `;
 
@@ -152,7 +153,8 @@ const SlotButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-sm) var(--spacing-xs);
+  height: 44px;
+  padding: 0 var(--spacing-md);
   border: 1px solid ${({ theme, $isAvailable }) => 
     $isAvailable ? theme.colors.border : theme.colors.borderLight};
   border-radius: ${({ theme }) => theme.radius.md};
@@ -160,11 +162,13 @@ const SlotButton = styled.button`
     $isAvailable ? theme.colors.white : theme.colors.background};
   color: ${({ theme, $isAvailable }) => 
     $isAvailable ? theme.colors.text : theme.colors.textLight};
-  font-size: var(--font-xs);
-  font-weight: 600;
+  font-size: var(--font-base);
+  font-weight: 500;
   cursor: ${({ $isAvailable }) => $isAvailable ? 'pointer' : 'not-allowed'};
   transition: all 0.2s ease;
-  min-height: 40px;
+  width: 100%;
+  max-width: 150px;
+  min-width: 104px;
   
   &:hover:not(:disabled) {
     background: ${({ theme }) => theme.colors.primary + '08'};
@@ -181,13 +185,17 @@ const SlotButton = styled.button`
   }
   
   @media (max-width: 768px) {
-    min-height: 36px;
-    font-size: var(--font-xs);
+    height: 44px;
+    font-size: var(--font-base);
+    max-width: 140px;
+    min-width: 100px;
   }
   
   @media (max-width: 480px) {
-    min-height: 32px;
-    padding: var(--spacing-xs);
+    height: 40px;
+    padding: 0 var(--spacing-sm);
+    max-width: 136px;
+    min-width: 92px;
   }
 `;
 
