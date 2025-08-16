@@ -24,7 +24,7 @@ const StyledSelect = styled.select`
 `;
 
 const Select = memo(({ label, options = [], ...props }) => (
-  <FormWrapper marginBottom="var(--spacing-md)">
+  <FormWrapper $marginBottom="var(--spacing-md)">
     {label && <Label>{label}</Label>}
     <StyledSelect {...props}>
       {options.map(({ value, label }) => (

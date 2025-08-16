@@ -4,6 +4,7 @@ import { useTranslation } from '../../i18n/useTranslation';
 import { useLanguage } from '../../../features/i18n/model/useLanguage';
 import authService from '../../../entities/user/service';
 import { ReactComponent as ProfileIcon } from '../../assets/icons/Profile.svg';
+import { ReactComponent as CaseIcon } from '../../assets/icons/Case.svg';
 import { ReactComponent as SubscriptionIcon } from '../../assets/icons/Payment.svg';
 import { ReactComponent as FavouriteIcon } from '../../assets/icons/Favorite.svg';
 import { ReactComponent as SupportIcon } from '../../assets/icons/Help.svg';
@@ -148,6 +149,13 @@ const ProfileMenu = ({ onNavigate }) => {
               <ProfileIcon />
             </MenuIcon>
             <MenuText>{t('profile.myProfile')}</MenuText>
+            <MenuArrow />
+          </MenuItem>
+          <MenuItem onClick={() => handleItemClick('/profile/professional')}>
+            <MenuIcon>
+              <CaseIcon />
+            </MenuIcon>
+            <MenuText>{t('profile.professionalAccount')}</MenuText>
             <MenuArrow />
           </MenuItem>
           <MenuItem onClick={() => handleItemClick('/profile/subscriptions')}>
