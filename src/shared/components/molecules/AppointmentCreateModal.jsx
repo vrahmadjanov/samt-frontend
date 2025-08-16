@@ -40,6 +40,7 @@ const Actions = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
 `;
 
 const TextArea = Textarea;
@@ -226,7 +227,7 @@ const AppointmentCreateModal = ({
               <TextArea
                 value={problem}
                 onChange={(e) => setProblem(e.target.value)}
-                placeholder="Например: головная боль, температура, боль в спине"
+                placeholder={t('doctor.problemPlaceholderExample') || 'Например: головная боль, температура, боль в спине'}
               />
               {fieldErrors.problem_description && <ErrorText>{fieldErrors.problem_description}</ErrorText>}
             </FieldWrapper>

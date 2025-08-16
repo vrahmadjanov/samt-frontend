@@ -9,6 +9,11 @@ const ToggleContainer = styled.div`
   padding: 4px;
   position: relative;
   overflow: hidden;
+  min-height: 48px; /* Фиксированная минимальная высота как у кнопок */
+  
+  @media (max-width: 768px) {
+    min-height: 44px; /* Немного меньше на мобильных */
+  }
 `;
 
 const ToggleOption = styled.button`
