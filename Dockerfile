@@ -6,9 +6,18 @@ RUN npm ci --legacy-peer-deps
 COPY . .
 RUN npm run build
 
-# Stage 2: Serve
-FROM nginx:alpine
-COPY --from=build /app/build /usr/share/nginx/html
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# Stage 2: Serve with static file server
+FROM node:20-alpine
+WORKDIR /app
+
+# Установка serve для статических файлов
+RUN npm install -g serve
+
+# Копирование собранного приложения
+COPY --from=build /app/build ./build
+
+# Открытие порта
+EXPOSE 3000
+
+# Запуск статического сервера
+CMD ["serve", "-s", "build", "-l", "3000"]
