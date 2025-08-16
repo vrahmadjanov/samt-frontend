@@ -18,7 +18,10 @@
     "page": "Страница",
     "minutes": "минут",
     "currency": "сомони",
-    "book": "Записаться"
+    "book": "Записаться",
+    "confirm": "Подтвердить",
+    "date": "Дата",
+    "time": "Время"
   },
   "navigation": {
     "doctors": "Врачи",
@@ -83,6 +86,7 @@
     "graduationYear": "Год окончания",
     "bookAppointment": "Записаться на прием",
     "appointmentSlots": "Время для записи",
+    "appointmentTime": "Время записи",
     "workTime": "Время работы",
     "noAvailableSlots": "Нет доступных слотов на выбранную дату",
     "noSlotsTitle": "Нет доступных слотов",
@@ -92,7 +96,19 @@
     "reviews": "Отзывов",
     "appointments": "Приемов",
     "patients": "Пациентов",
-    "yearsExperience": "Лет опыта"
+    "yearsExperience": "Лет опыта",
+    "problem": "Опишите проблему",
+    "problemPlaceholder": "Коротко опишите, что вас беспокоит",
+    "problemPlaceholderForAnother": "Коротко опишите, что беспокоит человека, который записывается на прием",
+    "phone": "Телефон для связи",
+    "bookForMyself": "Для меня",
+    "bookForAnother": "Для друга",
+    "isAnotherPatient": "Записать другого пациента",
+    "anotherPatientName": "Имя пациента",
+    "anotherPatientAge": "Возраст пациента",
+    "anotherPatientGender": "Пол пациента",
+    "male": "Мужской",
+    "female": "Женский"
   },
   "schedule": {
     "monday": "Понедельник",
@@ -264,6 +280,9 @@
   },
   "appointments": {
     "title": "Записи",
+    "confirmationTitle": "Подтверждение записи",
+    "createTitle": "Запись на прием",
+    "bookingType": "Тип записи",
     "searchPlaceholder": "Поиск записей...",
     "notFound": "Записи не найдены",
     "comingSoon": "Функция записей будет доступна в ближайшее время",

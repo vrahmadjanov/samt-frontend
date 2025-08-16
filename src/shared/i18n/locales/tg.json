@@ -18,7 +18,10 @@
     "page": "Саҳифа",
     "minutes": "дақиқа",
     "currency": "сомонӣ",
-    "book": "Қайд кунед"
+    "book": "Қайд кунед",
+    "confirm": "Тасдиқ",
+    "date": "Сана",
+    "time": "Вақт"
   },
   "navigation": {
     "doctors": "Духтурҳо",
@@ -83,6 +86,7 @@
     "graduationYear": "Соли хатм",
     "bookAppointment": "Ба қабул қайд кунед",
     "appointmentSlots": "Вақти қабул",
+    "appointmentTime": "Вақти қайд",
     "workTime": "Вақти кор",
     "noAvailableSlots": "Дар ин рӯз слотҳои дастрас нестанд",
     "noSlotsTitle": "Вақти озод нест",
@@ -92,7 +96,19 @@
     "reviews": "шарҳҳо",
     "appointments": "Қабулҳо",
     "patients": "Беморон",
-    "yearsExperience": "Солҳои таҷриба"
+    "yearsExperience": "Солҳои таҷриба",
+    "problem": "Мушкилиро тавсиф кунед",
+    "problemPlaceholder": "Кӯтоҳ тавсиф кунед, чӣ шуморо нороҳат мекунад",
+    "problemPlaceholderForAnother": "Кӯтоҳ тавсиф кунед, чӣ касеро нороҳат мекунад, ки ба қабул сабт мешавад",
+    "phone": "Телефони тамос",
+    "bookForMyself": "Барои ман", 
+    "bookForAnother": "Барои дӯст",
+    "isAnotherPatient": "Ба шахси дигар қайд кардан",
+    "anotherPatientName": "Номи бемор",
+    "anotherPatientAge": "Синни бемор",
+    "anotherPatientGender": "Ҷинси бемор",
+    "male": "Мард",
+    "female": "Зан"
   },
   "schedule": {
     "monday": "Душанбе",
@@ -264,6 +280,9 @@
   },
   "appointments": {
     "title": "Қабулҳо",
+    "confirmationTitle": "Тасдиқи қабул",
+    "createTitle": "Қабул ба қабул",
+    "bookingType": "Навъи қабул",
     "searchPlaceholder": "Ҷустуҷӯи қабулҳо...",
     "notFound": "Қабулҳо ёфт нашуд",
     "comingSoon": "Функсияи қабулҳо дар наздикӣ дастрас хоҳад буд",

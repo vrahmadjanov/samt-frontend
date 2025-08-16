@@ -20,3 +20,9 @@ export const confirmAppointmentByDoctor = async (appointmentId) => {
   const api = createApiClient(`/appointments/${appointmentId}/confirm-doctor/`);
   return await api.post({});
 };
+
+// Создание записи на прием
+export const createAppointment = async (payload) => {
+  const api = createApiClient('/appointments/create/');
+  return await api.post(payload);
+};

@@ -26,7 +26,7 @@ const DoctorClinicsSection = memo(({ doctor }) => {
   if (!clinics || clinics.length === 0) return null;
 
   return (
-    <Section frameless title={t('doctor.clinicsSectionTitle') || 'Медицинские учреждения врача'}>
+    <Section frameless title={t('doctor.workplacesSectionTitle') || 'Места работы'}>
       <ClinicList 
         clinics={clinics} 
         favorites={favoriteIds}

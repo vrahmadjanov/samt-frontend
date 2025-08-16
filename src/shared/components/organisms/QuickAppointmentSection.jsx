@@ -12,6 +12,8 @@ import ErrorMessage from '../atoms/ErrorMessage';
 import { ReactComponent as NotFoundIcon } from '../../assets/icons/NotFound.svg';
 import EmptyState from '../atoms/EmptyState';
 import WorkplaceSwitcher from '../molecules/WorkplaceSwitcher';
+import AppointmentCreateModal from '../molecules/AppointmentCreateModal';
+import { useCreateAppointment } from '../../../features/appointment/model/useCreateAppointment';
 
 // Вложенная карточка: шапка (инфо о месте работы) + тело (слоты)
 const WorkplaceCard = styled.div`
@@ -211,6 +213,8 @@ const QuickAppointmentSection = ({ doctor, selectedWorkplace, onWorkplaceSelect 
   const { t } = useTranslation();
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
   const [selectedSlot, setSelectedSlot] = useState(null);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const { create, loading: creating, fieldErrors } = useCreateAppointment();
   
   const { slots, loading, error } = useAppointmentSlots(
     selectedWorkplace?.id, 
@@ -231,23 +235,43 @@ const QuickAppointmentSection = ({ doctor, selectedWorkplace, onWorkplaceSelect 
     setSelectedSlot(null); // Сбрасываем выбранный слот при смене даты
   }, [selectedDate]);
 
+  const isSlotPassed = useCallback((slot) => {
+    const today = new Date().toISOString().split('T')[0];
+    // Проверяем только для сегодняшнего дня
+    if (selectedDate !== today) {
+      return false;
+    }
+    
+    const now = new Date();
+    const currentTime = now.getHours() * 60 + now.getMinutes(); // Текущее время в минутах
+    
+    const [hours, minutes] = slot.start_time.split(':').map(Number);
+    const slotTime = hours * 60 + minutes; // Время слота в минутах
+    
+    return slotTime <= currentTime;
+  }, [selectedDate]);
+
   const handleSlotClick = useCallback((slot) => {
-    if (slot.is_available) {
+    if (slot.is_available && !isSlotPassed(slot)) {
       setSelectedSlot(slot);
     }
-  }, [setSelectedSlot]);
+  }, [isSlotPassed]);
 
   const handleBookAppointment = useCallback(() => {
     if (selectedSlot && selectedWorkplace) {
-      // TODO: Добавить логику записи на прием
-      console.log('Запись на прием:', {
-        workplaceId: selectedWorkplace.id,
-        date: selectedDate,
-        startTime: selectedSlot.start_time,
-        endTime: selectedSlot.end_time
-      });
+      setModalOpen(true);
     }
-  }, [selectedSlot, selectedWorkplace, selectedDate]);
+  }, [selectedSlot, selectedWorkplace]);
+
+  const handleConfirmCreate = useCallback(async (payload) => {
+    try {
+      await create(payload);
+      setModalOpen(false);
+      setSelectedSlot(null);
+    } catch (e) {
+      // ошибки уже отражаются через fieldErrors
+    }
+  }, [create]);
 
   const today = new Date().toISOString().split('T')[0];
   const isToday = selectedDate === today;
@@ -328,13 +352,16 @@ const QuickAppointmentSection = ({ doctor, selectedWorkplace, onWorkplaceSelect 
                           const isSelected = selectedSlot &&
                             selectedSlot.start_time === slot.start_time &&
                             selectedSlot.end_time === slot.end_time;
+                          const isPassed = isSlotPassed(slot);
+                          const isActuallyAvailable = slot.is_available && !isPassed;
+                          
                           return (
                             <SlotButton
                               key={index}
-                              $isAvailable={slot.is_available}
+                              $isAvailable={isActuallyAvailable}
                               $isSelected={isSelected}
                               onClick={() => handleSlotClick(slot)}
-                              disabled={!slot.is_available}
+                              disabled={!isActuallyAvailable}
                             >
                               {formatTime(slot.start_time)}
                             </SlotButton>
@@ -376,6 +403,17 @@ const QuickAppointmentSection = ({ doctor, selectedWorkplace, onWorkplaceSelect 
           </Button>
         </div>
       )}
+
+      <AppointmentCreateModal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        onConfirm={handleConfirmCreate}
+        workplaceId={selectedWorkplace?.id}
+        selectedDate={selectedDate}
+        selectedSlot={selectedSlot}
+        fieldErrors={fieldErrors}
+        loading={creating}
+      />
     </Section>
   );
 };
